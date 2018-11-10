@@ -1,0 +1,199 @@
+create or replace PROCEDURE generate_services AS
+number_of_pools NUMBER;
+service_id NUMBER;
+ogolna_id NUMBER;
+lokalna_id NUMBER;
+price NUMBER;
+is_offered NUMBER;
+BEGIN
+
+	SELECT COUNT(*) into number_of_pools FROM BASEN;
+	service_id := 1;
+	ogolna_id := 1;
+	lokalna_id := 1;
+	
+	FOR counter IN 1..number_of_pools
+	LOOP
+	
+	    price := dbms_random.value(85,95);
+		
+		INSERT INTO LOKALNA
+		VALUES (lokalna_id);
+		
+		INSERT INTO USLUGA
+		VALUES (service_id, 'karnet', price, counter, NULL, lokalna_id);
+		
+		service_id := service_id + 1;
+		lokalna_id := lokalna_id + 1;
+		
+	END LOOP;
+	
+	FOR counter IN 1..number_of_pools
+	LOOP
+	
+	    price := dbms_random.value(6,15);
+		
+		INSERT INTO LOKALNA
+		VALUES (lokalna_id);
+		
+		INSERT INTO USLUGA
+		VALUES (service_id, 'bilet normalny', price, counter, NULL, lokalna_id);
+		
+		service_id := service_id + 1;
+		lokalna_id := lokalna_id + 1;
+		
+	END LOOP;
+	
+	FOR counter IN 1..number_of_pools
+	LOOP
+	
+	    price := dbms_random.value(4,10);
+		
+		INSERT INTO LOKALNA
+		VALUES (lokalna_id);
+		
+		INSERT INTO USLUGA
+		VALUES (service_id, 'bilet ulgowy', price, counter, NULL, lokalna_id);
+		
+		service_id := service_id + 1;
+		lokalna_id := lokalna_id + 1;
+		
+	END LOOP;
+	
+	FOR counter IN 1..number_of_pools
+	LOOP
+		
+		is_offered := dbms_random.value(0,999);
+		
+		IF is_offered>=500 THEN
+		
+			price := dbms_random.value(60,120);
+			
+			INSERT INTO LOKALNA
+			VALUES (lokalna_id);
+		
+			INSERT INTO USLUGA
+			VALUES (service_id, 'masaż', price, counter, NULL, lokalna_id);
+		
+			service_id := service_id + 1;
+			lokalna_id := lokalna_id + 1;
+			
+		END IF;
+		
+	END LOOP;
+	
+	FOR counter IN 1..number_of_pools
+	LOOP
+		
+		is_offered := dbms_random.value(0,999);
+		
+		IF is_offered>=500 THEN
+		
+			price := dbms_random.value(15,30);
+			
+			INSERT INTO LOKALNA
+			VALUES (lokalna_id);
+		
+			INSERT INTO USLUGA
+			VALUES (service_id, 'sauna', price, counter, NULL, lokalna_id);
+		
+			service_id := service_id + 1;
+			lokalna_id := lokalna_id + 1;
+			
+		END IF;
+		
+	END LOOP;
+	
+	FOR counter IN 1..number_of_pools
+	LOOP
+		
+		is_offered := dbms_random.value(0,999);
+		
+		IF is_offered>=500 THEN
+		
+			price := dbms_random.value(10,20);
+				
+			INSERT INTO LOKALNA
+			VALUES (lokalna_id);	
+			
+			INSERT INTO USLUGA
+			VALUES (service_id, 'termy', price, counter, NULL, lokalna_id);
+			
+			service_id := service_id + 1;
+			lokalna_id := lokalna_id + 1;
+            
+		END IF;
+		
+	END LOOP;
+	
+	FOR counter IN 1..number_of_pools
+	LOOP
+	
+	    price := dbms_random.value(15,30);
+		
+		INSERT INTO LOKALNA
+		VALUES (lokalna_id);
+		
+		INSERT INTO USLUGA
+		VALUES (service_id, 'aerobik', price, counter, NULL, lokalna_id);
+		
+		service_id := service_id + 1;
+		lokalna_id := lokalna_id + 1;
+		
+	END LOOP;
+	
+	FOR counter IN 1..number_of_pools
+	LOOP
+	
+	    price := dbms_random.value(50,100);
+		
+		INSERT INTO OGOLNA
+		VALUES (ogolna_id);
+		
+		INSERT INTO USLUGA
+		VALUES (service_id, 'rezerwacja toru', price, counter, ogolna_id, NULL);
+		
+		service_id := service_id + 1;
+		ogolna_id := ogolna_id + 1;
+		
+	END LOOP;
+	
+	FOR counter IN 1..number_of_pools
+	LOOP
+	
+	    price := dbms_random.value(30,60);
+		
+		INSERT INTO OGOLNA
+		VALUES (ogolna_id);
+		
+		INSERT INTO USLUGA
+		VALUES (service_id, 'lekcja pływania', price, counter, ogolna_id, NULL);
+
+		service_id := service_id + 1;
+		ogolna_id := ogolna_id + 1;
+		
+	END LOOP;
+	
+	FOR counter IN 1..number_of_pools
+	LOOP
+		
+		is_offered := dbms_random.value(0,999);
+		
+		IF is_offered>=500 THEN
+		
+			price := dbms_random.value(30,40);
+			
+			INSERT INTO LOKALNA
+			VALUES (lokalna_id);
+		
+			INSERT INTO USLUGA
+			VALUES (service_id, 'squash', price, counter, NULL, lokalna_id);
+			
+			service_id := service_id + 1;
+			lokalna_id := lokalna_id + 1;
+		
+		END IF;
+		
+	END LOOP;
+	
+END;

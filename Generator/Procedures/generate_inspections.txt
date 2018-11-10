@@ -1,0 +1,33 @@
+create or replace PROCEDURE generate_inspections (max_number_of_inspections NUMBER) AS
+number_of_inspections NUMBER;
+inspection_date DATE;
+number_of_pools NUMBER;
+inspection_id NUMBER;
+BEGIN
+    inspection_id := 1;
+    SELECT COUNT(*) into number_of_pools FROM BASEN;
+	FOR counter1 IN 1..number_of_pools
+	LOOP
+	
+		number_of_inspections := dbms_random.value(1,max_number_of_inspections);
+		inspection_date := TO_DATE(TRUNC(DBMS_RANDOM.VALUE(TO_CHAR(DATE '2018-12-07','J'), TO_CHAR(DATE '2020-12-07', 'J'))), 'J');
+		
+		INSERT INTO PRZEGLAD
+		VALUES (inspection_id, inspection_date, counter1);
+		
+		inspection_id := inspection_id + 1;
+		
+		FOR counter2 IN 1..number_of_inspections-1
+		LOOP
+		
+		    inspection_date := inspection_date - INTERVAL '2' YEAR;
+			
+			INSERT INTO PRZEGLAD
+			VALUES (inspection_id, inspection_date, counter1);
+			
+			inspection_id := inspection_id + 1;
+			
+		END LOOP;
+		
+	END LOOP;
+END;
