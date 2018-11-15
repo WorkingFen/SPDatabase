@@ -24,4 +24,4 @@ Technologie, które wykorzystujemy/będziemy wykorzystywać do projektu:
 - **Zawadka Piotr** - [WorkingFen](https://github.com/WorkingFen)
 
 ## Licencja
-This project is licensed under the MIT License - see the [LICENSE](LICENSE.md) file for details.
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
