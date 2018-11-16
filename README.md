@@ -12,13 +12,13 @@ Brak instalacji, bo nie ma czego
 2. Ściągnąć Oracle 12g Database
 3. Zapisać sobie gdzieć ustawione podczas instalacji hasło
 4. Zapamiętać ścieżkę do "Software location"
-5. Po zainstalowaniu wejść do tej ścieżki, a potem dalej do \network\admin\listener.ora
+5. Po zainstalowaniu, wejść do tej ścieżki, a potem dalej do \network\admin\listener.ora
 6. Dodać do SID_LIST
     (SID_DESC =
       (SID_NAME = orcl)      -> jeśli nie ustawiono innego podczas instalacji
       (ORACLE_HOME = wasza ścieżka do Software location)
     )
-7. Po zapisaniu stworzyć new connection (login:system password: z pkt.3 SID: orcl -> jeśli nie ustawiono innego podczas instalacji)
+7. Po zapisaniu, stworzyć new connection (login:system password: z pkt.3 SID: orcl -> jeśli nie ustawiono innego podczas instalacji)
  
 ## Technologie
 Technologie, które wykorzystujemy/będziemy wykorzystywać do projektu:
