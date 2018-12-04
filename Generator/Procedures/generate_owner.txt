@@ -30,10 +30,10 @@ BEGIN
         WHERE rownum = 1;
     END IF;
     
-    INSERT INTO WLASCICIEL
+    INSERT INTO WLASCICIELE
     VALUES (id_number, first_name, last_name);
     
-    INSERT INTO OSOBA
+    INSERT INTO OSOBY
     VALUES (id_number, null, id_number, null);
     
     INSERT INTO DANE_DO_LOGOWANIA

@@ -32,7 +32,7 @@ BEGIN
 		phone_number := dbms_random.value(500000000,889999999);
 		first_char := SUBSTR(first_name, 1, 1);
         
-        SELECT COUNT(*) INTO condition FROM KLIENT WHERE SUBSTR(first_name, 1, 1) = SUBSTR(imie, 1, 1) AND last_name = nazwisko;
+        SELECT COUNT(*) INTO condition FROM KLIENCI WHERE SUBSTR(first_name, 1, 1) = SUBSTR(imie, 1, 1) AND last_name = nazwisko;
         
         IF condition=0 THEN
             email_address := first_char || '.' || last_name || '@GMAIL.COM';
@@ -41,7 +41,7 @@ BEGIN
             email_address := first_char || '.' || last_name || condition || '@GMAIL.COM';
         END IF;
 
-        INSERT INTO KLIENT
+        INSERT INTO KLIENCI
         VALUES (counter, first_name, last_name, phone_number, email_address);
 
     END LOOP;

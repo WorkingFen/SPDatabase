@@ -17,7 +17,7 @@ BEGIN
     id_number := id_number+1;
 
     IF pool=0 THEN
-        FOR pool_number in (SELECT NUMER_OBIEKTU FROM BASEN)
+        FOR pool_number in (SELECT NUMER_OBIEKTU FROM BASENY)
         LOOP
             auxiliary := 1;
             FOR i in 1..7
@@ -47,10 +47,10 @@ BEGIN
                         WHERE rownum = 1;
                     END IF;
     
-                    INSERT INTO PRACOWNIK
+                    INSERT INTO PRACOWNICY
                     VALUES (id_number, first_name, last_name, 0, i, pool_number.NUMER_OBIEKTU);
     
-                    INSERT INTO OSOBA
+                    INSERT INTO OSOBY
                     VALUES (id_number, null, null, id_number);
     
                     INSERT INTO DANE_DO_LOGOWANIA
@@ -90,10 +90,10 @@ BEGIN
                     WHERE rownum = 1;
                 END IF;
     
-                INSERT INTO PRACOWNIK
+                INSERT INTO PRACOWNICY
                 VALUES (id_number, first_name, last_name, 0, i, pool);
     
-                INSERT INTO OSOBA
+                INSERT INTO OSOBY
                 VALUES (id_number, null, null, id_number);
     
                 INSERT INTO DANE_DO_LOGOWANIA

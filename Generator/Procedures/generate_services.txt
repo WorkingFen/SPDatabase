@@ -7,7 +7,7 @@ price NUMBER;
 is_offered NUMBER;
 BEGIN
 
-	SELECT COUNT(*) into number_of_pools FROM BASEN;
+	SELECT COUNT(*) into number_of_pools FROM BASENY;
 	service_id := 1;
 	ogolna_id := 1;
 	lokalna_id := 1;
@@ -17,10 +17,10 @@ BEGIN
 	
 	    price := dbms_random.value(85,95);
 		
-		INSERT INTO LOKALNA
+		INSERT INTO LOKALNE
 		VALUES (lokalna_id);
 		
-		INSERT INTO USLUGA
+		INSERT INTO USLUGI
 		VALUES (service_id, 'karnet', price, counter, NULL, lokalna_id);
 		
 		service_id := service_id + 1;
@@ -33,10 +33,10 @@ BEGIN
 	
 	    price := dbms_random.value(6,15);
 		
-		INSERT INTO LOKALNA
+		INSERT INTO LOKALNE
 		VALUES (lokalna_id);
 		
-		INSERT INTO USLUGA
+		INSERT INTO USLUGI
 		VALUES (service_id, 'bilet normalny', price, counter, NULL, lokalna_id);
 		
 		service_id := service_id + 1;
@@ -49,10 +49,10 @@ BEGIN
 	
 	    price := dbms_random.value(4,10);
 		
-		INSERT INTO LOKALNA
+		INSERT INTO LOKALNE
 		VALUES (lokalna_id);
 		
-		INSERT INTO USLUGA
+		INSERT INTO USLUGI
 		VALUES (service_id, 'bilet ulgowy', price, counter, NULL, lokalna_id);
 		
 		service_id := service_id + 1;
@@ -69,10 +69,10 @@ BEGIN
 		
 			price := dbms_random.value(60,120);
 			
-			INSERT INTO LOKALNA
+			INSERT INTO LOKALNE
 			VALUES (lokalna_id);
 		
-			INSERT INTO USLUGA
+			INSERT INTO USLUGI
 			VALUES (service_id, 'masaż', price, counter, NULL, lokalna_id);
 		
 			service_id := service_id + 1;
@@ -91,10 +91,10 @@ BEGIN
 		
 			price := dbms_random.value(15,30);
 			
-			INSERT INTO LOKALNA
+			INSERT INTO LOKALNE
 			VALUES (lokalna_id);
 		
-			INSERT INTO USLUGA
+			INSERT INTO USLUGI
 			VALUES (service_id, 'sauna', price, counter, NULL, lokalna_id);
 		
 			service_id := service_id + 1;
@@ -113,10 +113,10 @@ BEGIN
 		
 			price := dbms_random.value(10,20);
 				
-			INSERT INTO LOKALNA
+			INSERT INTO LOKALNE
 			VALUES (lokalna_id);	
 			
-			INSERT INTO USLUGA
+			INSERT INTO USLUGI
 			VALUES (service_id, 'termy', price, counter, NULL, lokalna_id);
 			
 			service_id := service_id + 1;
@@ -131,10 +131,10 @@ BEGIN
 	
 	    price := dbms_random.value(15,30);
 		
-		INSERT INTO LOKALNA
+		INSERT INTO LOKALNE
 		VALUES (lokalna_id);
 		
-		INSERT INTO USLUGA
+		INSERT INTO USLUGI
 		VALUES (service_id, 'aerobik', price, counter, NULL, lokalna_id);
 		
 		service_id := service_id + 1;
@@ -147,10 +147,10 @@ BEGIN
 	
 	    price := dbms_random.value(50,100);
 		
-		INSERT INTO OGOLNA
+		INSERT INTO OGOLNE
 		VALUES (ogolna_id);
 		
-		INSERT INTO USLUGA
+		INSERT INTO USLUGI
 		VALUES (service_id, 'rezerwacja toru', price, counter, ogolna_id, NULL);
 		
 		service_id := service_id + 1;
@@ -163,10 +163,10 @@ BEGIN
 	
 	    price := dbms_random.value(30,60);
 		
-		INSERT INTO OGOLNA
+		INSERT INTO OGOLNE
 		VALUES (ogolna_id);
 		
-		INSERT INTO USLUGA
+		INSERT INTO USLUGI
 		VALUES (service_id, 'lekcja pływania', price, counter, ogolna_id, NULL);
 
 		service_id := service_id + 1;
@@ -183,10 +183,10 @@ BEGIN
 		
 			price := dbms_random.value(30,40);
 			
-			INSERT INTO LOKALNA
+			INSERT INTO LOKALNE
 			VALUES (lokalna_id);
 		
-			INSERT INTO USLUGA
+			INSERT INTO USLUGI
 			VALUES (service_id, 'squash', price, counter, NULL, lokalna_id);
 			
 			service_id := service_id + 1;
