@@ -18,8 +18,6 @@ CREATE TABLE dane_do_logowania (
     id                            INTEGER NOT NULL,
     login                         VARCHAR2(4000) NOT NULL,
     haslo                         VARCHAR2(4000) NOT NULL,
-    numer_identyfikacyjny_a       INTEGER,
-    numer_identyfikacyjny_w       INTEGER,
     osoba_numer_identyfikacyjny   INTEGER NOT NULL
 );
 
@@ -56,8 +54,7 @@ CREATE TABLE lekcja_plywania (
     numer_ratownika           INTEGER NOT NULL,
     liczba_zapisanych_osob    INTEGER NOT NULL,
     klient_numer_klienta      INTEGER NOT NULL,
-    ogolna_numer_uslugi       INTEGER NOT NULL,
-    liczba_zapisanych_osob2   INTEGER NOT NULL
+    ogolna_numer_uslugi       INTEGER NOT NULL
 );
 
 ALTER TABLE lekcja_plywania ADD CONSTRAINT lekcja_plywania_pk PRIMARY KEY ( numer_lekcji );
