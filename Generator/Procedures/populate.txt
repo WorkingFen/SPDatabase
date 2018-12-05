@@ -1,0 +1,6 @@
+BEGIN
+generate_pools(5);
+generate_posts;
+generate_owner(0);
+generate_auditor;
+END;
