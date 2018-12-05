@@ -3,8 +3,10 @@ pool_name VARCHAR2(4000);
 number_of_tracks NUMBER;
 town VARCHAR2(4000);
 street VARCHAR2(4000);
+first_number NUMBER;
 BEGIN
-    FOR counter IN 1..number_of_pools
+    SELECT COUNT(*) into first_number FROM BASEN;
+    FOR counter IN 1+first_number..number_of_pools+first_number
     LOOP
         SELECT NAZWA into pool_name FROM
         ( SELECT NAZWA FROM GENERATOR_POOL_NAMES ORDER BY dbms_random.value )
