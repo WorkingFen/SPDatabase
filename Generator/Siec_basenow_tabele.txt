@@ -1,6 +1,5 @@
 CREATE TABLE audytor (
-    numer_identyfikacyjny   INTEGER NOT NULL,
-    id                      INTEGER NOT NULL
+    numer_identyfikacyjny   INTEGER NOT NULL
 );
 
 ALTER TABLE audytor ADD CONSTRAINT audytor_pk PRIMARY KEY ( numer_identyfikacyjny );
@@ -143,7 +142,6 @@ ALTER TABLE transakcja ADD CONSTRAINT transakcja_pk PRIMARY KEY ( numer_transakc
 
 CREATE TABLE wlasciciel (
     numer_identyfikacyjny   INTEGER NOT NULL,
-    id                      INTEGER NOT NULL,
     imie                    VARCHAR2(4000) NOT NULL,
     nazwisko                VARCHAR2(4000) NOT NULL
 );
