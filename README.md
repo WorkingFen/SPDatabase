@@ -19,7 +19,20 @@ Brak instalacji, bo nie ma czego
       (ORACLE_HOME = wasza ścieżka do Software location)
     )
 7. Po zapisaniu, stworzyć new connection (login:system password: z pkt.3 SID: orcl -> jeśli nie ustawiono innego podczas instalacji)
- 
+
+### Utworzenie tabel dla sieci basenów w bazie danych
+1. Przekopiować zawartość z pliku Siec_basenow_tabele z katalogu Generator do worksheeta w sql developerze.
+2. Kliknąć "Run script"
+
+### Utworzenie tabel do generatora w bazie danych
+1. Przekopiować zawartość z plików z katalogu Generator/Generator_tables_scripts do worksheeta w sql developerze.
+2. Kliknąć "Run script"
+
+### Generacja danych
+1. Przekopiować zawartość z plików (o nazwach zaczynających się od "generate") z katalogu Generator/Procedures do worksheeta w sql developerze.
+2. Kliknąć "Run script"
+#### W ten sposób zostały dodane procedury pozwalające wygenerować dane. Można ich używać oddzielnie lub wywołać je wszystkie przy pomocy pliku "populate.txt", gdzie parametry procedur zostały wpisane "na sztywno" (można je zmieniać).
+
 ## Technologie
 Technologie, które wykorzystujemy/będziemy wykorzystywać do projektu:
 - Oracle Database 
