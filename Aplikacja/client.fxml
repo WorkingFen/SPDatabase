@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane fx:id="borderPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.ClientController">
+   <top>
+      <HBox prefHeight="21.0" prefWidth="600.0" BorderPane.alignment="CENTER">
+         <children>
+            <ToggleButton mnemonicParsing="false" onAction="#changeToPathReservation" text="Rezerwacja toru">
+               <toggleGroup>
+                  <ToggleGroup fx:id="ToggleGroup1" />
+               </toggleGroup>
+            </ToggleButton>
+            <ToggleButton fx:id="buttonLesson" mnemonicParsing="false" onAction="#changeToLessonReservation" text="Zamówienie lekcji" toggleGroup="$ToggleGroup1" />
+            <Button alignment="CENTER_RIGHT" contentDisplay="RIGHT" mnemonicParsing="false" onAction="#changeScreenButtonPushed" prefHeight="25.0" prefWidth="64.0" text="Wyloguj">
+               <HBox.margin>
+                  <Insets right="100.0" />
+               </HBox.margin>
+            </Button>
+         </children>
+      </HBox>
+   </top>
+</BorderPane>

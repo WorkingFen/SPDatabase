@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<TableView prefHeight="200.0" prefWidth="315.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+    <columns>
+        <TableColumn prefWidth="104.0" text="Obiekt" />
+        <TableColumn prefWidth="103.0" text="Koszty" />
+        <TableColumn prefWidth="107.0" text="Przychód" />
+    </columns>
+</TableView>
