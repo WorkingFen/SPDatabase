@@ -1,10 +1,10 @@
 create or replace PROCEDURE generate_services AS
-number_of_pools NUMBER;
-service_id NUMBER;
-ogolna_id NUMBER;
-lokalna_id NUMBER;
-price NUMBER;
-is_offered NUMBER;
+number_of_pools NUMBER(2);
+service_id NUMBER(3);
+ogolna_id NUMBER(3);
+lokalna_id NUMBER(3);
+price NUMBER(3);
+is_offered NUMBER(3);
 BEGIN
 
 	SELECT COUNT(*) into number_of_pools FROM BASENY;
@@ -15,7 +15,7 @@ BEGIN
 	FOR counter IN 1..number_of_pools
 	LOOP
 	
-	    price := dbms_random.value(85,95);
+	    price := dbms_random.value(85,95.49);
 		
 		INSERT INTO LOKALNE
 		VALUES (lokalna_id);
@@ -31,7 +31,7 @@ BEGIN
 	FOR counter IN 1..number_of_pools
 	LOOP
 	
-	    price := dbms_random.value(6,15);
+	    price := dbms_random.value(6,15.49);
 		
 		INSERT INTO LOKALNE
 		VALUES (lokalna_id);
@@ -47,7 +47,7 @@ BEGIN
 	FOR counter IN 1..number_of_pools
 	LOOP
 	
-	    price := dbms_random.value(4,10);
+	    price := dbms_random.value(4,10.49);
 		
 		INSERT INTO LOKALNE
 		VALUES (lokalna_id);
@@ -63,11 +63,11 @@ BEGIN
 	FOR counter IN 1..number_of_pools
 	LOOP
 		
-		is_offered := dbms_random.value(0,999);
+		is_offered := dbms_random.value(0,999.49);
 		
 		IF is_offered>=500 THEN
 		
-			price := dbms_random.value(60,120);
+			price := dbms_random.value(60,120.49);
 			
 			INSERT INTO LOKALNE
 			VALUES (lokalna_id);
@@ -85,11 +85,11 @@ BEGIN
 	FOR counter IN 1..number_of_pools
 	LOOP
 		
-		is_offered := dbms_random.value(0,999);
+		is_offered := dbms_random.value(0,999.49);
 		
 		IF is_offered>=500 THEN
 		
-			price := dbms_random.value(15,30);
+			price := dbms_random.value(15,30.49);
 			
 			INSERT INTO LOKALNE
 			VALUES (lokalna_id);
@@ -107,11 +107,11 @@ BEGIN
 	FOR counter IN 1..number_of_pools
 	LOOP
 		
-		is_offered := dbms_random.value(0,999);
+		is_offered := dbms_random.value(0,999.49);
 		
 		IF is_offered>=500 THEN
 		
-			price := dbms_random.value(10,20);
+			price := dbms_random.value(10,20.49);
 				
 			INSERT INTO LOKALNE
 			VALUES (lokalna_id);	
@@ -129,7 +129,7 @@ BEGIN
 	FOR counter IN 1..number_of_pools
 	LOOP
 	
-	    price := dbms_random.value(15,30);
+	    price := dbms_random.value(15,30.49);
 		
 		INSERT INTO LOKALNE
 		VALUES (lokalna_id);
@@ -145,7 +145,7 @@ BEGIN
 	FOR counter IN 1..number_of_pools
 	LOOP
 	
-	    price := dbms_random.value(50,100);
+	    price := dbms_random.value(50,100.49);
 		
 		INSERT INTO OGOLNE
 		VALUES (ogolna_id);
@@ -161,7 +161,7 @@ BEGIN
 	FOR counter IN 1..number_of_pools
 	LOOP
 	
-	    price := dbms_random.value(30,60);
+	    price := dbms_random.value(30,60.49);
 		
 		INSERT INTO OGOLNE
 		VALUES (ogolna_id);
@@ -177,11 +177,11 @@ BEGIN
 	FOR counter IN 1..number_of_pools
 	LOOP
 		
-		is_offered := dbms_random.value(0,999);
+		is_offered := dbms_random.value(0,999.49);
 		
 		IF is_offered>=500 THEN
 		
-			price := dbms_random.value(30,40);
+			price := dbms_random.value(30,40.49);
 			
 			INSERT INTO LOKALNE
 			VALUES (lokalna_id);

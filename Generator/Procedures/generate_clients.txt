@@ -3,14 +3,14 @@ first_name VARCHAR2(4000);
 last_name VARCHAR2(4000);
 phone_number NUMBER(9);
 email_address VARCHAR2(4000);
-sex NUMBER;
+sex NUMBER(3);
 first_char VARCHAR2(2);
-condition NUMBER;
+condition NUMBER(6);
 BEGIN
     FOR counter IN 1..number_of_clients
     LOOP
 
-		sex := dbms_random.value(0,999);
+		sex := dbms_random.value(0,999.49);
 		IF sex>=500 THEN
 			SELECT IMIE into first_name FROM
 			( SELECT IMIE FROM GENERATOR_MEN_NAMES ORDER BY dbms_random.value )
@@ -29,7 +29,7 @@ BEGIN
 			WHERE rownum = 1;
 		END IF;
 
-		phone_number := dbms_random.value(500000000,889999999);
+		phone_number := dbms_random.value(500000000,889999999.49);
 		first_char := SUBSTR(first_name, 1, 1);
         
         SELECT COUNT(*) INTO condition FROM KLIENCI WHERE SUBSTR(first_name, 1, 1) = SUBSTR(imie, 1, 1) AND last_name = nazwisko;

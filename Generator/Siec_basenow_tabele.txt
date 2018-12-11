@@ -49,8 +49,7 @@ ALTER TABLE koszyki ADD CONSTRAINT koszyki_pk PRIMARY KEY ( uslugi_numer_uslugi,
 
 CREATE TABLE lekcje_plywania (
     numer_lekcji             INTEGER NOT NULL,
-    data                     DATE NOT NULL,
-    godzina                  DATE NOT NULL,
+    data_i_godzina           DATE NOT NULL,
     numer_ratownika          INTEGER NOT NULL,
     ogolne_numer_uslugi      INTEGER NOT NULL,
     liczba_zapisanych_osob   INTEGER NOT NULL
@@ -111,8 +110,7 @@ ALTER TABLE przeglady ADD CONSTRAINT przeglady_pk PRIMARY KEY ( numer_przegladu 
 
 CREATE TABLE rezerwacje_toru (
     numer_rezerwacji        INTEGER NOT NULL,
-    data                    DATE NOT NULL,
-    godzina                 DATE NOT NULL,
+    data_i_godzina          DATE NOT NULL,
     numer_toru              INTEGER NOT NULL,
     status                  CHAR(1) NOT NULL,
     klienci_numer_klienta   INTEGER NOT NULL,
