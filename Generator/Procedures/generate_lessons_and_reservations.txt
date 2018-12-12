@@ -1,15 +1,17 @@
-create or replace PROCEDURE generate_lessons_and_reservations (lessons_in_general NUMBER, reservations_per_person NUMBER, years_back NUMBER) AS
+create or replace PROCEDURE generate_lessons_and_reservations (lessons_in_general NUMBER, reservations_in_general NUMBER, years_back NUMBER) AS
 
 client_id NUMBER(6);
 condition NUMBER(3);
 condition2 NUMBER(6);
-condition3 NUMBER(1);
+condition3 NUMBER(3);
 date_of_service DATE;
+date_of_service_temp DATE;
 earliest_date DATE;
 lesson_id NUMBER(9);
 lifeguard_id NUMBER(4);
 number_of_clients NUMBER(6);
 number_of_enrolled NUMBER(1);
+number_of_lifeguards NUMBER(2);
 number_of_pools NUMBER(2);
 number_of_tracks NUMBER(1);
 ogolna_id NUMBER(3);
@@ -57,116 +59,134 @@ BEGIN
             start_date := earliest_date;
 
 		END IF;
-        
-        condition := dbms_random.value(0,999.49);
-		
-		IF condition<950 THEN
-		
-			date_of_service := TRUNC(SYSDATE - DBMS_RANDOM.value(0,30*MONTHS_BETWEEN(SYSDATE, start_date)));
-            rand_hour := dbms_random.value(7,21.49);
-            date_of_service := date_of_service + rand_hour/24;
-            
-        ELSE
-        
-            date_of_service := TRUNC(SYSDATE + DBMS_RANDOM.value(0,15));
-            rand_hour := dbms_random.value(7,21.49);
-            date_of_service := date_of_service + rand_hour/24;
-        
-		END IF;
+
+		SELECT COUNT(*) INTO number_of_lifeguards FROM pracownicy_stanowiska
+		WHERE Baseny_Numer_obiektu = pool_id AND Nazwa = 'ratownik';
 
 		SELECT Numer_identyfikacyjny INTO lifeguard_id FROM pracownicy_stanowiska
 		WHERE Baseny_Numer_obiektu = pool_id AND Nazwa = 'ratownik' AND rownum = 1
-        ORDER BY dbms_random.value;
+        ORDER BY Numer_identyfikacyjny;
 
-		SELECT COUNT(*) INTO condition2 FROM LEKCJE_PLYWANIA WHERE Ogolne_Numer_uslugi = ogolna_id AND Data_i_godzina = date_of_service AND Numer_ratownika = lifeguard_id;
+		lifeguard_id := lifeguard_id + dbms_random.value(0,number_of_lifeguards+0.49);
 
-        WHILE condition2=1 
+		condition := dbms_random.value(0,999.49);
+
+		IF condition<950 THEN
+
+			date_of_service_temp := TRUNC(SYSDATE - DBMS_RANDOM.value(0,30*MONTHS_BETWEEN(SYSDATE, start_date)));
+
+		ELSE
+
+			date_of_service_temp := TRUNC(SYSDATE + DBMS_RANDOM.value(0,8));
+
+		END IF;
+
+		SELECT COUNT(*) INTO condition2 FROM LEKCJE_PLYWANIA WHERE Ogolne_numer_uslugi = ogolna_id AND Data_i_godzina >= date_of_service_temp
+        AND Data_i_godzina < date_of_service_temp+1 AND Numer_ratownika = lifeguard_id;
+        
+        SELECT COUNT(*) INTO condition3 FROM LEKCJE_PLYWANIA WHERE Ogolne_numer_uslugi = ogolna_id AND Data_i_godzina >= date_of_service_temp
+        AND Data_i_godzina < date_of_service_temp+1 AND Numer_ratownika != lifeguard_id;
+
+		WHILE (condition2>3 OR condition3>0)
 		LOOP
 
-            IF condition<950 THEN
-		
-                date_of_service := TRUNC(SYSDATE - DBMS_RANDOM.value(0,30*MONTHS_BETWEEN(SYSDATE, start_date)));
-                rand_hour := dbms_random.value(7,21.49);
-                date_of_service := date_of_service + rand_hour/24;
-            
-            ELSE
+			IF condition<950 THEN
+
+				date_of_service_temp := TRUNC(SYSDATE - DBMS_RANDOM.value(0,30*MONTHS_BETWEEN(SYSDATE, start_date)));
+
+			ELSE
+
+				date_of_service_temp := TRUNC(SYSDATE + DBMS_RANDOM.value(0,8));
+
+			END IF;
+
+			SELECT COUNT(*) INTO condition2 FROM LEKCJE_PLYWANIA WHERE Ogolne_numer_uslugi = ogolna_id AND Data_i_godzina >= date_of_service_temp
+            AND Data_i_godzina < date_of_service_temp+1 AND Numer_ratownika = lifeguard_id;
         
-                date_of_service := TRUNC(SYSDATE + DBMS_RANDOM.value(0,15));
-                rand_hour := dbms_random.value(7,21.49);
-                date_of_service := date_of_service + rand_hour/24;
-        
-            END IF;
-
-			SELECT Numer_identyfikacyjny INTO lifeguard_id FROM pracownicy_stanowiska
-            WHERE Baseny_Numer_obiektu = pool_id AND Nazwa = 'ratownik' AND rownum = 1
-            ORDER BY dbms_random.value;
-
-			SELECT COUNT(*) INTO condition2 FROM LEKCJE_PLYWANIA WHERE Ogolne_Numer_uslugi = ogolna_id AND Data_i_godzina = date_of_service AND Numer_ratownika = lifeguard_id;
-
-        END LOOP;
-        
-        IF condition<950 THEN
-		
-            transaction_date := TRUNC(date_of_service -  DBMS_RANDOM.value(0,15));
-            
-        ELSE
-        
-            transaction_date := TRUNC(date_of_service -  15);
-        
-        END IF;
-
-		number_of_enrolled := dbms_random.value(1,6.49);
-
-		INSERT INTO LEKCJE_PLYWANIA
-		VALUES (lesson_id, date_of_service, lifeguard_id, ogolna_id, number_of_enrolled);
-
-		FOR counter2 IN 1..number_of_enrolled
-		LOOP
-
-			client_id := dbms_random.value(1, number_of_clients+0.49);
-
-			SELECT COUNT(*) INTO condition FROM uczestnicy_lekcje 
-			WHERE Data_i_godzina = date_of_service AND Klienci_Numer_klienta = client_id;
-
-			SELECT COUNT(*) INTO condition2 FROM uczestnicy_uslugi
-			WHERE Klienci_Numer_klienta = client_id AND Baseny_Numer_obiektu != pool_id;
-
-			WHILE (condition=1 OR condition2=1)
-			LOOP
-
-				client_id := dbms_random.value(1, number_of_clients+0.49);
-
-				SELECT COUNT(*) INTO condition FROM uczestnicy_lekcje 
-                WHERE Data_i_godzina = date_of_service AND Klienci_Numer_klienta = client_id;
-
-				SELECT COUNT(*) INTO condition2 FROM uczestnicy_uslugi
-                WHERE Klienci_Numer_klienta = client_id AND Baseny_Numer_obiektu != pool_id;
-
-			END LOOP;
-
-			INSERT INTO UCZESTNICY_LEKCJI
-			VALUES(client_id, lesson_id);
-
-			INSERT INTO TRANSAKCJE
-			VALUES(transaction_id, transaction_date);
-
-			INSERT INTO KOSZYKI
-			VALUES(transaction_id, service_id, 1);
-
-			transaction_id := transaction_id + 1;
+            SELECT COUNT(*) INTO condition3 FROM LEKCJE_PLYWANIA WHERE Ogolne_numer_uslugi = ogolna_id AND Data_i_godzina >= date_of_service_temp
+            AND Data_i_godzina < date_of_service_temp+1 AND Numer_ratownika != lifeguard_id;
 
 		END LOOP;
 
-		lesson_id := lesson_id + 1;
+		IF condition<950 THEN
 
-	END LOOP;
+			transaction_date := TRUNC(date_of_service_temp -  DBMS_RANDOM.value(0,8));
+
+		ELSE
+
+			transaction_date := TRUNC(date_of_service_temp -  8);
+
+		END IF;
+
+        rand_hour := dbms_random.value(7,21.49);
+        date_of_service := date_of_service_temp + rand_hour/24;
+
+    	SELECT COUNT(*) INTO condition FROM LEKCJE_PLYWANIA WHERE Ogolne_numer_uslugi = ogolna_id AND Data_i_godzina = date_of_service;
+
+    	WHILE condition=1 
+    	LOOP
+
+            rand_hour := dbms_random.value(7,21.49);
+            date_of_service := date_of_service_temp + rand_hour/24;
+
+            SELECT COUNT(*) INTO condition FROM LEKCJE_PLYWANIA WHERE Ogolne_numer_uslugi = ogolna_id AND Data_i_godzina = date_of_service;
+
+        END LOOP;
+
+    	number_of_enrolled := dbms_random.value(1,6.49);
+
+        INSERT INTO LEKCJE_PLYWANIA
+        VALUES (lesson_id, date_of_service, lifeguard_id, ogolna_id, number_of_enrolled);
+
+        FOR counter2 IN 1..number_of_enrolled
+        LOOP
+
+        	client_id := dbms_random.value(1, number_of_clients+0.49);
+
+    		SELECT COUNT(*) INTO condition FROM uczestnicy_lekcje 
+			WHERE Data_i_godzina = date_of_service AND Klienci_Numer_klienta = client_id;
+
+    		SELECT COUNT(*) INTO condition2 FROM uczestnicy_uslugi
+        	WHERE Klienci_Numer_klienta = client_id AND Baseny_Numer_obiektu != pool_id;
+
+        	WHILE (condition=1 OR condition2>0)
+        	LOOP
+
+            	client_id := dbms_random.value(1, number_of_clients+0.49);
+
+        		SELECT COUNT(*) INTO condition FROM uczestnicy_lekcje 
+        		WHERE Data_i_godzina = date_of_service AND Klienci_Numer_klienta = client_id;
+
+    			SELECT COUNT(*) INTO condition2 FROM uczestnicy_uslugi
+    			WHERE Klienci_Numer_klienta = client_id AND Baseny_Numer_obiektu != pool_id;
+
+        	END LOOP;
+
+            INSERT INTO UCZESTNICY_LEKCJI
+        	VALUES(client_id, lesson_id);
+
+            INSERT INTO TRANSAKCJE
+            VALUES(transaction_id, transaction_date);
+
+            INSERT INTO KOSZYKI
+            VALUES(transaction_id, service_id, 1);
+
+            transaction_id := transaction_id + 1;
+
+        END LOOP;
+
+        lesson_id := lesson_id + 1;
+
+    END LOOP;
 
 
 
-	FOR counter1 IN 1..number_of_clients
+	FOR counter1 IN 1..reservations_in_general
 	LOOP
 
-		SELECT COUNT(*) INTO condition FROM UCZESTNICY_LEKCJI WHERE Klienci_Numer_klienta = counter1;
+        client_id := dbms_random.value(1, number_of_clients+0.49);
+
+		SELECT COUNT(*) INTO condition FROM UCZESTNICY_LEKCJI WHERE Klienci_Numer_klienta = client_id;
 
 		IF condition=0 THEN
 
@@ -175,7 +195,7 @@ BEGIN
 		ELSE 
 
 			SELECT Baseny_Numer_obiektu INTO pool_id FROM uczestnicy_uslugi
-			WHERE Klienci_Numer_klienta = counter1 AND rownum = 1;
+			WHERE Klienci_Numer_klienta = client_id AND rownum = 1;
 
 		END IF;
 
@@ -199,25 +219,47 @@ BEGIN
 
         SELECT Liczba_torow_plywackich INTO number_of_tracks FROM BASENY WHERE Numer_obiektu = pool_id;
 
-        FOR counter2 IN 1..reservations_per_person
+        condition := dbms_random.value(0,999.49);
+
+        IF condition<950 THEN
+
+            date_of_service := TRUNC(SYSDATE - DBMS_RANDOM.value(0,30*MONTHS_BETWEEN(SYSDATE, start_date)));
+            rand_hour := dbms_random.value(7,21.49);
+            date_of_service := date_of_service + rand_hour/24;
+
+        ELSE
+
+            date_of_service := TRUNC(SYSDATE + DBMS_RANDOM.value(0,8));
+            rand_hour := dbms_random.value(7,21.49);
+            date_of_service := date_of_service + rand_hour/24;
+
+        END IF;
+
+        track_number := dbms_random.value(1,number_of_tracks+0.49);
+
+        SELECT COUNT(*) INTO condition2 FROM rezerwacje_uslugi 
+        WHERE Baseny_Numer_obiektu = pool_id AND Data_i_godzina = date_of_service AND Numer_toru = track_number;
+
+        SELECT COUNT(*) INTO condition3 FROM rezerwacje_uslugi 
+        WHERE Baseny_Numer_obiektu = pool_id AND Data_i_godzina = date_of_service AND Klienci_Numer_klienta = client_id;
+
+        WHILE (condition2=1 OR condition3=1)
         LOOP
 
-            condition := dbms_random.value(0,999.49);
-		
             IF condition<950 THEN
-		
+
                 date_of_service := TRUNC(SYSDATE - DBMS_RANDOM.value(0,30*MONTHS_BETWEEN(SYSDATE, start_date)));
                 rand_hour := dbms_random.value(7,21.49);
                 date_of_service := date_of_service + rand_hour/24;
-            
+
             ELSE
-        
-                date_of_service := TRUNC(SYSDATE + DBMS_RANDOM.value(0,15));
+
+                date_of_service := TRUNC(SYSDATE + DBMS_RANDOM.value(0,8));
                 rand_hour := dbms_random.value(7,21.49);
                 date_of_service := date_of_service + rand_hour/24;
-        
+
             END IF;
-            
+
             track_number := dbms_random.value(1,number_of_tracks+0.49);
 
             SELECT COUNT(*) INTO condition2 FROM rezerwacje_uslugi 
@@ -226,76 +268,49 @@ BEGIN
             SELECT COUNT(*) INTO condition3 FROM rezerwacje_uslugi 
             WHERE Baseny_Numer_obiektu = pool_id AND Data_i_godzina = date_of_service AND Klienci_Numer_klienta = counter1;
 
-            WHILE (condition2=1 OR condition3=1)
-            LOOP
+        END LOOP;
 
-                IF condition<950 THEN
-		
-                    date_of_service := TRUNC(SYSDATE - DBMS_RANDOM.value(0,30*MONTHS_BETWEEN(SYSDATE, start_date)));
-                    rand_hour := dbms_random.value(7,21.49);
-                date_of_service := date_of_service + rand_hour/24;
-            
-                ELSE
-        
-                    date_of_service := TRUNC(SYSDATE + DBMS_RANDOM.value(0,15));
-                    rand_hour := dbms_random.value(7,21.49);
-                date_of_service := date_of_service + rand_hour/24;
-        
-                END IF;
-                
-                track_number := dbms_random.value(1,number_of_tracks+0.49);
+        IF condition<950 THEN
 
-                SELECT COUNT(*) INTO condition2 FROM rezerwacje_uslugi 
-				WHERE Baseny_Numer_obiektu = pool_id AND Data_i_godzina = date_of_service AND Numer_toru = track_number;
+            status := dbms_random.value(0,999.49);
 
-				SELECT COUNT(*) INTO condition3 FROM rezerwacje_uslugi 
-				WHERE Baseny_Numer_obiektu = pool_id AND Data_i_godzina = date_of_service AND Klienci_Numer_klienta = counter1;
+            IF status<900 THEN
 
-            END LOOP;
-            
-            IF condition<950 THEN
-		
-                status := dbms_random.value(0,999.49);
+                status := 1;
 
-                IF status<900 THEN
+                INSERT INTO REZERWACJE_TORU
+                VALUES(reservation_id, date_of_service, track_number, status, client_id, ogolna_id);
 
-                    status := 1;
+                transaction_date := date_of_service;
 
-                    INSERT INTO REZERWACJE_TORU
-                    VALUES(reservation_id, date_of_service, track_number, status, counter1, ogolna_id);
+                INSERT INTO TRANSAKCJE
+                VALUES(transaction_id, transaction_date);
 
-                    transaction_date := TRUNC(date_of_service -  DBMS_RANDOM.value(0,15));
+                INSERT INTO KOSZYKI
+                VALUES(transaction_id, service_id, 1);
 
-                    INSERT INTO TRANSAKCJE
-                    VALUES(transaction_id, transaction_date);
+                transaction_id := transaction_id + 1;
 
-                    INSERT INTO KOSZYKI
-                    VALUES(transaction_id, service_id, 1);
-
-                    transaction_id := transaction_id + 1;
-
-                ELSE
-
-                    status := 0;
-
-                    INSERT INTO REZERWACJE_TORU
-                    VALUES(reservation_id, date_of_service, track_number, status, counter1, ogolna_id);
-
-                END IF;
-            
             ELSE
-        
+
                 status := 0;
 
                 INSERT INTO REZERWACJE_TORU
-                VALUES(reservation_id, date_of_service, track_number, status, counter1, ogolna_id);
-        
+                VALUES(reservation_id, date_of_service, track_number, status, client_id, ogolna_id);
+
             END IF;
 
-            reservation_id := reservation_id + 1;
+        ELSE
 
-        END LOOP;
+            status := 0;
 
-	END LOOP;
+            INSERT INTO REZERWACJE_TORU
+            VALUES(reservation_id, date_of_service, track_number, status, client_id, ogolna_id);
+
+        END IF;
+
+        reservation_id := reservation_id + 1;
+
+     END LOOP;
 
 END;
