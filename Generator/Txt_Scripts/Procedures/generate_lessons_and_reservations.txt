@@ -87,8 +87,10 @@ BEGIN
         SELECT COUNT(*) INTO condition3 FROM LEKCJE_PLYWANIA WHERE Ogolne_numer_uslugi = ogolna_id AND Data_i_godzina >= date_of_service_temp
         AND Data_i_godzina < date_of_service_temp+1 AND Numer_ratownika != lifeguard_id;
 
-		WHILE (condition2>3 OR condition3>0)
+		WHILE (condition2=3 OR condition3>0)
 		LOOP
+		
+			condition := dbms_random.value(0,999.49);
 
 			IF condition<950 THEN
 
@@ -245,6 +247,8 @@ BEGIN
 
         WHILE (condition2=1 OR condition3=1)
         LOOP
+		
+			condition := dbms_random.value(0,999.49);
 
             IF condition<950 THEN
 
