@@ -31,7 +31,7 @@ Brak instalacji, bo nie ma czego
 ### Generacja danych
 1. Przekopiować zawartość z plików (o nazwach zaczynających się od "generate") z katalogu Generator/Procedures do worksheeta w sql developerze.
 2. Kliknąć "Run script"
-#### W ten sposób zostały dodane procedury pozwalające wygenerować dane. Można ich używać oddzielnie lub wywołać je wszystkie przy pomocy pliku "populate.txt", gdzie parametry procedur zostały wpisane "na sztywno" (można je zmieniać).
+**W ten sposób zostały dodane procedury pozwalające wygenerować dane. Można ich używać oddzielnie lub wywołać je wszystkie przy pomocy pliku "populate.txt", gdzie parametry procedur zostały wpisane "na sztywno" (można je zmieniać).**
 
 ### Usuwanie bazy danych
 Ze względu na to, że usuwanie bazy danych Oracle wiąże się z ogromnymi kosztami nałożonymi na psychikę użytkownika (Jako, że wbudowany skrypt usuwania bazy danych bardziej szkodzi, aniżeli pomaga), kierujemy do bardzo pomocnej strony [o usuwaniu bazy](http://www.rebellionrider.com/oracle-database-12c-tutorial/how-to-uninstall-oracle-database-12c-rebellionrider.htm#.XBOlpVxKiUl)
