@@ -31,6 +31,7 @@ Brak instalacji, bo nie ma czego
 ### Generacja danych
 1. Przekopiować zawartość z plików (o nazwach zaczynających się od "generate") z katalogu Generator/Procedures do worksheeta w sql developerze.
 2. Kliknąć "Run script"
+
 **W ten sposób zostały dodane procedury pozwalające wygenerować dane. Można ich używać oddzielnie lub wywołać je wszystkie przy pomocy pliku "populate.txt", gdzie parametry procedur zostały wpisane "na sztywno" (można je zmieniać).**
 
 ### Usuwanie bazy danych
