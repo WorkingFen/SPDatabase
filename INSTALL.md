@@ -36,6 +36,10 @@
 2. Powiązać plik z aktualnie użytkowaną bazą
 3. Kliknąć "Run script"
 
+## Generacja widoków
+1. Otworzyć skrypt [Views](https://github.com/WorkingFen/BDProject/blob/master/Generator/SQL_Scripts/Tables/Views.sql) w sql developerze.
+2. Powiązać plik z aktualnie użytkowaną bazą
+3. Kliknąć "Run script"
 
 ## Utworzenie tabel do generatora w bazie danych
 1. Otworzyć skrypty z katalogu [Generators](https://github.com/WorkingFen/BDProject/tree/master/Generator/SQL_Scripts/Generators) w sql developerze.
