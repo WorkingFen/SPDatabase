@@ -1,0 +1,47 @@
+drop table generator_hashes cascade constraints;
+drop table generator_logins cascade constraints;
+drop table generator_men_last cascade constraints;
+drop table generator_men_names cascade constraints;
+drop table generator_men_posts cascade constraints;
+drop table generator_passwords cascade constraints;
+drop table generator_pool_names cascade constraints;
+drop table generator_services cascade constraints;
+drop table generator_streets cascade constraints;
+drop table generator_towns cascade constraints;
+drop table generator_women_last cascade constraints;
+drop table generator_women_names cascade constraints;
+drop table generator_women_posts cascade constraints;
+
+drop table audytorzy cascade constraints;
+drop table baseny cascade constraints;
+drop table dane_do_logowania cascade constraints;
+drop table klienci cascade constraints;
+drop table koszyki cascade constraints;
+drop table lekcje_plywania cascade constraints;
+drop table lokalne cascade constraints;
+drop table ogolne cascade constraints;
+drop table osoby cascade constraints;
+drop table pracownicy cascade constraints;
+drop table przeglady cascade constraints;
+drop table rezerwacje_toru cascade constraints;
+drop table stanowiska cascade constraints;
+drop table transakcje cascade constraints;
+drop table uczestnicy_lekcji cascade constraints;
+drop table uslugi cascade constraints;
+drop table wlasciciele cascade constraints;
+
+drop view pracownicy_stanowiska;
+drop view rezerwacje_uslugi;
+drop view uczestnicy_lekcje;
+drop view uczestnicy_uslugi;
+
+drop procedure generate_auditor;
+drop procedure generate_clients;
+drop procedure generate_inspections;
+drop procedure generate_lessons_and_reservations;
+drop procedure generate_owner;
+drop procedure generate_pools;
+drop procedure generate_posts;
+drop procedure generate_services;
+drop procedure generate_transactions;
+drop procedure generate_workers;

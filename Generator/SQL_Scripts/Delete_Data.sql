@@ -1,0 +1,17 @@
+delete from dane_do_logowania;
+delete from osoby;
+delete from audytorzy;
+delete from pracownicy;
+delete from wlasciciele;
+delete from stanowiska;
+delete from przeglady;
+delete from koszyki;
+delete from uslugi;
+delete from baseny;
+delete from lokalne;
+delete from transakcje;
+delete from uczestnicy_lekcji;
+delete from lekcje_plywania;
+delete from rezerwacje_toru;
+delete from klienci;
+delete from ogolne;
