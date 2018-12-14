@@ -11,7 +11,7 @@ delete from baseny;
 delete from lokalne;
 delete from transakcje;
 delete from uczestnicy_lekcji;
-delete from klienci;
 delete from lekcje_plywania;
 delete from rezerwacje_toru;
+delete from klienci;
 delete from ogolne;
