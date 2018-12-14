@@ -1,9 +1,15 @@
+----========================================================================================================================----
+----===----------------------------------------------Tworzenie tabel-----------------------------------------------------===----
+----========================================================================================================================----
+
+-----------------------------------------------------Tworzenie tabel------------------------------------------------------------
 CREATE TABLE audytorzy (
     numer_identyfikacyjny   INTEGER NOT NULL
 );
 
 ALTER TABLE audytorzy ADD CONSTRAINT audytorzy_pk PRIMARY KEY ( numer_identyfikacyjny );
 
+----------------------------------------------------------Baseny----------------------------------------------------------------
 CREATE TABLE baseny (
     numer_obiektu             INTEGER NOT NULL,
     nazwa_obiektu             VARCHAR2(4000) NOT NULL,
@@ -14,6 +20,7 @@ CREATE TABLE baseny (
 
 ALTER TABLE baseny ADD CONSTRAINT baseny_pk PRIMARY KEY ( numer_obiektu );
 
+-----------------------------------------------------Dane do logowania----------------------------------------------------------
 CREATE TABLE dane_do_logowania (
     id                            INTEGER NOT NULL,
     login                         VARCHAR2(4000) NOT NULL,
@@ -28,6 +35,7 @@ CREATE UNIQUE INDEX dane_do_logowania__idx ON
 
 ALTER TABLE dane_do_logowania ADD CONSTRAINT dane_do_logowania_pk PRIMARY KEY ( id );
 
+----------------------------------------------------------Klienci---------------------------------------------------------------
 CREATE TABLE klienci (
     numer_klienta    INTEGER NOT NULL,
     imie             VARCHAR2(4000) NOT NULL,
@@ -38,6 +46,7 @@ CREATE TABLE klienci (
 
 ALTER TABLE klienci ADD CONSTRAINT klienci_pk PRIMARY KEY ( numer_klienta );
 
+----------------------------------------------------------Koszyki---------------------------------------------------------------
 CREATE TABLE koszyki (
     transakcje_numer_transakcji   INTEGER NOT NULL,
     uslugi_numer_uslugi           INTEGER NOT NULL,
@@ -47,6 +56,7 @@ CREATE TABLE koszyki (
 ALTER TABLE koszyki ADD CONSTRAINT koszyki_pk PRIMARY KEY ( uslugi_numer_uslugi,
                                                             transakcje_numer_transakcji );
 
+------------------------------------------------------Lekce plywania------------------------------------------------------------
 CREATE TABLE lekcje_plywania (
     numer_lekcji             INTEGER NOT NULL,
     data_i_godzina           DATE NOT NULL,
@@ -57,18 +67,21 @@ CREATE TABLE lekcje_plywania (
 
 ALTER TABLE lekcje_plywania ADD CONSTRAINT lekcje_plywania_pk PRIMARY KEY ( numer_lekcji );
 
+---------------------------------------------------------Lokalne----------------------------------------------------------------
 CREATE TABLE lokalne (
     numer_uslugi   INTEGER NOT NULL
 );
 
 ALTER TABLE lokalne ADD CONSTRAINT lokalne_pk PRIMARY KEY ( numer_uslugi );
 
+---------------------------------------------------------Ogolne-----------------------------------------------------------------
 CREATE TABLE ogolne (
     numer_uslugi   INTEGER NOT NULL
 );
 
 ALTER TABLE ogolne ADD CONSTRAINT ogolne_pk PRIMARY KEY ( numer_uslugi );
 
+---------------------------------------------------------Osoby------------------------------------------------------------------
 CREATE TABLE osoby (
     numer_identyfikacyjny   INTEGER NOT NULL,
     audytorzy_numer_id      INTEGER,
@@ -89,6 +102,7 @@ ALTER TABLE osoby
 
 ALTER TABLE osoby ADD CONSTRAINT osoby_pk PRIMARY KEY ( numer_identyfikacyjny );
 
+------------------------------------------------------Pracownicy----------------------------------------------------------------
 CREATE TABLE pracownicy (
     numer_identyfikacyjny         INTEGER NOT NULL,
     imie                          VARCHAR2(4000) NOT NULL,
@@ -100,6 +114,7 @@ CREATE TABLE pracownicy (
 
 ALTER TABLE pracownicy ADD CONSTRAINT pracownicy_pk PRIMARY KEY ( numer_identyfikacyjny );
 
+------------------------------------------------------Przeglady-----------------------------------------------------------------
 CREATE TABLE przeglady (
     numer_przegladu        INTEGER NOT NULL,
     data                   DATE NOT NULL,
@@ -108,6 +123,7 @@ CREATE TABLE przeglady (
 
 ALTER TABLE przeglady ADD CONSTRAINT przeglady_pk PRIMARY KEY ( numer_przegladu );
 
+---------------------------------------------------Rezerwacje toru--------------------------------------------------------------
 CREATE TABLE rezerwacje_toru (
     numer_rezerwacji        INTEGER NOT NULL,
     data_i_godzina          DATE NOT NULL,
@@ -119,6 +135,7 @@ CREATE TABLE rezerwacje_toru (
 
 ALTER TABLE rezerwacje_toru ADD CONSTRAINT rezerwacje_toru_pk PRIMARY KEY ( numer_rezerwacji );
 
+------------------------------------------------------Stanowiska----------------------------------------------------------------
 CREATE TABLE stanowiska (
     numer_stanowiska   INTEGER NOT NULL,
     nazwa              VARCHAR2(4000) NOT NULL,
@@ -127,6 +144,7 @@ CREATE TABLE stanowiska (
 
 ALTER TABLE stanowiska ADD CONSTRAINT stanowiska_pk PRIMARY KEY ( numer_stanowiska );
 
+------------------------------------------------------Transakcje----------------------------------------------------------------
 CREATE TABLE transakcje (
     numer_transakcji   INTEGER NOT NULL,
     data               DATE NOT NULL
@@ -134,6 +152,7 @@ CREATE TABLE transakcje (
 
 ALTER TABLE transakcje ADD CONSTRAINT transakcje_pk PRIMARY KEY ( numer_transakcji );
 
+---------------------------------------------------Uczestnicy lekcji------------------------------------------------------------
 CREATE TABLE uczestnicy_lekcji (
     klienci_numer_klienta          INTEGER NOT NULL,
     lekcje_plywania_numer_lekcji   INTEGER NOT NULL
@@ -142,6 +161,7 @@ CREATE TABLE uczestnicy_lekcji (
 ALTER TABLE uczestnicy_lekcji ADD CONSTRAINT uczestnicy_lekcji_pk PRIMARY KEY ( klienci_numer_klienta,
                                                                                 lekcje_plywania_numer_lekcji );
 
+---------------------------------------------------------Uslugi-----------------------------------------------------------------
 CREATE TABLE uslugi (
     numer_uslugi           INTEGER NOT NULL,
     nazwa_uslugi           VARCHAR2(4000) NOT NULL,
@@ -159,6 +179,7 @@ ALTER TABLE uslugi
 
 ALTER TABLE uslugi ADD CONSTRAINT uslugi_pk PRIMARY KEY ( numer_uslugi );
 
+------------------------------------------------------Wlasciciele---------------------------------------------------------------
 CREATE TABLE wlasciciele (
     numer_identyfikacyjny   INTEGER NOT NULL,
     imie                    VARCHAR2(4000) NOT NULL,
@@ -167,6 +188,9 @@ CREATE TABLE wlasciciele (
 
 ALTER TABLE wlasciciele ADD CONSTRAINT wlasciciele_pk PRIMARY KEY ( numer_identyfikacyjny );
 
+----========================================================================================================================----
+----===-----------------------------------------Dodawanie kluczy obcych--------------------------------------------------===----
+----========================================================================================================================----
 ALTER TABLE dane_do_logowania
     ADD CONSTRAINT dane_do_logowania_osoby_fk FOREIGN KEY ( osoby_numer_identyfikacyjny )
         REFERENCES osoby ( numer_identyfikacyjny );
