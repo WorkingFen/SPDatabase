@@ -1,8 +1,8 @@
 # Baza Danych basenów - Instalacja
 
 ## Postawienie serwera lokalnie
-1. Ściągnąć Oracle SQL Developer (18.3)
-2. Ściągnąć Oracle 12c Database
+1. Ściągnąć [Oracle SQL Developer (18.3)](https://www.oracle.com/technetwork/developer-tools/sql-developer/downloads/index.html)
+2. Ściągnąć [Oracle 12c Database](https://www.oracle.com/technetwork/database/enterprise-edition/downloads/index.html)
 3. Zapisać sobie gdzieć ustawione podczas instalacji hasło
 4. Zapamiętać co jest wpisane w Global database name oraz Pluggable database name 
 5. Zapamiętać ścieżkę do "Software location"
