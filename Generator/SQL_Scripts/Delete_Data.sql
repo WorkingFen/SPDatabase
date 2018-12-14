@@ -1,17 +1,20 @@
-delete from dane_do_logowania;
-delete from osoby;
-delete from audytorzy;
-delete from pracownicy;
-delete from wlasciciele;
-delete from stanowiska;
-delete from przeglady;
-delete from koszyki;
-delete from uslugi;
-delete from baseny;
-delete from lokalne;
-delete from transakcje;
-delete from uczestnicy_lekcji;
-delete from lekcje_plywania;
-delete from rezerwacje_toru;
-delete from klienci;
-delete from ogolne;
+----========================================================================================================================----
+----===------------------------------------------Usuwanie danych z tabel-------------------------------------------------===----
+----========================================================================================================================----
+DELETE FROM Dane_do_logowania;
+DELETE FROM Osoby;
+DELETE FROM Audytorzy;
+DELETE FROM Pracownicy;
+DELETE FROM Wlasciciele;
+DELETE FROM Stanowiska;
+DELETE FROM Przeglady;
+DELETE FROM Koszyki;
+DELETE FROM Uslugi;
+DELETE FROM Baseny;
+DELETE FROM Lokalne;
+DELETE FROM Transakcje;
+DELETE FROM Uczestnicy_lekcji;
+DELETE FROM Lekcje_plywania;
+DELETE FROM Rezerwacje_toru;
+DELETE FROM Klienci;
+DELETE FROM Ogolne;
