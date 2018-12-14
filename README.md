@@ -21,21 +21,21 @@ Brak instalacji, bo nie ma czego
 7. Po zapisaniu, stworzyć new connection (login:system password: z pkt.3 SID: orcl -> jeśli nie ustawiono innego podczas instalacji)
 
 ### Utworzenie tabel dla sieci basenów w bazie danych
-1. Przekopiować zawartość z pliku Siec_basenow_tabele z katalogu Generator do worksheeta w sql developerze.
+1. Otworzyć skrypt [Tables](https://github.com/WorkingFen/BDProject/blob/master/Generator/SQL_Scripts/Tables/Tables.sql) w sql developerze.
 2. Kliknąć "Run script"
 
 ### Utworzenie tabel do generatora w bazie danych
-1. Przekopiować zawartość z plików z katalogu Generator/Generator_tables_scripts do worksheeta w sql developerze.
-2. Kliknąć "Run script"
+1. Otworzyć skrypty z katalogu [Generators](https://github.com/WorkingFen/BDProject/tree/master/Generator/SQL_Scripts/Generators) w sql developerze.
+2. Kliknąć dla każdego skryptu "Run script"
 
 ### Generacja danych
-1. Przekopiować zawartość z plików (o nazwach zaczynających się od "generate") z katalogu Generator/Procedures do worksheeta w sql developerze.
-2. Kliknąć "Run script"
+1. Otworzyć skrypty z katalogu [Procedures](https://github.com/WorkingFen/BDProject/tree/master/Generator/SQL_Scripts/Procedures) w sql developerze.
+2. Kliknąć dla każdego skryptu "Run script"
 
-**W ten sposób zostały dodane procedury pozwalające wygenerować dane. Można ich używać oddzielnie lub wywołać je wszystkie przy pomocy pliku "populate.txt", gdzie parametry procedur zostały wpisane "na sztywno" (można je zmieniać).**
+**W ten sposób zostały dodane procedury pozwalające wygenerować dane. Można ich używać oddzielnie lub wywołać je wszystkie przy pomocy pliku [Populate](https://github.com/WorkingFen/BDProject/blob/master/Generator/SQL_Scripts/Populate.sql), gdzie parametry procedur zostały wpisane "na sztywno" (można je zmieniać).**
 
 ### Usuwanie bazy danych
-Ze względu na to, że usuwanie bazy danych Oracle wiąże się z ogromnymi kosztami nałożonymi na psychikę użytkownika (Jako, że wbudowany skrypt usuwania bazy danych bardziej szkodzi, aniżeli pomaga), kierujemy do bardzo pomocnej strony [o usuwaniu bazy](http://www.rebellionrider.com/oracle-database-12c-tutorial/how-to-uninstall-oracle-database-12c-rebellionrider.htm#.XBOlpVxKiUl)
+Ze względu na to, że usuwanie bazy danych Oracle wiąże się z ogromnymi kosztami nałożonymi na psychikę użytkownika (Jako, że wbudowany skrypt usuwania bazy danych bardziej szkodzi, aniżeli pomaga), kierujemy do bardzo pomocnej strony [usuwania bazy](http://www.rebellionrider.com/oracle-database-12c-tutorial/how-to-uninstall-oracle-database-12c-rebellionrider.htm#.XBOlpVxKiUl)
 
 ## Technologie
 Technologie, które wykorzystujemy/będziemy wykorzystywać do projektu:
