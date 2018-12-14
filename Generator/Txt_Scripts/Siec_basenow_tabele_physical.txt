@@ -103,28 +103,28 @@ LOGGING
         data_i_godzina
     )
     ( PARTITION partition1
-        VALUES LESS THAN ( 17 / 03 / 31 )
+        VALUES LESS THAN (TO_DATE('2017/03/31', 'YYYY/MM/DD'))
     TABLESPACE "2017_1",
     PARTITION partition2
-        VALUES LESS THAN ( 17 / 06 / 30 )
+        VALUES LESS THAN (TO_DATE('2017/06/30', 'YYYY/MM/DD'))
     TABLESPACE "2017_2",
     PARTITION partition3
-        VALUES LESS THAN ( 17 / 09 / 30 )
+        VALUES LESS THAN (TO_DATE('2017/09/30', 'YYYY/MM/DD'))
     TABLESPACE "2017_3",
     PARTITION partition4
-        VALUES LESS THAN ( 17 / 12 / 31 )
+        VALUES LESS THAN (TO_DATE('2017/12/31', 'YYYY/MM/DD'))
     TABLESPACE "2017_4",
     PARTITION partition5
-        VALUES LESS THAN ( 18 / 03 / 31 )
+        VALUES LESS THAN (TO_DATE('2018/03/31', 'YYYY/MM/DD'))
     TABLESPACE "2018_1",
     PARTITION partition6
-        VALUES LESS THAN ( 18 / 06 / 30 )
+        VALUES LESS THAN (TO_DATE('2018/06/30', 'YYYY/MM/DD'))
     TABLESPACE "2018_2",
     PARTITION partition7
-        VALUES LESS THAN ( 18 / 09 / 30 )
+        VALUES LESS THAN (TO_DATE('2018/09/30', 'YYYY/MM/DD'))
     TABLESPACE "2018_3",
     PARTITION partition8
-        VALUES LESS THAN ( 18 / 12 / 31 )
+        VALUES LESS THAN (TO_DATE('2018/12/31', 'YYYY/MM/DD'))
     TABLESPACE "2018_4" );
 
 ALTER TABLE lekcje_plywania ADD CONSTRAINT lekcje_plywania_pk PRIMARY KEY ( numer_lekcji );
@@ -198,28 +198,28 @@ LOGGING
         data_i_godzina
     )
     ( PARTITION partition1
-        VALUES LESS THAN ( 17 / 03 / 31 )
+        VALUES LESS THAN (TO_DATE('2017/03/31', 'YYYY/MM/DD'))
     TABLESPACE "2017_1",
     PARTITION partition2
-        VALUES LESS THAN ( 17 / 06 / 30 )
+        VALUES LESS THAN (TO_DATE('2017/06/30', 'YYYY/MM/DD'))
     TABLESPACE "2017_2",
     PARTITION partition3
-        VALUES LESS THAN ( 17 / 09 / 30 )
+        VALUES LESS THAN (TO_DATE('2017/09/30', 'YYYY/MM/DD'))
     TABLESPACE "2017_3",
     PARTITION partition4
-        VALUES LESS THAN ( 17 / 12 / 31 )
+        VALUES LESS THAN (TO_DATE('2017/12/31', 'YYYY/MM/DD'))
     TABLESPACE "2017_4",
     PARTITION partition5
-        VALUES LESS THAN ( 18 / 03 / 31 )
+        VALUES LESS THAN (TO_DATE('2018/03/31', 'YYYY/MM/DD'))
     TABLESPACE "2018_1",
     PARTITION partition6
-        VALUES LESS THAN ( 18 / 06 / 30 )
+        VALUES LESS THAN (TO_DATE('2018/06/30', 'YYYY/MM/DD'))
     TABLESPACE "2018_2",
     PARTITION partition7
-        VALUES LESS THAN ( 18 / 09 / 30 )
+        VALUES LESS THAN (TO_DATE('2018/09/30', 'YYYY/MM/DD'))
     TABLESPACE "2018_3",
     PARTITION partition8
-        VALUES LESS THAN ( 18 / 12 / 31 )
+        VALUES LESS THAN (TO_DATE('2018/12/31', 'YYYY/MM/DD'))
     TABLESPACE "2018_4" );
 
 ALTER TABLE rezerwacje_toru ADD CONSTRAINT rezerwacje_toru_pk PRIMARY KEY ( numer_rezerwacji );
@@ -242,28 +242,28 @@ LOGGING
         data
     )
     ( PARTITION partition1
-        VALUES LESS THAN ( 17 / 03 / 31 )
-    TABLESPACE "2017_1" LOGGING,
+        VALUES LESS THAN (TO_DATE('2017/03/31', 'YYYY/MM/DD'))
+    TABLESPACE "2017_1",
     PARTITION partition2
-        VALUES LESS THAN ( 17 / 06 / 30 )
+        VALUES LESS THAN (TO_DATE('2017/06/30', 'YYYY/MM/DD'))
     TABLESPACE "2017_2",
     PARTITION partition3
-        VALUES LESS THAN ( 17 / 09 / 30 )
+        VALUES LESS THAN (TO_DATE('2017/09/30', 'YYYY/MM/DD'))
     TABLESPACE "2017_3",
     PARTITION partition4
-        VALUES LESS THAN ( 17 / 12 / 31 )
+        VALUES LESS THAN (TO_DATE('2017/12/31', 'YYYY/MM/DD'))
     TABLESPACE "2017_4",
     PARTITION partition5
-        VALUES LESS THAN ( 18 / 03 / 31 )
+        VALUES LESS THAN (TO_DATE('2018/03/31', 'YYYY/MM/DD'))
     TABLESPACE "2018_1",
     PARTITION partition6
-        VALUES LESS THAN ( 18 / 06 / 30 )
+        VALUES LESS THAN (TO_DATE('2018/06/30', 'YYYY/MM/DD'))
     TABLESPACE "2018_2",
     PARTITION partition7
-        VALUES LESS THAN ( 18 / 09 / 30 )
+        VALUES LESS THAN (TO_DATE('2018/09/30', 'YYYY/MM/DD'))
     TABLESPACE "2018_3",
     PARTITION partition8
-        VALUES LESS THAN ( 18 / 12 / 31 )
+        VALUES LESS THAN (TO_DATE('2018/12/31', 'YYYY/MM/DD'))
     TABLESPACE "2018_4" );
 
 ALTER TABLE transakcje ADD CONSTRAINT transakcje_pk PRIMARY KEY ( numer_transakcji );
