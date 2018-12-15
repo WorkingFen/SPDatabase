@@ -1,3 +1,6 @@
+----========================================================================================================================----
+----===------------------------------------------Dodawanie widoków bazy--------------------------------------------------===----
+----========================================================================================================================----
 CREATE OR REPLACE VIEW uczestnicy_uslugi AS SELECT Klienci_Numer_klienta, Baseny_Numer_obiektu FROM UCZESTNICY_LEKCJI 
 INNER JOIN LEKCJE_PLYWANIA ON UCZESTNICY_LEKCJI.Lekcje_plywania_Numer_lekcji = LEKCJE_PLYWANIA.Numer_lekcji
 INNER JOIN OGOLNE ON LEKCJE_PLYWANIA.Ogolne_Numer_uslugi = OGOLNE.Numer_uslugi

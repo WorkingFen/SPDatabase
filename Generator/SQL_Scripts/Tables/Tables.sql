@@ -56,7 +56,7 @@ CREATE TABLE koszyki (
 ALTER TABLE koszyki ADD CONSTRAINT koszyki_pk PRIMARY KEY ( uslugi_numer_uslugi,
                                                             transakcje_numer_transakcji );
 
-------------------------------------------------------Lekce plywania------------------------------------------------------------
+-----------------------------------------------------Lekcje plywania------------------------------------------------------------
 CREATE TABLE lekcje_plywania (
     numer_lekcji             INTEGER NOT NULL,
     data_i_godzina           DATE NOT NULL,
