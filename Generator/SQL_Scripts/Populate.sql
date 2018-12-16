@@ -33,5 +33,5 @@ LOOP
 	
 END LOOP;
 
-generate_lessons_and_reservations(500, 1000, 2);
+generate_lessons_reservations(500, 1000, 2);
 END;

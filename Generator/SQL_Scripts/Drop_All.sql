@@ -22,17 +22,17 @@ DROP TABLE Wlasciciele CASCADE CONSTRAINTS PURGE;
 ----========================================================================================================================----
 ----===-----------------------------------------Usuwanie tabel generatorów-----------------------------------------------===----
 ----========================================================================================================================----
-DROP TABLE Generator_hashes CASCADE CONSTRAINTS PURGE;
 DROP TABLE Generator_logins CASCADE CONSTRAINTS PURGE;
-DROP TABLE Generator_men_last CASCADE CONSTRAINTS PURGE;
+DROP TABLE Generator_men_lasts CASCADE CONSTRAINTS PURGE;
 DROP TABLE Generator_men_names CASCADE CONSTRAINTS PURGE;
 DROP TABLE Generator_men_posts CASCADE CONSTRAINTS PURGE;
+DROP TABLE Generator_password_hashes CASCADE CONSTRAINTS PURGE;
 DROP TABLE Generator_passwords CASCADE CONSTRAINTS PURGE;
 DROP TABLE Generator_pool_names CASCADE CONSTRAINTS PURGE;
 DROP TABLE Generator_services CASCADE CONSTRAINTS PURGE;
 DROP TABLE Generator_streets CASCADE CONSTRAINTS PURGE;
 DROP TABLE Generator_towns CASCADE CONSTRAINTS PURGE;
-DROP TABLE Generator_women_last CASCADE CONSTRAINTS PURGE;
+DROP TABLE Generator_women_lasts CASCADE CONSTRAINTS PURGE;
 DROP TABLE Generator_women_names CASCADE CONSTRAINTS PURGE;
 DROP TABLE Generator_women_posts CASCADE CONSTRAINTS PURGE;
 
@@ -57,7 +57,7 @@ DROP VIEW Uczestnicy_uslugi;
 DROP PROCEDURE Generate_auditor;
 DROP PROCEDURE Generate_clients;
 DROP PROCEDURE Generate_inspections;
-DROP PROCEDURE Generate_lessons_and_reservations;
+DROP PROCEDURE Generate_lessons_reservations;
 DROP PROCEDURE Generate_owner;
 DROP PROCEDURE Generate_pools;
 DROP PROCEDURE Generate_posts;

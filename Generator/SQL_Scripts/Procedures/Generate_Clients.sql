@@ -17,7 +17,7 @@ BEGIN
 			WHERE rownum = 1;
 
 			SELECT NAZWISKO into last_name FROM
-			( SELECT NAZWISKO FROM GENERATOR_MEN_LAST ORDER BY dbms_random.value )
+			( SELECT NAZWISKO FROM GENERATOR_MEN_LASTS ORDER BY dbms_random.value )
 			WHERE rownum = 1;
 		ELSE
 			SELECT IMIE into first_name FROM
@@ -25,7 +25,7 @@ BEGIN
 			WHERE rownum = 1;
 
 			SELECT NAZWISKO into last_name FROM
-			( SELECT NAZWISKO FROM GENERATOR_WOMEN_LAST ORDER BY dbms_random.value )
+			( SELECT NAZWISKO FROM GENERATOR_WOMEN_LASTS ORDER BY dbms_random.value )
 			WHERE rownum = 1;
 		END IF;
 
