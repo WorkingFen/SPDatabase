@@ -17,7 +17,7 @@
 ## Tworzenie nowego usera dla Oracle 12c i SQL Developera
 1. Zalogować się do bazy danych jako system
 2. Wpisać komendę
-   > ALTER SESSION SET CONTAINTER=pdborcl;  --Gdzie pdborcl to Pluggable database name
+   > ALTER SESSION SET CONTAINER=pdborcl;  --Gdzie pdborcl to Pluggable database name
 3. Utworzyć nowego użytkownika i nadać mu przywileje. Odpowiednio:
 
    ```
