@@ -1,6 +1,9 @@
 ----========================================================================================================================----
 ----===-----------------------------------------Tworzenie przestrzeni tabel----------------------------------------------===----
 ----========================================================================================================================----
+CREATE TABLESPACE "BUSINESS" DATAFILE
+    'Business_file.dbf' SIZE 100M AUTOEXTEND ON NEXT 100M MAXSIZE 8G
+LOGGING ONLINE EXTENT MANAGEMENT LOCAL AUTOALLOCATE SEGMENT SPACE MANAGEMENT AUTO;
 
 CREATE TABLESPACE "2017_1" DATAFILE
     '2017_1_file.dbf' SIZE 100M REUSE

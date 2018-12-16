@@ -1,4 +1,4 @@
-create or replace PROCEDURE generate_lessons_and_reservations (lessons_in_general NUMBER, reservations_in_general NUMBER, years_back NUMBER) AS
+create or replace PROCEDURE generate_lessons_reservations (lessons_in_general NUMBER, reservations_in_general NUMBER, years_back NUMBER) AS
 
 client_id NUMBER(6);
 condition NUMBER(3);
