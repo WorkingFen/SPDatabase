@@ -3,6 +3,10 @@ Projekt polega na stworzeniu bazy danych, która ma wspomagać teoretyczną sie�
 
 ## Pierwsze kroki
 Zanim zaczniemy cokolwiek pobierać, to najpierw trzeba wiedzieć co należy zrobić.
+
+**Reminder:** Nigdy nie należy zmieniać ustawień ani plików bazy danych, jak również nie należy zatrzymywać usług powiązanych z bazą danych! Wiąże się to z zablokowaniem dostępu do niej i koniecznością jej usunięcia!
+> Learning the hard way
+
 ### Wymagania wstępne
 - Należy pobrać [Oracle Database 12c Release 2](https://www.oracle.com/technetwork/database/enterprise-edition/downloads/index.html) po uprzednim zaakceptowaniu licencji i jednokrotnym zalogowaniu się na stronę Oracle.
 - Należy pobrać [SQL Developer](https://www.oracle.com/technetwork/developer-tools/sql-developer/downloads/index.html) po uprzednim zaakceptowaniu licencji
