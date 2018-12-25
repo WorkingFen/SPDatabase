@@ -31,23 +31,23 @@
 6. Testujemy połączenie i łączymy się z bazą danych.   
 
 ## Utworzenie tabel dla sieci basenów w bazie danych
-1. Otworzyć skrypt [Physical Tables](https://github.com/WorkingFen/BDProject/blob/master/Generator/SQL_Scripts/Tables/Physical_Tables.sql) w sql developerze.
-   > Gdyby wystąpił błąd z fizyczną bazą, należy otworzyć skrypt [Tables](https://github.com/WorkingFen/BDProject/blob/master/Generator/SQL_Scripts/Tables/Tables.sql)
+1. Otworzyć skrypt [Physical Tables](https://github.com/WorkingFen/BDProject/blob/master/Generator/Tables/Physical_Tables.sql) w sql developerze.
+   > Gdyby wystąpił błąd z fizyczną bazą, należy otworzyć skrypt [Tables](https://github.com/WorkingFen/BDProject/blob/master/Generator/Tables/Tables.sql)
 2. Powiązać plik z aktualnie użytkowaną bazą
 3. Kliknąć "Run script"
 
 ## Generacja widoków
-1. Otworzyć skrypt [Views](https://github.com/WorkingFen/BDProject/blob/master/Generator/SQL_Scripts/Tables/Views.sql) w sql developerze.
+1. Otworzyć skrypt [Views](https://github.com/WorkingFen/BDProject/blob/master/Generator/Tables/Views.sql) w sql developerze.
 2. Powiązać plik z aktualnie użytkowaną bazą
 3. Kliknąć "Run script"
 
 ## Utworzenie tabel do generatora w bazie danych
-1. Otworzyć skrypty z katalogu [Generators](https://github.com/WorkingFen/BDProject/tree/master/Generator/SQL_Scripts/Generators) w sql developerze.
+1. Otworzyć skrypty z katalogu [Generators](https://github.com/WorkingFen/BDProject/tree/master/Generator/Generators) w sql developerze.
 2. Powiązać pliki z aktualnie użytkowaną bazą
 3. Kliknąć dla każdego skryptu "Run script"
 
 ## Generacja danych
-1. Otworzyć skrypty z katalogu [Procedures](https://github.com/WorkingFen/BDProject/tree/master/Generator/SQL_Scripts/Procedures) w sql developerze.
+1. Otworzyć skrypty z katalogu [Procedures](https://github.com/WorkingFen/BDProject/tree/master/Generator/Procedures) w sql developerze.
 2. Powiązać pliki z aktualnie użytkowaną bazą
 3. Kliknąć dla każdego skryptu "Run script"
 
