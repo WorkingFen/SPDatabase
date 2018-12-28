@@ -2,13 +2,21 @@ package sample;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.stage.Stage;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -16,7 +24,18 @@ public class CashierController implements Initializable {
 
 
     @FXML
-    private TableView<cashierClient> clientTable;
+    private TextField fnameField;
+    @FXML
+    private TextField lnameField;
+    @FXML
+    private TextField phoneNumberField;
+    @FXML
+    private TextField emailField;
+
+
+
+    @FXML
+    private TableView<CashierClient> clientTable;
     @FXML
     private TableColumn<Path, String> clientNumber;
     @FXML
@@ -34,7 +53,7 @@ public class CashierController implements Initializable {
 
 
     @FXML
-    private TableView<cashierPath> pathTable;
+    private TableView<CashierPath> pathTable;
     @FXML
     private TableColumn<Path, String> lessonName;
     @FXML
@@ -48,7 +67,7 @@ public class CashierController implements Initializable {
 
 
     @FXML
-    private TableView<cashierLesson> lessonTable;
+    private TableView<CashierLesson> lessonTable;
     @FXML
     private TableColumn<Path, String> pathReservationNumber;
     @FXML
@@ -62,27 +81,27 @@ public class CashierController implements Initializable {
 
 
     // przykładowe wiersze do dodania do tabel
-    private final ObservableList<cashierLesson> lessons =
+    private final ObservableList<CashierLesson> lessons =
             FXCollections.observableArrayList(
-                    new cashierLesson("Banan", "02.02.2020", "25:61", "Srarol"),
-                    new cashierLesson("Banan", "02.02.2020", "25:61", "Srarol"),
-                    new cashierLesson("Banan", "02.02.2020", "25:61", "Srarol"),
-                    new cashierLesson("Banan", "02.02.2020", "25:61", "Srarol")
+                    new CashierLesson("Banan", "02.02.2020", "25:61", "Srarol"),
+                    new CashierLesson("Banan", "02.02.2020", "25:61", "Srarol"),
+                    new CashierLesson("Banan", "02.02.2020", "25:61", "Srarol"),
+                    new CashierLesson("Banan", "02.02.2020", "25:61", "Srarol")
             );
 
-    private final ObservableList<cashierPath> paths =
+    private final ObservableList<CashierPath> paths =
             FXCollections.observableArrayList(
-                    new cashierPath("Banan", "02.02.2020", "25:61", "Srarol"),
-                    new cashierPath("Banan", "02.02.2020", "25:61", "Srarol"),
-                    new cashierPath("Banan", "02.02.2020", "25:61", "Srarol"),
-                    new cashierPath("Banan", "02.02.2020", "25:61", "Srarol")
+                    new CashierPath("Banan", "02.02.2020", "25:61", "Srarol"),
+                    new CashierPath("Banan", "02.02.2020", "25:61", "Srarol"),
+                    new CashierPath("Banan", "02.02.2020", "25:61", "Srarol"),
+                    new CashierPath("Banan", "02.02.2020", "25:61", "Srarol")
             );
-    private final ObservableList<cashierClient> clients =
+    private final ObservableList<CashierClient> clients =
             FXCollections.observableArrayList(
-                    new cashierClient("Banan", "02.02.2020", "25:61", "Srarol", "A", new Button("Edytuj"), new Button("Usuń")),
-                    new cashierClient("Banan", "02.02.2020", "25:61", "Srarol", "A", new Button("Edytuj"), new Button("Usuń")),
-                    new cashierClient("Banan", "02.02.2020", "25:61", "Srarol", "A", new Button("Edytuj"), new Button("Usuń")),
-                    new cashierClient("Banan", "02.02.2020", "25:61", "Srarol", "A", new Button("Edytuj"), new Button("Usuń"))
+                    new CashierClient("Banan", "02.02.2020", "25:61", "Srarol", "A", new Button("Edytuj"), new Button("Usuń")),
+                    new CashierClient("Banan", "02.02.2020", "25:61", "Srarol", "A", new Button("Edytuj"), new Button("Usuń")),
+                    new CashierClient("Banan", "02.02.2020", "25:61", "Srarol", "A", new Button("Edytuj"), new Button("Usuń")),
+                    new CashierClient("Banan", "02.02.2020", "25:61", "Srarol", "A", new Button("Edytuj"), new Button("Usuń"))
             );
 
 
@@ -134,6 +153,31 @@ public class CashierController implements Initializable {
         initializePaths();
         initializeClients();
 
+    }
+
+    public void addClientButtonPushed(ActionEvent event) throws IOException {
+
+        String fnameInput= fnameField.getText();
+        String lnameInput = lnameField.getText();
+        String phoneNumberInput = phoneNumberField.getText();
+        String emailInput = emailField.getText();
+
+
+        CashierClient client = new CashierClient("1337",fnameInput, lnameInput, phoneNumberInput, emailInput,new Button("Edytuj"),new Button("Usuń"));
+
+        clientTable.getItems().add(client);
+
+        //TODO dodanie do BD i jakieś ify
+    }
+
+    public void logOutButtonPushed(ActionEvent event)throws IOException {
+
+        Parent tableViewParent = FXMLLoader.load(getClass().getResource("sample.fxml"));
+        Scene tableViewScene = new Scene(tableViewParent);
+
+        Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
+        window.setScene(tableViewScene);
+        window.show();
     }
 }
 

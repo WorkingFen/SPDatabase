@@ -28,12 +28,11 @@
                         </TableView>
                         <HBox layoutY="300.0" prefHeight="37.0" prefWidth="600.0">
                            <children>
-                              <TextField prefHeight="30.0" prefWidth="89.0" />
-                              <TextField prefHeight="30.0" prefWidth="89.0" />
-                              <TextField prefHeight="30.0" prefWidth="89.0" />
-                              <TextField prefHeight="30.0" prefWidth="89.0" />
-                              <TextField prefHeight="30.0" prefWidth="89.0" />
-                              <Button mnemonicParsing="false" prefHeight="30.0" prefWidth="48.0" text="Dodaj" />
+                              <TextField fx:id="fnameField" prefHeight="30.0" prefWidth="89.0" promptText="Imię" />
+                              <TextField fx:id="lnameField" prefHeight="30.0" prefWidth="89.0" promptText="Nazwisko" />
+                              <TextField fx:id="phoneNumberField" prefHeight="30.0" prefWidth="101.0" promptText="Numer telefonu" />
+                              <TextField fx:id="emailField" prefHeight="30.0" prefWidth="89.0" promptText="Adres e-mail" />
+                              <Button mnemonicParsing="false" onAction="#addClientButtonPushed" prefHeight="30.0" prefWidth="48.0" text="Dodaj" />
                            </children>
                         </HBox>
                      </children>
@@ -69,6 +68,6 @@
       </Tab>
    </tabs>
 </TabPane>
-      <Button layoutY="367.0" mnemonicParsing="false" prefHeight="33.0" prefWidth="100.0" text="Wyloguj się" />
+      <Button layoutY="367.0" mnemonicParsing="false" onAction="#logOutButtonPushed" prefHeight="33.0" prefWidth="100.0" text="Wyloguj się" />
 </children>
 </AnchorPane>

@@ -2,7 +2,7 @@ package sample;
 
 import javafx.scene.control.Button;
 
-public class cashierPath {
+public class CashierPath {
     private String number;
     private String date;
     private String pathNumber;
@@ -11,7 +11,7 @@ public class cashierPath {
 
 
 
-    public cashierPath(String name, String date, String pathNumber, String state) {
+    public CashierPath(String name, String date, String pathNumber, String state) {
         this.number = name;
         this.date = date;
         this.pathNumber = pathNumber;

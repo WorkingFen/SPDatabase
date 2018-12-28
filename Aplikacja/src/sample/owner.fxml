@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.OwnerController">
+   <children>
+      <TabPane layoutY="7.0" prefHeight="370.0" prefWidth="600.0" tabClosingPolicy="UNAVAILABLE">
+         <tabs>
+            <Tab text="Lista pracowników">
+               <content>
+                  <TableView fx:id="lessonTable" prefHeight="200.0" prefWidth="200.0">
+                     <columns>
+                        <TableColumn fx:id="lessonName" prefWidth="142.0" text="Numer identyfikacyjny" />
+                        <TableColumn fx:id="lessonDate" minWidth="0.0" prefWidth="145.0" text="Imię" />
+                        <TableColumn fx:id="lessonEnrolled" prefWidth="162.0" text="Nazwisko" />
+                        <TableColumn fx:id="lessonRescuer" prefWidth="151.0" text="Dodatek do pensji" />
+
+                     </columns>
+                  </TableView>
+               </content>
+            </Tab>
+            <Tab text="Przychody i koszty obiektów">
+               <content>
+                  <TableView fx:id="pathTable" prefHeight="200.0" prefWidth="200.0">
+                     <columns>
+                        <TableColumn fx:id="pathReservationNumber" prefWidth="202.0" text="Obiekt" />
+                        <TableColumn fx:id="pathHours" prefWidth="113.0" text="Przychody" />
+                        <TableColumn fx:id="pathNumber" minWidth="0.0" prefWidth="115.0" text="Koszty" />
+                     </columns>
+                  </TableView>
+               </content>
+            </Tab>
+         </tabs>
+      </TabPane>
+      <Button layoutY="367.0" mnemonicParsing="false" onAction="#logOutButtonPushed" prefHeight="33.0" prefWidth="100.0" text="Wyloguj się" />
+   </children>
+</AnchorPane>

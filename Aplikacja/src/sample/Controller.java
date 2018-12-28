@@ -7,7 +7,6 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
@@ -21,7 +20,7 @@ public class Controller implements Initializable {
     TextField loginInput;
 
     @FXML
-    PasswordField passwordInput;
+    TextField passwordInput;
 
     @Override
     public void initialize(URL url, ResourceBundle rb){
@@ -38,18 +37,26 @@ public class Controller implements Initializable {
         window.show();
     }
 
-
     public void loginButtonPushed(ActionEvent event) throws IOException {
 
         String loginInputText = loginInput.getText();
         String passwordInputText = passwordInput.getText();
 
-        //changeScreen("cashier.fxml", event); // do usunięcia
-        if (loginInputText.equals("klient") && passwordInputText.equals("iksde")){
+        //changeScreen("owner.fxml", event); // do usunięcia
+        if (loginInputText.equals("1") && passwordInputText.equals("")){
             changeScreen("client.fxml", event);
         }
-        else if (loginInputText.equals("kasjer") && passwordInputText.equals("xDDD")){
+        else if (loginInputText.equals("2") && passwordInputText.equals("")){
             changeScreen("cashier.fxml", event);
+        }
+        else if (loginInputText.equals("3") && passwordInputText.equals("")){
+            changeScreen("HR.fxml", event);
+        }
+        else if (loginInputText.equals("4") && passwordInputText.equals("")){
+            changeScreen("owner.fxml", event);
+        }
+        else if (loginInputText.equals("5") && passwordInputText.equals("")){
+            changeScreen("auditor.fxml", event);
         }
         else{
             System.out.println("Zle haslo");
