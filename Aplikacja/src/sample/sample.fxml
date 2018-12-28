@@ -26,9 +26,9 @@
                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                </rowConstraints>
                <children>
-                  <TextField prefHeight="25.0" prefWidth="160.0" promptText="Username" />
-                  <TextField promptText="Password" GridPane.rowIndex="1" />
-                  <Button mnemonicParsing="false" onAction="#changeScreenButtonPushed" prefHeight="25.0" prefWidth="290.0" text="Sign in" GridPane.rowIndex="2" />
+                  <TextField fx:id="loginInput" prefHeight="25.0" prefWidth="160.0" promptText="Username" />
+                  <PasswordField fx:id="passwordInput" promptText="Password" GridPane.rowIndex="1" />
+                  <Button mnemonicParsing="false" onAction="#loginButtonPushed" prefHeight="25.0" prefWidth="290.0" text="Sign in" GridPane.rowIndex="2" />
                </children>
             </GridPane>
          </children>
