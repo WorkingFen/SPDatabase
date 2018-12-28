@@ -8,35 +8,36 @@
 <?import javafx.scene.layout.*?>
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.ClientController">
-   <children>
-      <TabPane prefHeight="400.0" prefWidth="600.0" tabClosingPolicy="UNAVAILABLE">
-        <tabs>
-          <Tab text="Zamówienie lekcji">
-               <content>
-                  <TableView fx:id="lessonTable" prefHeight="200.0" prefWidth="200.0">
-                    <columns>
-                      <TableColumn fx:id="lessonName" prefWidth="75.0" text="Nazwa" />
-                      <TableColumn fx:id="lessonDate" prefWidth="75.0" text="Data" />
-                        <TableColumn fx:id="lessonEnrolled" prefWidth="145.0" text="Liczba zapisanych osób" />
-                        <TableColumn fx:id="lessonRescuer" prefWidth="100.0" text="Prowadzący" />
-                        <TableColumn fx:id="reserveLesson" prefWidth="90.0" text="" />
+    <children>
+        <TabPane prefHeight="370.0" prefWidth="600.0" tabClosingPolicy="UNAVAILABLE">
+            <tabs>
+                <Tab text="Zamówienie lekcji">
+                    <content>
+                        <TableView fx:id="lessonTable" prefHeight="200.0" prefWidth="200.0">
+                            <columns>
+                                <TableColumn fx:id="lessonName" prefWidth="75.0" text="Nazwa" />
+                                <TableColumn fx:id="lessonDate" prefWidth="75.0" text="Data" />
+                                <TableColumn fx:id="lessonEnrolled" prefWidth="145.0" text="Liczba zapisanych osób" />
+                                <TableColumn fx:id="lessonRescuer" prefWidth="100.0" text="Prowadzący" />
+                                <TableColumn fx:id="reserveLesson" prefWidth="90.0" text="" />
 
-                    </columns>
-                  </TableView>
-               </content>
-          </Tab>
-          <Tab text="Rezerwacja toru">
-               <content>
-                  <TableView fx:id="pathTable" prefHeight="200.0" prefWidth="200.0">
-                    <columns>
-                      <TableColumn fx:id="pathNumber" prefWidth="135.0" text="Numer toru" />
-                        <TableColumn fx:id="pathHours" prefWidth="90.0" text="Godzina" />
-                        <TableColumn fx:id="reservePath" prefWidth="90.0" text="" />
-                    </columns>
-                  </TableView>
-               </content>
-          </Tab>
-        </tabs>
-      </TabPane>
-   </children>
+                                  </columns>
+                        </TableView>
+                    </content>
+                </Tab>
+                <Tab text="Rezerwacja toru">
+                    <content>
+                        <TableView fx:id="pathTable" prefHeight="200.0" prefWidth="200.0">
+                            <columns>
+                                <TableColumn fx:id="pathNumber" prefWidth="135.0" text="Numer toru" />
+                                <TableColumn fx:id="pathHours" prefWidth="90.0" text="Godzina" />
+                                <TableColumn fx:id="reservePath" prefWidth="90.0" text="" />
+                            </columns>
+                        </TableView>
+                    </content>
+                </Tab>
+            </tabs>
+        </TabPane>
+      <Button layoutY="370.0" mnemonicParsing="false" onAction="#changeScreenButtonPushed" prefHeight="30.0" prefWidth="100.0" text="Wyloguj się" />
+    </children>
 </AnchorPane>

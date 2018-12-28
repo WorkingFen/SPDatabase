@@ -21,10 +21,8 @@ import java.util.ResourceBundle;
 
 public class ClientController implements Initializable {
 
-    @FXML
-    private AnchorPane anchorPane;
 
-
+    // zmienne potrzebne do dodawania lekcji
     @FXML
     private TableView<Lesson> lessonTable;
     @FXML
@@ -34,6 +32,7 @@ public class ClientController implements Initializable {
     @FXML
     private TableColumn<Path, Button> reservePath;
 
+    // zmienne potrzebne do dodawania torów
     @FXML
     private TableView<Path> pathTable;
     @FXML
@@ -48,7 +47,7 @@ public class ClientController implements Initializable {
     private TableColumn<Path, Button> reserveLesson;
 
 
-
+    // przykładowe wiersze do dodania do tabel
     private final ObservableList<Lesson> lessons =
             FXCollections.observableArrayList(
                     new Lesson("Banan", "02.02.2020", "25:61", "Srarol"),
@@ -65,13 +64,16 @@ public class ClientController implements Initializable {
             );
 
 
-    private void addLessons(){
+    private void initializeLessons(){
+
+        // ustawienie typu kolumn czy coś
         lessonName.setCellValueFactory(new PropertyValueFactory<>("name"));
         lessonDate.setCellValueFactory(new PropertyValueFactory<>("date"));
         lessonEnrolled.setCellValueFactory(new PropertyValueFactory<>("enrolled"));
         lessonRescuer.setCellValueFactory(new PropertyValueFactory<>("rescuer"));
         reserveLesson.setCellValueFactory(new PropertyValueFactory<>("enrollButton"));
 
+        // dodanie wierszy
         lessonTable.getItems().addAll(lessons);
     }
 
@@ -86,12 +88,13 @@ public class ClientController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
 
-        addLessons();
+        initializeLessons();
         initializePaths();
 
     }
 
 
+    // powrót do okna logowania
     public void changeScreenButtonPushed(ActionEvent event) throws IOException {
 
         Parent tableViewParent = FXMLLoader.load(getClass().getResource("sample.fxml"));

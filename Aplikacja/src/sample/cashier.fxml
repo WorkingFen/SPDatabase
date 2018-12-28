@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.CashierController">
+<children>
+<TabPane layoutY="7.0" prefHeight="370.0" prefWidth="600.0" tabClosingPolicy="UNAVAILABLE">
+   <tabs>
+            <Tab text="Klienci">
+               <content>
+                  <AnchorPane prefHeight="400.0" prefWidth="600.0">
+                     <children>
+                        <TableView fx:id="clientTable" prefHeight="300.0" prefWidth="600.0">
+                          <columns>
+                            <TableColumn fx:id="clientNumber" prefWidth="96.0" text="Numer klienta" />
+                            <TableColumn fx:id="clientFName" prefWidth="54.0" text="Imię" />
+                              <TableColumn fx:id="clientLName" prefWidth="75.0" text="Nazwisko" />
+                              <TableColumn fx:id="clientPhone" prefWidth="107.0" text="Numer telefonu" />
+                              <TableColumn fx:id="clientEMail" prefWidth="92.0" text="Adres e-mail" />
+                              <TableColumn fx:id="editClient" prefWidth="75.0" />
+                              <TableColumn fx:id="deleteClient" prefWidth="75.0" />
+                          </columns>
+                        </TableView>
+                        <HBox layoutY="300.0" prefHeight="37.0" prefWidth="600.0">
+                           <children>
+                              <TextField prefHeight="30.0" prefWidth="89.0" />
+                              <TextField prefHeight="30.0" prefWidth="89.0" />
+                              <TextField prefHeight="30.0" prefWidth="89.0" />
+                              <TextField prefHeight="30.0" prefWidth="89.0" />
+                              <TextField prefHeight="30.0" prefWidth="89.0" />
+                              <Button mnemonicParsing="false" prefHeight="30.0" prefWidth="48.0" text="Dodaj" />
+                           </children>
+                        </HBox>
+                     </children>
+                  </AnchorPane>
+               </content>
+            </Tab>
+      <Tab text="Rezerwacje lekcji pływania">
+         <content>
+            <TableView fx:id="lessonTable" prefHeight="200.0" prefWidth="200.0">
+               <columns>
+                  <TableColumn fx:id="lessonName" prefWidth="87.0" text="Numer lekcji" />
+                  <TableColumn fx:id="lessonDate" prefWidth="63.0" text="Data" />
+                  <TableColumn fx:id="lessonEnrolled" prefWidth="145.0" text="Liczba zapisanych osób" />
+                  <TableColumn fx:id="lessonRescuer" prefWidth="100.0" text="Prowadzący" />
+                  <TableColumn fx:id="reserveLesson" prefWidth="90.0" text="" />
+
+                     </columns>
+            </TableView>
+         </content>
+      </Tab>
+      <Tab text="Rezerwacje torów">
+         <content>
+            <TableView fx:id="pathTable" prefHeight="200.0" prefWidth="200.0">
+               <columns>
+                  <TableColumn fx:id="pathReservationNumber" prefWidth="135.0" text="Numer rezerwacji" />
+                  <TableColumn fx:id="pathHours" prefWidth="90.0" text="Data" />
+                   <TableColumn fx:id="pathNumber" prefWidth="75.0" text="Numer toru" />
+                   <TableColumn fx:id="pathState" prefWidth="75.0" text="Status" />
+                  <TableColumn fx:id="reservePath" prefWidth="90.0" text="" />
+               </columns>
+            </TableView>
+         </content>
+      </Tab>
+   </tabs>
+</TabPane>
+      <Button layoutY="367.0" mnemonicParsing="false" prefHeight="33.0" prefWidth="100.0" text="Wyloguj się" />
+</children>
+</AnchorPane>
