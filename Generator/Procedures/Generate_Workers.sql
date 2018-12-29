@@ -6,6 +6,7 @@ auxiliary NUMBER;
 first_name VARCHAR2(4000);
 last_name VARCHAR2(4000);
 id_number NUMBER;
+id_employee NUMBER;
 login VARCHAR2(4000);
 password_hash VARCHAR2(4000);
 
@@ -15,6 +16,9 @@ BEGIN
 
     SELECT COUNT(*) into id_number FROM DANE_DO_LOGOWANIA;
     id_number := id_number+1;
+    
+    SELECT COUNT(*) into id_employee FROM PRACOWNICY;
+    id_employee := id_employee+1;
 
     IF pool=0 THEN
         FOR pool_number in (SELECT NUMER_OBIEKTU FROM BASENY)
@@ -48,15 +52,16 @@ BEGIN
                     END IF;
     
                     INSERT INTO PRACOWNICY
-                    VALUES (id_number, first_name, last_name, 0, i, pool_number.NUMER_OBIEKTU);
+                    VALUES (id_employee, first_name, last_name, 0, i, pool_number.NUMER_OBIEKTU);
     
                     INSERT INTO OSOBY
-                    VALUES (id_number, null, null, id_number);
+                    VALUES (id_number, null, null, id_employee);
     
                     INSERT INTO DANE_DO_LOGOWANIA
                     VALUES (id_number, login, password_hash, id_number);
     
                     id_number := id_number+1;
+                    id_employee := id_employee+1;
                 END LOOP;
             auxiliary := auxiliary+1;
             END LOOP;
@@ -91,15 +96,16 @@ BEGIN
                 END IF;
     
                 INSERT INTO PRACOWNICY
-                VALUES (id_number, first_name, last_name, 0, i, pool);
+                VALUES (id_employee, first_name, last_name, 0, i, pool);
     
                 INSERT INTO OSOBY
-                VALUES (id_number, null, null, id_number);
+                VALUES (id_number, null, null, id_employee);
     
                 INSERT INTO DANE_DO_LOGOWANIA
                 VALUES (id_number, login, password_hash, id_number);
     
                 id_number := id_number+1;
+                id_employee := id_employee+1;
             END LOOP;
         auxiliary := auxiliary+1;
         END LOOP;        

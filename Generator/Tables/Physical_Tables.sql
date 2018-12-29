@@ -37,6 +37,10 @@ CREATE TABLESPACE "2018_4" DATAFILE
     '2018_4_file.dbf' SIZE 100M REUSE
 LOGGING ONLINE EXTENT MANAGEMENT LOCAL AUTOALLOCATE FLASHBACK ON;
 
+CREATE TABLESPACE "2019_1" DATAFILE
+    '2019_1_file.dbf' SIZE 100M REUSE
+LOGGING ONLINE EXTENT MANAGEMENT LOCAL AUTOALLOCATE FLASHBACK ON;
+
 ----========================================================================================================================----
 ----===-----------------------------------------------Tworzenie tabel----------------------------------------------------===----
 ----========================================================================================================================----
@@ -142,7 +146,10 @@ LOGGING   --   --   --   --   --   --   --   --   --   -Partycje  --   --   --  
     TABLESPACE "2018_3",
     PARTITION partition8
         VALUES LESS THAN (TO_DATE('2018/12/31', 'YYYY/MM/DD'))
-    TABLESPACE "2018_4" );
+    TABLESPACE "2018_4",
+    PARTITION partition9
+        VALUES LESS THAN (TO_DATE('2019/03/31', 'YYYY/MM/DD'))
+    TABLESPACE "2019_1" );
 
 ALTER TABLE lekcje_plywania ADD CONSTRAINT lekcje_plywania_pk PRIMARY KEY ( numer_lekcji );
 
@@ -243,7 +250,10 @@ LOGGING   --   --   --   --   --   --   --   --   --   -Partycje  --   --   --  
     TABLESPACE "2018_3",
     PARTITION partition8
         VALUES LESS THAN (TO_DATE('2018/12/31', 'YYYY/MM/DD'))
-    TABLESPACE "2018_4" );
+    TABLESPACE "2018_4",
+    PARTITION partition9
+        VALUES LESS THAN (TO_DATE('2019/03/31', 'YYYY/MM/DD'))
+    TABLESPACE "2019_1" );
 
 ALTER TABLE rezerwacje_toru ADD CONSTRAINT rezerwacje_toru_pk PRIMARY KEY ( numer_rezerwacji );
 
@@ -289,7 +299,10 @@ LOGGING   --   --   --   --   --   --   --   --   --   -Partycje  --   --   --  
     TABLESPACE "2018_3",
     PARTITION partition8
         VALUES LESS THAN (TO_DATE('2018/12/31', 'YYYY/MM/DD'))
-    TABLESPACE "2018_4" );
+    TABLESPACE "2018_4",
+    PARTITION partition9
+        VALUES LESS THAN (TO_DATE('2019/03/31', 'YYYY/MM/DD'))
+    TABLESPACE "2019_1" );
 
 ALTER TABLE transakcje ADD CONSTRAINT transakcje_pk PRIMARY KEY ( numer_transakcji );
 

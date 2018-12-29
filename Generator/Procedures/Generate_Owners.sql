@@ -2,12 +2,16 @@ create or replace PROCEDURE generate_owner (sex NUMBER) AS
 first_name VARCHAR2(4000);
 last_name VARCHAR2(4000);
 id_number NUMBER;
+id_owner NUMBER;
 login VARCHAR2(4000);
 password_hash VARCHAR2(4000);
 BEGIN
 
     SELECT COUNT(*) into id_number FROM DANE_DO_LOGOWANIA;
     id_number := id_number+1;
+    
+    SELECT COUNT(*) into id_owner FROM WLASCICIELE;
+    id_owner := id_owner+1;
     
     SELECT LOGIN into login FROM (SELECT LOGIN, ROWNUM AS RN FROM GENERATOR_LOGINS) WHERE RN = id_number;
     SELECT PASSWORD_HASH into password_hash FROM (SELECT PASSWORD_HASH, ROWNUM AS RN FROM GENERATOR_PASSWORD_HASHES) WHERE RN = id_number;
@@ -31,10 +35,10 @@ BEGIN
     END IF;
     
     INSERT INTO WLASCICIELE
-    VALUES (id_number, first_name, last_name);
+    VALUES (id_owner, first_name, last_name);
     
     INSERT INTO OSOBY
-    VALUES (id_number, null, id_number, null);
+    VALUES (id_number, null, id_owner, null);
     
     INSERT INTO DANE_DO_LOGOWANIA
     VALUES (id_number, login, password_hash, id_number);
