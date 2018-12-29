@@ -20,8 +20,15 @@ Zanim zaczniemy cokolwiek pobierać, to najpierw trzeba wiedzieć co należy zro
 5. [Generatory](https://github.com/WorkingFen/BDProject/blob/master/INSTALL.md#utworzenie-tabel-do-generatora-w-bazie-danych)
 6. [Procedury zaludniania](https://github.com/WorkingFen/BDProject/blob/master/INSTALL.md#generacja-danych)
 
+### Pomoc
+1. [ORA-01033 - rozwiązanie](https://github.com/WorkingFen/BDProject/blob/master/HELP.md#ora-01033)
+
 ### Dezinstalacja
-[Dezinstalacja](https://github.com/WorkingFen/BDProject/blob/master/UNINSTALL.md) bazy danych w zależności od potrzeb
+[Dezinstalacja](https://github.com/WorkingFen/BDProject/blob/master/UNINSTALL.md) bazy danych w zależności od potrzeb:
+1. [Usuwanie danych z tabel](https://github.com/WorkingFen/BDProject/blob/master/UNINSTALL.md#usuwanie-danych-z-tabel)
+2. [Usuwanie tabel](https://github.com/WorkingFen/BDProject/blob/master/UNINSTALL.md#usuwanie-tabel)
+3. [Usuwanie przestrzeni tabel](https://github.com/WorkingFen/BDProject/blob/master/UNINSTALL.md#usuwanie-przestrzeni-tabel)
+4. [Usuwanie bazy danych Oracle 12c](https://github.com/WorkingFen/BDProject/blob/master/UNINSTALL.md#usuwanie-bazy-danych-oracle-12c)
 
 ## Technologie
 Technologie, które wykorzystujemy/będziemy wykorzystywać do projektu:
