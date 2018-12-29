@@ -20,6 +20,8 @@ Zanim zaczniemy cokolwiek pobierać, to najpierw trzeba wiedzieć co należy zro
 5. [Generatory](https://github.com/WorkingFen/BDProject/blob/master/INSTALL.md#utworzenie-tabel-do-generatora-w-bazie-danych)
 6. [Procedury zaludniania](https://github.com/WorkingFen/BDProject/blob/master/INSTALL.md#generacja-danych)
 
+Lub instalacja całej bazy danych przy pomocy [generatora](https://github.com/WorkingFen/BDProject/blob/master/Generator/Generate.sql). Uruchamiamy go, tak jak inne skrypty.
+
 ### Pomoc
 1. [ORA-01033 - rozwiązanie](https://github.com/WorkingFen/BDProject/blob/master/HELP.md#ora-01033)
 

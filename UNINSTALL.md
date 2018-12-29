@@ -1,17 +1,17 @@
 # Baza Danych basenów - Dezinstalacja
 
 ## Usuwanie danych z tabel
-1. Otworzyć skrypt [Delete Data](https://github.com/WorkingFen/BDProject/blob/master/Generator/Delete_Data.sql) w sql developerze.
+1. Otworzyć skrypt [Delete Data](https://github.com/WorkingFen/BDProject/blob/master/Generator/Drops/Delete_Data.sql) w sql developerze.
 2. Powiązać plik z aktualnie użytkowaną bazą
 3. Kliknąć "Run script" lub "Run statemnet" w przypadku usuwania wybranych danych
 
 ## Usuwanie tabel
-1. Otworzyć skrypt [Drop Table](https://github.com/WorkingFen/BDProject/blob/master/Generator/Drop_All.sql) w sql developerze.
+1. Otworzyć skrypt [Drop Table](https://github.com/WorkingFen/BDProject/blob/master/Generator/Drops/Drop_All.sql) w sql developerze.
 2. Powiązać plik z aktualnie użytkowaną bazą
 3. Kliknąć "Run script" lub "Run statemnet" w przypadku usuwania wybranych tabel
 
 ## Usuwanie przestrzeni tabel
-1. Otworzyć skrypt [Drop Tablespace](https://github.com/WorkingFen/BDProject/blob/master/Generator/Drop_Tablespaces.sql) w sql developerze.
+1. Otworzyć skrypt [Drop Tablespace](https://github.com/WorkingFen/BDProject/blob/master/Generator/Drops/Drop_Tablespaces.sql) w sql developerze.
 2. Powiązać plik z aktualnie użytkowaną bazą
 3. Kliknąć "Run script" lub "Run statemnet" w przypadku usuwania wybranych przestrzeni tabel
 4. Usunąć manualnie z katalogu zapisanej bazy _../product/12.1.0/dbhome_nrbazy/database_ pliki odpowiednie dla usuwanych przestrzeni tabel
