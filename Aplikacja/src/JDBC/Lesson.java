@@ -1,5 +1,7 @@
 package JDBC;
 
+import sample.CashierLesson;
+import sample.ClientLesson;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -43,44 +45,73 @@ public class Lesson {
         }
     }
 
-    private Lesson getLesson(int id) throws SQLException {
-        Lesson lesson = new Lesson();
-
-        PreparedStatement stmt = conn.prepareStatement("SELECT Dane_Do_Logowania.Osoby_Numer_Identyfikacyjny FROM Dane_Do_Logowania WHERE Login = ?");
-        stmt.setString(1, login);
+    static public CashierLesson getCashierLesson(Connection conn, String msg, int id) throws SQLException {
+        String name = "PrObLEmO";
+        PreparedStatement stmt = conn.prepareStatement("SELECT lp.Data_i_Godzina, lp.Numer_ratownika, lp.Liczba_zapisanych_osob FROM Lekcje_Plywania lp WHERE Numer_Lekcji = ?");
+        stmt.setInt(1, id);
         ResultSet rSet = stmt.executeQuery();
         if(rSet.next()){
-            int logNum = rSet.getInt(1);
-            PreparedStatement stmt2 = conn.prepareStatement("SELECT RN FROM (SELECT Haslo AS HA, ROWNUM AS RN FROM Generator_Passwords) WHERE HA = ?");
-            stmt2.setString(1, password);
+            String date = rSet.getString(1);
+            int noGuard = rSet.getInt(2);
+            String noAttendees = rSet.getString(3)+"/6";
+            PreparedStatement stmt2 = conn.prepareStatement("SELECT Nazwisko FROM Pracownicy WHERE Numer_Identyfikacyjny = ?");
+            stmt2.setInt(1, noGuard);
             ResultSet rSet2 = stmt2.executeQuery();
             if(rSet2.next()){
-                int passNum = rSet2.getInt(1);
-                if(passNum == logNum){
-                    int source = Employee.checkEmployee(conn, passNum);
-                    if(source != 0){
-                        return source+2;
-                    }
-                    else if(Auditor.checkAuditor(conn, passNum)){
-                        return 1;
-                    }
-                    else if(Owner.checkOwner(conn, passNum)){
-                        return 2;
-                    }
-                    else
-                        return 0;
-                }
+                String surname = rSet2.getString(1);
+                rSet2.close();
+                stmt2.close();
+                rSet.close();
+                stmt.close();
+                return new CashierLesson(name, date, noAttendees, surname, msg);
             }
-            rSet2.close();
-            stmt2.close();
-            rSet.close();
-            stmt.close();
-            return 0;
+            else{
+                rSet2.close();
+                stmt2.close();
+                rSet.close();
+                stmt.close();
+                return new CashierLesson(name, date, noAttendees, "Informacja na basenie", msg);
+            }
         }
         else{
             rSet.close();
             stmt.close();
-            return 0;
+            return null;
+        }
+    }
+
+    static public ClientLesson getClientLesson(Connection conn, String msg, int id) throws SQLException {
+        String name = "PrObLEmO";
+        PreparedStatement stmt = conn.prepareStatement("SELECT lp.Data_i_Godzina, lp.Numer_ratownika, lp.Liczba_zapisanych_osob FROM Lekcje_Plywania lp WHERE Numer_Lekcji = ?");
+        stmt.setInt(1, id);
+        ResultSet rSet = stmt.executeQuery();
+        if(rSet.next()){
+            String date = rSet.getString(1);
+            int noGuard = rSet.getInt(2);
+            String noAttendees = rSet.getString(3)+"/6";
+            PreparedStatement stmt2 = conn.prepareStatement("SELECT Nazwisko FROM Pracownicy WHERE Numer_Identyfikacyjny = ?");
+            stmt2.setInt(1, noGuard);
+            ResultSet rSet2 = stmt2.executeQuery();
+            if(rSet2.next()){
+                String surname = rSet2.getString(1);
+                rSet2.close();
+                stmt2.close();
+                rSet.close();
+                stmt.close();
+                return new ClientLesson(name, date, noAttendees, surname, msg);
+            }
+            else{
+                rSet2.close();
+                stmt2.close();
+                rSet.close();
+                stmt.close();
+                return new ClientLesson(name, date, noAttendees, "Informacja na basenie", msg);
+            }
+        }
+        else{
+            rSet.close();
+            stmt.close();
+            return null;
         }
     }
 }

@@ -1,5 +1,7 @@
 package sample;
 
+import JDBC.Lesson;
+import JDBC.Reservation;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -11,58 +13,87 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ResourceBundle;
 
 public class ClientController implements Initializable {
 
+    // zmienne potrzebne do dodawania torów
+    @FXML
+    private TableView<ClientPath> pathTable;
+    @FXML
+    private TableColumn<ClientPath, String> number;
+    @FXML
+    private TableColumn<ClientPath, String> pathHours;
+    @FXML
+    private TableColumn<ClientPath, String> pathNumber;
+    @FXML
+    private TableColumn<ClientPath, Button> reservePath;
 
     // zmienne potrzebne do dodawania lekcji
     @FXML
-    private TableView<Lesson> lessonTable;
+    private TableView<ClientLesson> lessonTable;
     @FXML
-    private TableColumn<Path, String> pathNumber;
+    private TableColumn<ClientLesson, String> lessonName;
     @FXML
-    private TableColumn<Path, String> pathHours;
+    private TableColumn<ClientLesson, String> lessonDate;
     @FXML
-    private TableColumn<Path, Button> reservePath;
+    private TableColumn<ClientLesson, String> lessonEnrolled;
+    @FXML
+    private TableColumn<ClientLesson, String> lessonRescuer;
+    @FXML
+    private TableColumn<ClientLesson, Button> reserveLesson;
 
-    // zmienne potrzebne do dodawania torów
-    @FXML
-    private TableView<Path> pathTable;
-    @FXML
-    private TableColumn<Path, String> lessonName;
-    @FXML
-    private TableColumn<Path, String> lessonDate;
-    @FXML
-    private TableColumn<Path, String> lessonEnrolled;
-    @FXML
-    private TableColumn<Path, String> lessonRescuer;
-    @FXML
-    private TableColumn<Path, Button> reserveLesson;
+    public ClientController() throws SQLException {
+    }
 
+    private ObservableList<ClientLesson> getLessons(Connection conn) throws SQLException {
+        int noLessons;
+        PreparedStatement stmt = conn.prepareStatement("SELECT COUNT(*) FROM Lekcje_Plywania");
+        ResultSet rSet = stmt.executeQuery();
 
-    // przykładowe wiersze do dodania do tabel
-    private final ObservableList<Lesson> lessons =
-            FXCollections.observableArrayList(
-                    new Lesson("Banan", "02.02.2020", "25:61", "Srarol"),
-                    new Lesson("Banan", "02.02.2020", "25:61", "Srarol"),
-                    new Lesson("Banan", "02.02.2020", "25:61", "Srarol"),
-                    new Lesson("Banan", "02.02.2020", "25:61", "Srarol")
-            );
-    private final ObservableList<Path> paths =
-            FXCollections.observableArrayList(
-                    new Path("Banan", "02.02.2020"),
-                    new Path("Banan", "02.02.2020"),
-                    new Path("Banan", "02.02.2020"),
-                    new Path("Banan", "02.02.2020")
-            );
+        if(rSet.next()) noLessons = rSet.getInt(1);
+        else noLessons = 0;
 
+        rSet.close();
+        stmt.close();
+
+        ObservableList<ClientLesson> list = FXCollections.observableArrayList();
+        for(int i = 0; i < noLessons; i++){
+            list.add(Lesson.getClientLesson(conn, "Zapisz się", i+1));
+        }
+        return list;
+    }
+
+    private ObservableList<ClientPath> getReservations(Connection conn) throws SQLException {
+        int noReservations;
+        PreparedStatement stmt = conn.prepareStatement("SELECT COUNT(*) FROM Rezerwacje_Toru");
+        ResultSet rSet = stmt.executeQuery();
+
+        if(rSet.next()) noReservations = rSet.getInt(1);
+        else noReservations = 0;
+
+        rSet.close();
+        stmt.close();
+
+        ObservableList<ClientPath> list = FXCollections.observableArrayList();
+        for(int i = 0; i < noReservations; i++){
+            ClientPath temp = Reservation.getClientReservation(conn, "Zarezerwuj", i+1);
+            if(temp != null) list.add(temp);
+        }
+        return list;
+    }
+
+    private final ObservableList<ClientLesson> lessons = getLessons(Main.jdbc.getConn());
+
+    private final ObservableList<ClientPath> clientPaths = getReservations(Main.jdbc.getConn());
 
     private void initializeLessons(){
 
@@ -78,11 +109,12 @@ public class ClientController implements Initializable {
     }
 
     private void initializePaths(){
-        pathNumber.setCellValueFactory(new PropertyValueFactory<>("number"));
+        number.setCellValueFactory(new PropertyValueFactory<>("number"));
         pathHours.setCellValueFactory(new PropertyValueFactory<>("date"));
+        pathNumber.setCellValueFactory(new PropertyValueFactory<>("pathNumber"));
         reservePath.setCellValueFactory(new PropertyValueFactory<>("reserveButton"));
 
-        pathTable.getItems().addAll(paths);
+        pathTable.getItems().addAll(clientPaths);
     }
 
     @Override
@@ -92,7 +124,6 @@ public class ClientController implements Initializable {
         initializePaths();
 
     }
-
 
     // powrót do okna logowania
     public void changeScreenButtonPushed(ActionEvent event) throws IOException {

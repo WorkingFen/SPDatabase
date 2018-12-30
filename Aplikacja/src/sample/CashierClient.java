@@ -11,7 +11,6 @@ public class CashierClient {
     private Button editButton;
     private Button deleteButton;
 
-
     public CashierClient(String number, String firstName, String lastName, String phone, String email, Button editButton, Button deleteButton) {
         this.number = number;
         this.firstName = firstName;
@@ -20,7 +19,6 @@ public class CashierClient {
         this.email = email;
         this.editButton = editButton;
         this.deleteButton = deleteButton;
-
 
         // change button color on mouse clicked
         this.editButton.setOnAction(e -> {

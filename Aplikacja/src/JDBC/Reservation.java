@@ -1,5 +1,8 @@
 package JDBC;
 
+import sample.CashierPath;
+import sample.ClientPath;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -42,6 +45,46 @@ public class Reservation {
         }
         finally {
             conn.setAutoCommit(true);
+        }
+    }
+
+    static public CashierPath getCashierReservation(Connection conn, String msg, int id) throws SQLException {
+        PreparedStatement stmt = conn.prepareStatement("SELECT rt.Data_i_Godzina, rt.Numer_toru, rt.Status FROM Rezerwacje_Toru rt WHERE Numer_Rezerwacji = ?");
+        stmt.setInt(1, id);
+        ResultSet rSet = stmt.executeQuery();
+        if(rSet.next()){
+            String date = rSet.getString(1);
+            int noPath = rSet.getInt(2);
+            int state = rSet.getInt(3);
+            String status;
+            if(state == 0) status = "Wolny";
+            else status = "Zajęty";
+            rSet.close();
+            stmt.close();
+            return new CashierPath(id, date, noPath, status, msg);
+        }
+        else{
+            rSet.close();
+            stmt.close();
+            return null;
+        }
+    }
+
+    static public ClientPath getClientReservation(Connection conn, String msg, int id) throws SQLException {
+        PreparedStatement stmt = conn.prepareStatement("SELECT rt.Data_i_Godzina, rt.Numer_toru FROM Rezerwacje_Toru rt WHERE Numer_Rezerwacji = ? AND Status = 0");
+        stmt.setInt(1, id);
+        ResultSet rSet = stmt.executeQuery();
+        if(rSet.next()){
+            String date = rSet.getString(1);
+            int noPath = rSet.getInt(2);
+            rSet.close();
+            stmt.close();
+            return new ClientPath(id, date, noPath, msg);
+        }
+        else{
+            rSet.close();
+            stmt.close();
+            return null;
         }
     }
 }

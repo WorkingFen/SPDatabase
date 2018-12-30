@@ -1,5 +1,7 @@
 package sample;
 
+import JDBC.Lesson;
+import JDBC.Reservation;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -18,10 +20,13 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ResourceBundle;
 
 public class CashierController implements Initializable {
-
 
     @FXML
     private TextField fnameField;
@@ -33,68 +38,94 @@ public class CashierController implements Initializable {
     private TextField emailField;
 
 
-
     @FXML
     private TableView<CashierClient> clientTable;
     @FXML
-    private TableColumn<Path, String> clientNumber;
+    private TableColumn<ClientPath, String> clientNumber;
     @FXML
-    private TableColumn<Path, String> clientFName;
+    private TableColumn<ClientPath, String> clientFName;
     @FXML
-    private TableColumn<Path, String> clientLName;
+    private TableColumn<ClientPath, String> clientLName;
     @FXML
-    private TableColumn<Path, String> clientPhone;
+    private TableColumn<ClientPath, String> clientPhone;
     @FXML
-    private TableColumn<Path, String> clientEMail;
+    private TableColumn<ClientPath, String> clientEMail;
     @FXML
-    private TableColumn<Path, String> editClient;
+    private TableColumn<ClientPath, String> editClient;
     @FXML
-    private TableColumn<Path, String> deleteClient;
+    private TableColumn<ClientPath, String> deleteClient;
 
 
     @FXML
     private TableView<CashierPath> pathTable;
     @FXML
-    private TableColumn<Path, String> lessonName;
+    private TableColumn<ClientPath, String> lessonName;
     @FXML
-    private TableColumn<Path, String> lessonDate;
+    private TableColumn<ClientPath, String> lessonDate;
     @FXML
-    private TableColumn<Path, String> lessonEnrolled;
+    private TableColumn<ClientPath, String> lessonEnrolled;
     @FXML
-    private TableColumn<Path, String> lessonRescuer;
+    private TableColumn<ClientPath, String> lessonRescuer;
     @FXML
-    private TableColumn<Path, String> reserveLesson;
+    private TableColumn<ClientPath, String> reserveLesson;
 
 
     @FXML
     private TableView<CashierLesson> lessonTable;
     @FXML
-    private TableColumn<Path, String> pathReservationNumber;
+    private TableColumn<ClientPath, String> pathReservationNumber;
     @FXML
-    private TableColumn<Path, String> pathHours;
+    private TableColumn<ClientPath, String> pathHours;
     @FXML
-    private TableColumn<Path, String> pathNumber;
+    private TableColumn<ClientPath, String> pathNumber;
     @FXML
-    private TableColumn<Path, String> pathState;
+    private TableColumn<ClientPath, String> pathState;
     @FXML
-    private TableColumn<Path, String> reservePath;
+    private TableColumn<ClientPath, String> reservePath;
 
-    // przykładowe wiersze do dodania do tabel
-    private final ObservableList<CashierLesson> lessons =
-            FXCollections.observableArrayList(
-                    new CashierLesson("Banan", "02.02.2020", "25:61", "Srarol"),
-                    new CashierLesson("Banan", "02.02.2020", "25:61", "Srarol"),
-                    new CashierLesson("Banan", "02.02.2020", "25:61", "Srarol"),
-                    new CashierLesson("Banan", "02.02.2020", "25:61", "Srarol")
-            );
+    public CashierController() throws SQLException {
+    }
 
-    private final ObservableList<CashierPath> paths =
-            FXCollections.observableArrayList(
-                    new CashierPath("Banan", "02.02.2020", "25:61", "Srarol"),
-                    new CashierPath("Banan", "02.02.2020", "25:61", "Srarol"),
-                    new CashierPath("Banan", "02.02.2020", "25:61", "Srarol"),
-                    new CashierPath("Banan", "02.02.2020", "25:61", "Srarol")
-            );
+    private ObservableList<CashierLesson> getLessons(Connection conn) throws SQLException {
+        int noLessons;
+        PreparedStatement stmt = conn.prepareStatement("SELECT COUNT(*) FROM Lekcje_Plywania");
+        ResultSet rSet = stmt.executeQuery();
+
+        if(rSet.next()) noLessons = rSet.getInt(1);
+        else noLessons = 0;
+
+        rSet.close();
+        stmt.close();
+
+        ObservableList<CashierLesson> list = FXCollections.observableArrayList();
+        for(int i = 0; i < noLessons; i++){
+            list.add(Lesson.getCashierLesson(conn, "Zapisz", i+1));
+        }
+        return list;
+    }
+
+    private ObservableList<CashierPath> getReservations(Connection conn) throws SQLException {
+        int noReservations;
+        PreparedStatement stmt = conn.prepareStatement("SELECT COUNT(*) FROM Rezerwacje_Toru");
+        ResultSet rSet = stmt.executeQuery();
+
+        if(rSet.next()) noReservations = rSet.getInt(1);
+        else noReservations = 0;
+
+        rSet.close();
+        stmt.close();
+
+        ObservableList<CashierPath> list = FXCollections.observableArrayList();
+        for(int i = 0; i < noReservations; i++){
+            list.add(Reservation.getCashierReservation(conn, "Rezerwuj", i+1));
+        }
+        return list;
+    }
+
+    private final ObservableList<CashierLesson> lessons = getLessons(Main.jdbc.getConn());
+
+    private final ObservableList<CashierPath> paths = getReservations(Main.jdbc.getConn());
+
     private final ObservableList<CashierClient> clients =
             FXCollections.observableArrayList(
                     new CashierClient("Banan", "02.02.2020", "25:61", "Srarol", "A", new Button("Edytuj"), new Button("Usuń")),
@@ -111,8 +142,6 @@ public class CashierController implements Initializable {
         lessonEnrolled.setCellValueFactory(new PropertyValueFactory<>("enrolled"));
         lessonRescuer.setCellValueFactory(new PropertyValueFactory<>("rescuer"));
         reserveLesson.setCellValueFactory(new PropertyValueFactory<>("enrollButton"));
-
-
 
         // dodanie wierszy
         lessonTable.getItems().addAll(lessons);

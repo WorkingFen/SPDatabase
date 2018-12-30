@@ -92,6 +92,9 @@ public class Controller implements Initializable {
         else if (loginInputText.equals("7") && passwordInputText.equals("")){
             changeScreen("marketingSpecialist.fxml", event);
         }
+        else if (loginInputText.equals("8") && passwordInputText.equals("")){
+            changeScreen("repairman.fxml", event);
+        }
         else{
             System.out.println("Zle haslo");
             //TODO chyba że wywalone
