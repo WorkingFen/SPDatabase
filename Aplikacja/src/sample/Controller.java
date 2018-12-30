@@ -44,7 +44,7 @@ public class Controller implements Initializable {
         String loginInputText = loginInput.getText();
         String passwordInputText = passwordInput.getText();
 
-        int source = LoginDetails.checkLoginDetails(Main.jdbc.getConn(), loginInputText, passwordInputText);
+        /*int source = LoginDetails.checkLoginDetails(Main.jdbc.getConn(), loginInputText, passwordInputText);
 
         if(source == 1){
             changeScreen("auditor.fxml", event);
@@ -68,10 +68,10 @@ public class Controller implements Initializable {
         else{
             System.out.println("Zle haslo");
             //TODO chyba że wywalone
-        }
+        }*/
 
         //changeScreen("owner.fxml", event); // do usunięcia
-        /*if(loginInputText.equals("1") && passwordInputText.equals("")){
+        if(loginInputText.equals("1") && passwordInputText.equals("")){
             changeScreen("client.fxml", event);
         }
         else if(loginInputText.equals("2") && passwordInputText.equals("")){
@@ -89,7 +89,7 @@ public class Controller implements Initializable {
         else{
             System.out.println("Zle haslo");
             //TODO chyba że wywalone
-        }*/
+        }
 
     }
 }

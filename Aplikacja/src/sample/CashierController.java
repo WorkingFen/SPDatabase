@@ -79,7 +79,6 @@ public class CashierController implements Initializable {
     @FXML
     private TableColumn<Path, String> reservePath;
 
-
     // przykładowe wiersze do dodania do tabel
     private final ObservableList<CashierLesson> lessons =
             FXCollections.observableArrayList(
@@ -104,7 +103,6 @@ public class CashierController implements Initializable {
                     new CashierClient("Banan", "02.02.2020", "25:61", "Srarol", "A", new Button("Edytuj"), new Button("Usuń"))
             );
 
-
     private void initializeLessons() {
 
         // ustawienie typu kolumn czy coś
@@ -113,6 +111,8 @@ public class CashierController implements Initializable {
         lessonEnrolled.setCellValueFactory(new PropertyValueFactory<>("enrolled"));
         lessonRescuer.setCellValueFactory(new PropertyValueFactory<>("rescuer"));
         reserveLesson.setCellValueFactory(new PropertyValueFactory<>("enrollButton"));
+
+
 
         // dodanie wierszy
         lessonTable.getItems().addAll(lessons);
