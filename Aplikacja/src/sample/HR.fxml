@@ -12,14 +12,14 @@
                     <content>
                         <AnchorPane prefHeight="400.0" prefWidth="600.0">
                             <children>
-                                <TableView fx:id="workerTable" prefHeight="300.0" prefWidth="600.0">
+                                <TableView fx:id="employeeTable" prefHeight="300.0" prefWidth="600.0">
                                     <columns>
-                                        <TableColumn fx:id="workerID" prefWidth="135.0" text="Numer identyfikacyjny" />
-                                        <TableColumn fx:id="workerFName" prefWidth="50.0" text="Imię" />
-                                        <TableColumn fx:id="workerLName" prefWidth="120.0" text="Nazwisko" />
-                                        <TableColumn fx:id="workerPosition" prefWidth="90.0" text="Stanowisko" />
-                                        <TableColumn fx:id="fireWorker" minWidth="3.0" prefWidth="90.0" text="Zwalnianie" />
-                                        <TableColumn fx:id="changeWorkerPosition" prefWidth="114.0" text="Zmiana stanowiska" />
+                                        <TableColumn fx:id="employeeID" prefWidth="135.0" text="Numer identyfikacyjny" />
+                                        <TableColumn fx:id="employeeFName" prefWidth="50.0" text="Imię" />
+                                        <TableColumn fx:id="employeeLName" prefWidth="120.0" text="Nazwisko" />
+                                        <TableColumn fx:id="employeePosition" prefWidth="90.0" text="Stanowisko" />
+                                        <TableColumn fx:id="fireEmployee" minWidth="3.0" prefWidth="90.0" text="Zwalnianie" />
+                                        <TableColumn fx:id="changeEmployeePosition" prefWidth="114.0" text="Zmiana stanowiska" />
                                     </columns>
                                 </TableView>
                                 <HBox layoutY="300.0" prefHeight="37.0" prefWidth="600.0">
@@ -27,7 +27,7 @@
                                         <TextField fx:id="fnameField" prefHeight="30.0" prefWidth="89.0" promptText="Imię" />
                                         <TextField fx:id="lnameField" prefHeight="30.0" prefWidth="89.0" promptText="Nazwisko" />
                                         <TextField fx:id="positionField" prefHeight="30.0" prefWidth="101.0" promptText="Stanowisko" />
-                                        <Button mnemonicParsing="false" onAction="#hireWorkerButtonPushed" prefHeight="30.0" prefWidth="48.0" text="Dodaj" />
+                                        <Button mnemonicParsing="false" onAction="#hireEmployeeButtonPushed" prefHeight="30.0" prefWidth="48.0" text="Dodaj" />
                                     </children>
                                 </HBox>
                             </children>
@@ -36,7 +36,7 @@
                 </Tab>
                 <Tab text="Stanowiska">
                     <content>
-                        <TableView fx:id="lessonTable" prefHeight="200.0" prefWidth="200.0">
+                        <TableView fx:id="postTable" prefHeight="200.0" prefWidth="200.0">
                             <columns>
                                 <TableColumn fx:id="positionName" prefWidth="150.0" text="Nazwa" />
                                 <TableColumn fx:id="positionSalary" prefWidth="153.0" text="Wynagrodzenie" />

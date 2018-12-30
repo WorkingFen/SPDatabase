@@ -1,5 +1,7 @@
 package JDBC;
 
+import sample.HRPost;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -39,6 +41,24 @@ public class Post {
         }
         finally{
             conn.setAutoCommit(true);
+        }
+    }
+
+    static public HRPost getHRPost(Connection conn, int id) throws SQLException {
+        PreparedStatement stmt = conn.prepareStatement("SELECT s.Nazwa, s.Wynagrodzenie FROM Stanowiska s WHERE Numer_Stanowiska = ?");
+        stmt.setInt(1, id);
+        ResultSet rSet = stmt.executeQuery();
+        if(rSet.next()){
+            String name = rSet.getString(1);
+            int salary = rSet.getInt(2);
+            rSet.close();
+            stmt.close();
+            return new HRPost(name, salary);
+        }
+        else{
+            rSet.close();
+            stmt.close();
+            return null;
         }
     }
 }
