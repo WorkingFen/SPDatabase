@@ -74,17 +74,23 @@ public class Controller implements Initializable {
         if(loginInputText.equals("1") && passwordInputText.equals("")){
             changeScreen("client.fxml", event);
         }
-        else if(loginInputText.equals("2") && passwordInputText.equals("")){
+        else if (loginInputText.equals("2") && passwordInputText.equals("")){
             changeScreen("cashier.fxml", event);
         }
-        else if(loginInputText.equals("3") && passwordInputText.equals("")){
+        else if (loginInputText.equals("3") && passwordInputText.equals("")){
             changeScreen("HR.fxml", event);
         }
-        else if(loginInputText.equals("4") && passwordInputText.equals("")){
+        else if (loginInputText.equals("4") && passwordInputText.equals("")){
             changeScreen("owner.fxml", event);
         }
-        else if(loginInputText.equals("5") && passwordInputText.equals("")){
+        else if (loginInputText.equals("5") && passwordInputText.equals("")){
             changeScreen("auditor.fxml", event);
+        }
+        else if (loginInputText.equals("6") && passwordInputText.equals("")){
+            changeScreen("manager.fxml", event);
+        }
+        else if (loginInputText.equals("7") && passwordInputText.equals("")){
+            changeScreen("marketingSpecialist.fxml", event);
         }
         else{
             System.out.println("Zle haslo");
