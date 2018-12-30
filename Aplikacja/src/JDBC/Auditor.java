@@ -7,7 +7,7 @@ import java.sql.SQLException;
 
 public class Auditor {
 
-    private void addAuditor(Connection conn) throws SQLException {
+    static void addAuditor(Connection conn) throws SQLException {
         try{
             PreparedStatement stmt;
 
@@ -56,5 +56,15 @@ public class Auditor {
         finally{
             conn.setAutoCommit(true);
         }
+    }
+
+    static boolean checkAuditor(Connection conn, int id) throws SQLException {
+        PreparedStatement stmt = conn.prepareStatement("SELECT AN FROM (SELECT Audytorzy_Numer_ID AS AN, Osoby.Numer_Identyfikacyjny FROM Osoby) WHERE Numer_Identyfikacyjny = ?");
+        stmt.setInt(1, id);
+        ResultSet rSet = stmt.executeQuery();
+        if(rSet.next())
+            return rSet.getInt(1) != 0;
+        else
+            return false;
     }
 }

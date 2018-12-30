@@ -62,4 +62,31 @@ public class Employee {
             conn.setAutoCommit(true);
         }
     }
+
+    static int checkEmployee(Connection conn, int id) throws SQLException {
+        PreparedStatement stmt = conn.prepareStatement("SELECT PN FROM (SELECT Pracownicy_Numer_ID AS PN, Osoby.Numer_Identyfikacyjny FROM Osoby) WHERE Numer_Identyfikacyjny = ?");
+        stmt.setInt(1, id);
+        ResultSet rSet = stmt.executeQuery();
+        if(rSet.next()){
+            int employeeID = rSet.getInt(1);
+            PreparedStatement stmt2 = conn.prepareStatement("SELECT SN FROM (SELECT Stanowiska_Numer_Stanowiska AS SN, Pracownicy.Numer_Identyfikacyjny AS ID FROM Pracownicy) WHERE ID = ?");
+            stmt2.setInt(1, employeeID);
+            ResultSet rSet2 = stmt2.executeQuery();
+            if(rSet2.next()){
+                return rSet2.getInt(1);
+            }
+            else{
+                stmt2.close();
+                rSet2.close();
+                stmt.close();
+                rSet.close();
+                return 0;
+            }
+        }
+        else{
+            stmt.close();
+            rSet.close();
+            return 0;
+        }
+    }
 }

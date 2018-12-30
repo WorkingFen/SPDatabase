@@ -6,7 +6,7 @@ import java.sql.SQLException;
 
 public class Attendee {
 
-    private void addAttendee(Connection conn, int clientID, int lessonID) throws SQLException {
+    private static void addAttendee(Connection conn, int clientID, int lessonID) throws SQLException {
         try {
             PreparedStatement stmt;
 

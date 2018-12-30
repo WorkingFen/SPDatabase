@@ -1,5 +1,6 @@
 package sample;
 
+import JDBC.LoginDetails;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -12,6 +13,7 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
+import java.sql.SQLException;
 import java.util.ResourceBundle;
 
 public class Controller implements Initializable {
@@ -37,31 +39,57 @@ public class Controller implements Initializable {
         window.show();
     }
 
-    public void loginButtonPushed(ActionEvent event) throws IOException {
+    public void loginButtonPushed(ActionEvent event) throws IOException, SQLException {
 
         String loginInputText = loginInput.getText();
         String passwordInputText = passwordInput.getText();
 
-        //changeScreen("owner.fxml", event); // do usunięcia
-        if (loginInputText.equals("1") && passwordInputText.equals("")){
-            changeScreen("client.fxml", event);
-        }
-        else if (loginInputText.equals("2") && passwordInputText.equals("")){
-            changeScreen("cashier.fxml", event);
-        }
-        else if (loginInputText.equals("3") && passwordInputText.equals("")){
-            changeScreen("HR.fxml", event);
-        }
-        else if (loginInputText.equals("4") && passwordInputText.equals("")){
-            changeScreen("owner.fxml", event);
-        }
-        else if (loginInputText.equals("5") && passwordInputText.equals("")){
+        int source = LoginDetails.checkLoginDetails(Main.jdbc.getConn(), loginInputText, passwordInputText);
+
+        if(source == 1){
             changeScreen("auditor.fxml", event);
+            System.out.println("Audytor");
+        }
+        else if(source == 2){
+            changeScreen("owner.fxml", event);
+            System.out.println("Wlasciciel");
+        }
+        else if(source == 4){
+            changeScreen("HR.fxml", event);
+            System.out.println("HR");
+        }
+        else if(source == 5){
+            changeScreen("cashier.fxml", event);
+            System.out.println("Kasjer");
+        }
+        else if(source == 9){
+            changeScreen("client.fxml", event);
         }
         else{
             System.out.println("Zle haslo");
             //TODO chyba że wywalone
         }
+
+        //changeScreen("owner.fxml", event); // do usunięcia
+        /*if(loginInputText.equals("1") && passwordInputText.equals("")){
+            changeScreen("client.fxml", event);
+        }
+        else if(loginInputText.equals("2") && passwordInputText.equals("")){
+            changeScreen("cashier.fxml", event);
+        }
+        else if(loginInputText.equals("3") && passwordInputText.equals("")){
+            changeScreen("HR.fxml", event);
+        }
+        else if(loginInputText.equals("4") && passwordInputText.equals("")){
+            changeScreen("owner.fxml", event);
+        }
+        else if(loginInputText.equals("5") && passwordInputText.equals("")){
+            changeScreen("auditor.fxml", event);
+        }
+        else{
+            System.out.println("Zle haslo");
+            //TODO chyba że wywalone
+        }*/
 
     }
 }

@@ -59,4 +59,14 @@ public class Owner {
             conn.setAutoCommit(true);
         }
     }
+
+    static boolean checkOwner(Connection conn, int id) throws SQLException {
+        PreparedStatement stmt = conn.prepareStatement("SELECT WN FROM (SELECT Wlasciciele_Numer_ID AS WN, Osoby.Numer_Identyfikacyjny FROM Osoby) WHERE Numer_Identyfikacyjny = ?");
+        stmt.setInt(1, id);
+        ResultSet rSet = stmt.executeQuery();
+        if(rSet.next())
+            return rSet.getInt(1) != 0;
+        else
+            return false;
+    }
 }
