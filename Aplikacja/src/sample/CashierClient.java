@@ -3,7 +3,7 @@ package sample;
 import javafx.scene.control.Button;
 
 public class CashierClient {
-    private String number;
+    private int number;
     private String firstName;
     private String lastName;
     private String phone;
@@ -11,14 +11,14 @@ public class CashierClient {
     private Button editButton;
     private Button deleteButton;
 
-    public CashierClient(String number, String firstName, String lastName, String phone, String email, Button editButton, Button deleteButton) {
+    public CashierClient(int number, String firstName, String lastName, String phone, String email) {
         this.number = number;
         this.firstName = firstName;
         this.lastName = lastName;
         this.phone = phone;
         this.email = email;
-        this.editButton = editButton;
-        this.deleteButton = deleteButton;
+        this.editButton = new Button("Edytuj");
+        this.deleteButton = new Button("Usuń");
 
         // change button color on mouse clicked
         this.editButton.setOnAction(e -> {
@@ -29,11 +29,11 @@ public class CashierClient {
         });
     }
 
-    public String getNumber() {
+    public int getNumber() {
         return number;
     }
 
-    public void setNumber(String number) {
+    public void setNumber(int number) {
         this.number = number;
     }
 

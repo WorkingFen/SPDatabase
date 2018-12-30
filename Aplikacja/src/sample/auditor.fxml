@@ -13,41 +13,40 @@
             <tabs>
                 <Tab text="Lista pracowników">
                     <content>
-                        <TableView fx:id="lessonTable" prefHeight="200.0" prefWidth="200.0">
+                        <TableView fx:id="employeeTable" prefHeight="200.0" prefWidth="200.0">
                             <columns>
-                                <TableColumn fx:id="lessonName" prefWidth="142.0" text="Numer identyfikacyjny" />
-                                <TableColumn fx:id="lessonDate" minWidth="0.0" prefWidth="79.0" text="Imię" />
-                                <TableColumn fx:id="lessonEnrolled" prefWidth="140.0" text="Nazwisko" />
-                        <TableColumn prefWidth="121.0" text="Stanowisko" />
-                        <TableColumn prefWidth="118.0" text="Dodatek do pensji" />
-
+                                <TableColumn fx:id="employeeID" prefWidth="142.0" text="Numer identyfikacyjny" />
+                                <TableColumn fx:id="employeeName" minWidth="0.0" prefWidth="79.0" text="Imię" />
+                                <TableColumn fx:id="employeeSurname" prefWidth="140.0" text="Nazwisko" />
+                                <TableColumn fx:id="employeePost" prefWidth="121.0" text="Stanowisko" />
+                                <TableColumn fx:id="employeePerk" prefWidth="118.0" text="Dodatek do pensji" />
                             </columns>
                         </TableView>
                     </content>
                 </Tab>
                 <Tab text="Przeglądy">
                     <content>
-                        <TableView fx:id="pathTable" prefHeight="200.0" prefWidth="200.0">
+                        <TableView fx:id="inspectionTable" prefHeight="200.0" prefWidth="200.0">
                             <columns>
-                                <TableColumn fx:id="pathReservationNumber" prefWidth="135.0" text="Numer przeglądu" />
-                                <TableColumn fx:id="pathHours" prefWidth="148.0" text="Obiekt" />
-                                <TableColumn fx:id="pathNumber" minWidth="5.0" prefWidth="113.0" text="Data" />
+                                <TableColumn fx:id="inspectionID" prefWidth="135.0" text="Numer przeglądu" />
+                                <TableColumn fx:id="inspectionObject" prefWidth="148.0" text="Obiekt" />
+                                <TableColumn fx:id="inspectionDate" minWidth="5.0" prefWidth="113.0" text="Data" />
                             </columns>
                         </TableView>
                     </content>
                 </Tab>
-            <Tab text="Transakcje">
-               <content>
-                  <TableView prefHeight="200.0" prefWidth="200.0">
-                    <columns>
-                      <TableColumn prefWidth="122.0" text="Numer transakcji" />
-                      <TableColumn prefWidth="83.0" text="Data" />
-                        <TableColumn prefWidth="133.0" text="Usługa" />
-                        <TableColumn prefWidth="90.0" text="Kwota" />
-                    </columns>
-                  </TableView>
-               </content>
-            </Tab>
+                <Tab text="Transakcje">
+                    <content>
+                        <TableView fx:id="transactionTable" prefHeight="200.0" prefWidth="200.0">
+                            <columns>
+                                <TableColumn fx:id="transactionID" prefWidth="122.0" text="Numer transakcji" />
+                                <TableColumn fx:id="transactionDate" prefWidth="83.0" text="Data" />
+                                <TableColumn fx:id="transactionService" prefWidth="133.0" text="Usługa" />
+                                <TableColumn fx:id="transactionPrice" prefWidth="90.0" text="Kwota" />
+                            </columns>
+                        </TableView>
+                    </content>
+                </Tab>
             </tabs>
         </TabPane>
         <Button layoutY="367.0" mnemonicParsing="false" onAction="#logOutButtonPushed" prefHeight="33.0" prefWidth="100.0" text="Wyloguj się" />

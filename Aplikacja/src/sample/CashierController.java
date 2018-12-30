@@ -1,5 +1,6 @@
 package sample;
 
+import JDBC.Client;
 import JDBC.Lesson;
 import JDBC.Reservation;
 import javafx.collections.FXCollections;
@@ -122,17 +123,29 @@ public class CashierController implements Initializable {
         return list;
     }
 
+    private ObservableList<CashierClient> getClients(Connection conn) throws SQLException {
+        int noClients;
+        PreparedStatement stmt = conn.prepareStatement("SELECT COUNT(*) FROM Klienci");
+        ResultSet rSet = stmt.executeQuery();
+
+        if(rSet.next()) noClients = rSet.getInt(1);
+        else noClients = 0;
+
+        rSet.close();
+        stmt.close();
+
+        ObservableList<CashierClient> list = FXCollections.observableArrayList();
+        for(int i = 0; i < noClients; i++){
+            list.add(Client.getCashierClient(conn,i+1));
+        }
+        return list;
+    }
+
     private final ObservableList<CashierLesson> lessons = getLessons(Main.jdbc.getConn());
 
     private final ObservableList<CashierPath> paths = getReservations(Main.jdbc.getConn());
 
-    private final ObservableList<CashierClient> clients =
-            FXCollections.observableArrayList(
-                    new CashierClient("Banan", "02.02.2020", "25:61", "Srarol", "A", new Button("Edytuj"), new Button("Usuń")),
-                    new CashierClient("Banan", "02.02.2020", "25:61", "Srarol", "A", new Button("Edytuj"), new Button("Usuń")),
-                    new CashierClient("Banan", "02.02.2020", "25:61", "Srarol", "A", new Button("Edytuj"), new Button("Usuń")),
-                    new CashierClient("Banan", "02.02.2020", "25:61", "Srarol", "A", new Button("Edytuj"), new Button("Usuń"))
-            );
+    private final ObservableList<CashierClient> clients = getClients(Main.jdbc.getConn());
 
     private void initializeLessons() {
 
@@ -192,9 +205,9 @@ public class CashierController implements Initializable {
         String emailInput = emailField.getText();
 
 
-        CashierClient client = new CashierClient("1337",fnameInput, lnameInput, phoneNumberInput, emailInput,new Button("Edytuj"),new Button("Usuń"));
+        //CashierClient client = new CashierClient("1337",fnameInput, lnameInput, phoneNumberInput, emailInput,new Button("Edytuj"),new Button("Usuń"));
 
-        clientTable.getItems().add(client);
+        //clientTable.getItems().add(client);
 
         //TODO dodanie do BD i jakieś ify
     }

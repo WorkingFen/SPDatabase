@@ -67,7 +67,8 @@ public class ClientController implements Initializable {
 
         ObservableList<ClientLesson> list = FXCollections.observableArrayList();
         for(int i = 0; i < noLessons; i++){
-            list.add(Lesson.getClientLesson(conn, "Zapisz się", i+1));
+            ClientLesson temp = Lesson.getClientLesson(conn, "Zapisz się", i+1);
+            if(temp != null) list.add(temp);
         }
         return list;
     }

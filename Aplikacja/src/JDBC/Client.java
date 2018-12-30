@@ -1,5 +1,7 @@
 package JDBC;
 
+import sample.CashierClient;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -41,6 +43,26 @@ public class Client {
         }
         finally {
             conn.setAutoCommit(true);
+        }
+    }
+
+    static public CashierClient getCashierClient(Connection conn, int id) throws SQLException {
+        PreparedStatement stmt = conn.prepareStatement("SELECT k.Imie, k.Nazwisko, k.Numer_Telefonu, k.\"Adres_e-mail\" FROM Klienci k WHERE Numer_Klienta = ?");
+        stmt.setInt(1, id);
+        ResultSet rSet = stmt.executeQuery();
+        if(rSet.next()){
+            String name = rSet.getString(1);
+            String surname = rSet.getString(2);
+            String phone = rSet.getString(3);
+            String email = rSet.getString(4);
+            rSet.close();
+            stmt.close();
+            return new CashierClient(id, name, surname, phone, email);
+        }
+        else{
+            rSet.close();
+            stmt.close();
+            return null;
         }
     }
 }

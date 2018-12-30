@@ -1,5 +1,7 @@
 package JDBC;
 
+import sample.AuditorTransaction;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -37,6 +39,54 @@ public class Transaction {
         }
         finally {
             conn.setAutoCommit(true);
+        }
+    }
+
+    static public AuditorTransaction getAuditorTransaction(Connection conn, int id) throws SQLException {
+        PreparedStatement stmt = conn.prepareStatement("SELECT t.Data FROM Transakcje t WHERE Numer_transakcji = ?");
+        stmt.setInt(1, id);
+        ResultSet rSet = stmt.executeQuery();
+        String date;
+        if(rSet.next()){
+            date = rSet.getString(1);
+            rSet.close();
+            stmt.close();
+        }
+        else{
+            rSet.close();
+            stmt.close();
+            return null;
+        }
+        stmt = conn.prepareStatement("SELECT Uslugi_Numer_Uslugi, Ilosc FROM Koszyki WHERE Transakcje_Numer_Transakcji = ?");
+        stmt.setInt(1, id);
+        rSet = stmt.executeQuery();
+        int noService;
+        int amount;
+        if(rSet.next()){
+            noService = rSet.getInt(1);
+            amount = rSet.getInt(2);
+            rSet.close();
+            stmt.close();
+        }
+        else{
+            rSet.close();
+            stmt.close();
+            return null;
+        }
+        stmt = conn.prepareStatement("SELECT Nazwa_Uslugi, Cena FROM Uslugi WHERE Numer_Uslugi = ?");
+        stmt.setInt(1, noService);
+        rSet = stmt.executeQuery();
+        if(rSet.next()){
+            String serviceName = rSet.getString(1);
+            int price = rSet.getInt(2)*amount;
+            rSet.close();
+            stmt.close();
+            return new AuditorTransaction(id, date, serviceName, price);
+        }
+        else{
+            rSet.close();
+            stmt.close();
+            return null;
         }
     }
 }

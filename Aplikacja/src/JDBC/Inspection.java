@@ -1,5 +1,7 @@
 package JDBC;
 
+import sample.AuditorInspection;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -39,6 +41,39 @@ public class Inspection {
         }
         finally{
             conn.setAutoCommit(true);
+        }
+    }
+
+    static public AuditorInspection getAuditorInspection(Connection conn, int id) throws SQLException {
+        PreparedStatement stmt = conn.prepareStatement("SELECT p.Data, p.Baseny_Numer_Obiektu FROM Przeglady p WHERE Numer_Przegladu = ?");
+        stmt.setInt(1, id);
+        ResultSet rSet = stmt.executeQuery();
+        if(rSet.next()){
+            String date = rSet.getString(1);
+            int noObject = rSet.getInt(2);
+            PreparedStatement stmt2 = conn.prepareStatement("SELECT b.Nazwa_Obiektu, b.Miasto FROM Baseny b WHERE Numer_Obiektu = ?");
+            stmt2.setInt(1, noObject);
+            ResultSet rSet2 = stmt2.executeQuery();
+            if(rSet2.next()){
+                String objectName = rSet2.getString(1) + ", " + rSet2.getString(2);
+                rSet2.close();
+                stmt2.close();
+                rSet.close();
+                stmt.close();
+                return new AuditorInspection(id, objectName, date);
+            }
+            else{
+                rSet2.close();
+                stmt2.close();
+                rSet.close();
+                stmt.close();
+                return null;
+            }
+        }
+        else{
+            rSet.close();
+            stmt.close();
+            return null;
         }
     }
 }
