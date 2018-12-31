@@ -38,24 +38,23 @@ Lub instalacja całej bazy danych przy pomocy [generatora](https://github.com/Wo
 - Należy pobrać [Oracle JDBC](https://www.oracle.com/technetwork/database/features/jdbc/jdbc-ucp-122-3110062.html) po uprzednim zaakceptowaniu licencji i jednokrotnym zalogowaniu się na stronę Oracle.
 - Należy pobrać [JavaFX](https://gluonhq.com/products/javafx/) jako, że nowe wersje JDK zostały pozbawione modułów i ogołocone do tak zwanego Core'a
 - Należy pobrać [JDK 11](https://www.oracle.com/technetwork/java/javase/downloads/jdk11-downloads-5066655.html) po uprzednim zaakceptowaniu licencji
-  - 
 
 ### Instalacja
 [Instalacja](https://github.com/WorkingFen/BDProject/blob/master/Aplikacja/INSTALL.md#instalacja-aplikacji-nieskompilowanej) aplikacji nieskompilowanej krok po kroku:
 1. [Tworzenie projektu](https://github.com/WorkingFen/BDProject/blob/master/Aplikacja/INSTALL.md#tworzenie-projektu)
 2. [Instalacja JDBC](https://github.com/WorkingFen/BDProject/blob/master/Aplikacja/INSTALL.md#instalacja-jdbc)
 3. [Instalacja JavaFX](https://github.com/WorkingFen/BDProject/blob/master/Aplikacja/INSTALL.md#instalacja-javafx)
-4. [Konfiguracja wywoływania](https://github.com/WorkingFen/BDProject/blob/master/Aplikacja/INSTALL.md#konfiguracja-sposobu-wywolywania-aplikacji)
+4. [Konfiguracja wywoływania](https://github.com/WorkingFen/BDProject/blob/master/Aplikacja/INSTALL.md#konfiguracja-sposobu-wywoływania-aplikacji)
 
 ## Technologie
 Technologie, które wykorzystujemy/będziemy wykorzystywać do projektu:
 - JDK 11
   > Główne serce aplikacji javowych
-- Oracle Database 
+- Oracle Database 12c
   > Jako nasz DBMS
 - JavaFX
   > Do tworzenia aplikacji okienkowej, wykorzystywać będziemy rozwiązania JavaFX
-- JDBC
+- Oracle JDBC 8
   > Komunikacja z bazą danych z poziomu aplikacji okientkowej
 
 ## Autorzy
