@@ -4,19 +4,18 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.OwnerController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.RepairmanController">
     <children>
         <TabPane layoutY="7.0" prefHeight="370.0" prefWidth="600.0" tabClosingPolicy="UNAVAILABLE">
             <tabs>
                 <Tab text="Przeprowadzone przeglądy">
                     <content>
-                        <TableView fx:id="lessonTable" prefHeight="200.0" prefWidth="200.0">
+                        <TableView fx:id="inspectionTable" prefHeight="200.0" prefWidth="200.0">
                             <columns>
-                                <TableColumn fx:id="lessonName" prefWidth="142.0" text="Numer przeglądu" />
-                                <TableColumn fx:id="lessonDate" minWidth="0.0" prefWidth="74.0" text="Data" />
-                                <TableColumn fx:id="lessonEnrolled" prefWidth="233.0" text="Opis" />
-                                <TableColumn fx:id="lessonRescuer" prefWidth="151.0" text="Usuwanie" />
-
+                                <TableColumn fx:id="inspectionID" prefWidth="142.0" text="Numer przeglądu" />
+                                <TableColumn fx:id="inspectionDate" minWidth="0.0" prefWidth="74.0" text="Data" />
+                                <TableColumn fx:id="comment" prefWidth="233.0" text="Opis" />
+                                <TableColumn fx:id="delete" prefWidth="151.0" text="Usuwanie" />
                             </columns>
                         </TableView>
                     </content>
