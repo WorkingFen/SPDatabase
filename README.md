@@ -1,7 +1,7 @@
 # Baza Danych basenów
 Projekt polega na stworzeniu bazy danych, która ma wspomagać teoretyczną sieć basenów.
 
-## Pierwsze kroki
+## Pierwsze kroki bazy danych
 Zanim zaczniemy cokolwiek pobierać, to najpierw trzeba wiedzieć co należy zrobić.
 
 **Reminder:** Nigdy nie należy zmieniać ustawień ani plików bazy danych poza dedykowanymi programami, jak również nie należy zatrzymywać usług powiązanych z bazą danych! Wiąże się to z zablokowaniem dostępu i koniecznością usunięcia tejże bazy danych!
@@ -32,8 +32,25 @@ Lub instalacja całej bazy danych przy pomocy [generatora](https://github.com/Wo
 3. [Usuwanie przestrzeni tabel](https://github.com/WorkingFen/BDProject/blob/master/UNINSTALL.md#usuwanie-przestrzeni-tabel)
 4. [Usuwanie bazy danych Oracle 12c](https://github.com/WorkingFen/BDProject/blob/master/UNINSTALL.md#usuwanie-bazy-danych-oracle-12c)
 
+## Pierwsze kroki aplikacji
+
+### Wymagania wstępne
+- Należy pobrać [Oracle JDBC](https://www.oracle.com/technetwork/database/features/jdbc/jdbc-ucp-122-3110062.html) po uprzednim zaakceptowaniu licencji i jednokrotnym zalogowaniu się na stronę Oracle.
+- Należy pobrać [JavaFX](https://gluonhq.com/products/javafx/) jako, że nowe wersje JDK zostały pozbawione modułów i ogołocone do tak zwanego Core'a
+- Należy pobrać [JDK 11](https://www.oracle.com/technetwork/java/javase/downloads/jdk11-downloads-5066655.html) po uprzednim zaakceptowaniu licencji
+  - 
+
+### Instalacja
+[Instalacja](https://github.com/WorkingFen/BDProject/blob/master/Aplikacja/INSTALL.md#instalacja-aplikacji-nieskompilowanej) aplikacji nieskompilowanej krok po kroku:
+1. [Tworzenie projektu](https://github.com/WorkingFen/BDProject/blob/master/Aplikacja/INSTALL.md#tworzenie-projektu)
+2. [Instalacja JDBC](https://github.com/WorkingFen/BDProject/blob/master/Aplikacja/INSTALL.md#instalacja-jdbc)
+3. [Instalacja JavaFX](https://github.com/WorkingFen/BDProject/blob/master/Aplikacja/INSTALL.md#instalacja-javafx)
+4. [Konfiguracja wywoływania](https://github.com/WorkingFen/BDProject/blob/master/Aplikacja/INSTALL.md#konfiguracja-sposobu-wywolywania-aplikacji)
+
 ## Technologie
 Technologie, które wykorzystujemy/będziemy wykorzystywać do projektu:
+- JDK 11
+  > Główne serce aplikacji javowych
 - Oracle Database 
   > Jako nasz DBMS
 - JavaFX
