@@ -47,7 +47,7 @@ public class Lesson {
 
     static public CashierLesson getCashierLesson(Connection conn, String msg, int id) throws SQLException {
         String name = "PrObLEmO";
-        PreparedStatement stmt = conn.prepareStatement("SELECT lp.Data_i_Godzina, lp.Numer_ratownika, lp.Liczba_zapisanych_osob FROM Lekcje_Plywania lp WHERE Numer_Lekcji = ?");
+        PreparedStatement stmt = conn.prepareStatement("SELECT lp.Data_i_Godzina, lp.Numer_ratownika, lp.Liczba_zapisanych_osob FROM Lekcje_Plywania lp WHERE Numer_Lekcji = ? AND Data_I_Godzina > SYSDATE");
         stmt.setInt(1, id);
         ResultSet rSet = stmt.executeQuery();
         if(rSet.next()){
@@ -82,7 +82,7 @@ public class Lesson {
 
     static public ClientLesson getClientLesson(Connection conn, String msg, int id) throws SQLException {
         String name = "PrObLEmO";
-        PreparedStatement stmt = conn.prepareStatement("SELECT lp.Data_i_Godzina, lp.Numer_ratownika, lp.Liczba_zapisanych_osob FROM Lekcje_Plywania lp WHERE Numer_Lekcji = ? AND Liczba_zapisanych_osob < 6");
+        PreparedStatement stmt = conn.prepareStatement("SELECT lp.Data_i_Godzina, lp.Numer_ratownika, lp.Liczba_zapisanych_osob FROM Lekcje_Plywania lp WHERE Numer_Lekcji = ? AND Liczba_zapisanych_osob < 6 AND Data_I_Godzina > SYSDATE");
         stmt.setInt(1, id);
         ResultSet rSet = stmt.executeQuery();
         if(rSet.next()){

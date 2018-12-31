@@ -88,37 +88,59 @@ public class CashierController implements Initializable {
     }
 
     private ObservableList<CashierLesson> getLessons(Connection conn) throws SQLException {
-        int noLessons;
-        PreparedStatement stmt = conn.prepareStatement("SELECT COUNT(*) FROM Lekcje_Plywania");
+        int minLesson;
+        int maxLesson;
+        PreparedStatement stmt = conn.prepareStatement("SELECT MIN(Numer_Lekcji) FROM Lekcje_Plywania WHERE Data_I_Godzina > SYSDATE");
         ResultSet rSet = stmt.executeQuery();
 
-        if(rSet.next()) noLessons = rSet.getInt(1);
-        else noLessons = 0;
+        if(rSet.next()) minLesson = rSet.getInt(1);
+        else minLesson = 0;
+
+        rSet.close();
+        stmt.close();
+
+        stmt = conn.prepareStatement("SELECT MAX(Numer_Lekcji) FROM Lekcje_Plywania WHERE Data_I_Godzina > SYSDATE");
+        rSet = stmt.executeQuery();
+
+        if(rSet.next()) maxLesson = rSet.getInt(1);
+        else maxLesson = 0;
 
         rSet.close();
         stmt.close();
 
         ObservableList<CashierLesson> list = FXCollections.observableArrayList();
-        for(int i = 0; i < noLessons; i++){
-            list.add(Lesson.getCashierLesson(conn, "Zapisz", i+1));
+        for(int i = minLesson-1; i < maxLesson; i++){
+            CashierLesson temp = Lesson.getCashierLesson(conn, "Zapisz", i+1);
+            if(temp != null) list.add(temp);
         }
         return list;
     }
 
     private ObservableList<CashierPath> getReservations(Connection conn) throws SQLException {
-        int noReservations;
-        PreparedStatement stmt = conn.prepareStatement("SELECT COUNT(*) FROM Rezerwacje_Toru");
+        int minReservation;
+        int maxReservation;
+        PreparedStatement stmt = conn.prepareStatement("SELECT MIN(Numer_Rezerwacji) FROM Rezerwacje_Toru WHERE Data_I_Godzina > SYSDATE");
         ResultSet rSet = stmt.executeQuery();
 
-        if(rSet.next()) noReservations = rSet.getInt(1);
-        else noReservations = 0;
+        if(rSet.next()) minReservation = rSet.getInt(1);
+        else minReservation = 0;
+
+        rSet.close();
+        stmt.close();
+
+        stmt = conn.prepareStatement("SELECT MAX(Numer_Rezerwacji) FROM Rezerwacje_Toru WHERE Data_I_Godzina > SYSDATE");
+        rSet = stmt.executeQuery();
+
+        if(rSet.next()) maxReservation = rSet.getInt(1);
+        else maxReservation = 0;
 
         rSet.close();
         stmt.close();
 
         ObservableList<CashierPath> list = FXCollections.observableArrayList();
-        for(int i = 0; i < noReservations; i++){
-            list.add(Reservation.getCashierReservation(conn, "Rezerwuj", i+1));
+        for(int i = minReservation-1; i < maxReservation; i++){
+            CashierPath temp = Reservation.getCashierReservation(conn, "Rezerwuj", i+1);
+            if(temp != null) list.add(temp);
         }
         return list;
     }
