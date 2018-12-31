@@ -2,6 +2,7 @@ package JDBC;
 
 import sample.AuditorEmployee;
 import sample.HREmployee;
+import sample.OwnerEmployee;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -154,6 +155,25 @@ public class Employee {
                 stmt.close();
                 return null;
             }
+        }
+        else{
+            rSet.close();
+            stmt.close();
+            return null;
+        }
+    }
+
+    static public OwnerEmployee getOwnerEmployee(Connection conn, int id) throws SQLException {
+        PreparedStatement stmt = conn.prepareStatement("SELECT p.Imie, p.Nazwisko, p.Dodatek_Do_Pensji FROM Pracownicy p WHERE Numer_Identyfikacyjny = ?");
+        stmt.setInt(1, id);
+        ResultSet rSet = stmt.executeQuery();
+        if(rSet.next()){
+            String name = rSet.getString(1);
+            String surname = rSet.getString(2);
+            int perk = rSet.getInt(3);
+            rSet.close();
+            stmt.close();
+            return new OwnerEmployee(id, name, surname, perk);
         }
         else{
             rSet.close();
