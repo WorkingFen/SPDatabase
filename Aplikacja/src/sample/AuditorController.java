@@ -12,6 +12,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.ListView;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -27,6 +28,9 @@ import java.util.ResourceBundle;
 
 
 public class AuditorController implements Initializable {
+
+    @FXML
+    private ListView<String> poolList;
 
     @FXML
     private TableView<AuditorEmployee> employeeTable;
@@ -66,6 +70,12 @@ public class AuditorController implements Initializable {
     private TableColumn<AuditorTransaction, String> transactionPrice;
 
     public AuditorController() throws SQLException {
+    }
+
+    private void clearTables(){
+        employeeTable.getItems().clear();
+        inspectionTable.getItems().clear();
+        transactionTable.getItems().clear();
     }
 
     private ObservableList<AuditorEmployee> getEmployees(Connection conn) throws SQLException {
@@ -156,11 +166,54 @@ public class AuditorController implements Initializable {
         transactionTable.getItems().addAll(transactions);
     }
 
+    private void initializePoolList(){
+        //TODO
+
+        //przykładowe
+        ObservableList<String> items = FXCollections.observableArrayList (
+                "Single", "Double", "Suite", "Family App");
+        poolList.setItems(items);
+    }
+
+    private void changeTables()
+    {
+        clearTables();
+
+        //TODO
+    }
+
     @Override
     public void initialize(URL url, ResourceBundle rb){
+        initializePoolList();
         initializeEmployees();
         initializeInspections();
         initializeTransactions();
+    }
+
+    private void setItemsEmployeeTable(String poolName) {
+        //TODO
+    }
+    private void setItemsInspectionTable(String poolName) {
+        //TODO
+    }
+    private void setItemsTransactionTable(String poolName) {
+        //TODO
+    }
+
+    @FXML
+    public void poolItemClicked() {
+
+        String poolItem = poolList.getSelectionModel().getSelectedItem();
+
+        System.out.println("clicked on " + poolItem);   //debug
+
+        if(poolItem == null) return;
+
+        // set new items
+        clearTables();
+        setItemsEmployeeTable(poolItem);
+        setItemsInspectionTable(poolItem);
+        setItemsTransactionTable(poolItem);
     }
 
     public void logOutButtonPushed(ActionEvent event) throws IOException {

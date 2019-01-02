@@ -25,6 +25,9 @@ import java.util.ResourceBundle;
 
 public class ClientController implements Initializable {
 
+    @FXML
+    private ListView<String> poolList;
+
     // zmienne potrzebne do dodawania torów
     @FXML
     private TableView<ClientPath> pathTable;
@@ -54,6 +57,11 @@ public class ClientController implements Initializable {
     private TableColumn<ClientLesson, Button> reserveLesson;
 
     public ClientController() throws SQLException {
+    }
+
+    private void clearTables(){
+        pathTable.getItems().clear();
+        lessonTable.getItems().clear();
     }
 
     private ObservableList<ClientLesson> getLessons(Connection conn) throws SQLException {
@@ -141,16 +149,55 @@ public class ClientController implements Initializable {
         pathTable.getItems().addAll(clientPaths);
     }
 
+    private void initializePoolList(){
+        //TODO
+
+        //przykładowe
+        ObservableList<String> items = FXCollections.observableArrayList (
+                "Single", "Double", "Suite", "Family App");
+        poolList.setItems(items);
+    }
+
+    private void changeTables()
+    {
+        clearTables();
+
+        //TODO
+    }
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-
+        initializePoolList();
         initializeLessons();
         initializePaths();
 
     }
 
+    private void setItemsLessonTable(String poolName) {
+        //TODO
+    }
+    private void setItemsPathTable(String poolName) {
+        //TODO
+    }
+
+    @FXML
+    public void poolItemClicked() {
+
+        String poolItem = poolList.getSelectionModel().getSelectedItem();
+
+        System.out.println("clicked on " + poolItem);   //debug
+
+        if(poolItem == null) return;
+
+        // set new items
+        clearTables();
+        setItemsLessonTable(poolItem);
+        setItemsPathTable(poolItem);
+
+    }
+
     // powrót do okna logowania
-    public void changeScreenButtonPushed(ActionEvent event) throws IOException {
+    public void logOutButtonPushed(ActionEvent event) throws IOException {
 
         Parent tableViewParent = FXMLLoader.load(getClass().getResource("sample.fxml"));
         Scene tableViewScene = new Scene(tableViewParent);

@@ -28,6 +28,9 @@ import java.util.ResourceBundle;
 public class OwnerController implements Initializable {
 
     @FXML
+    private ListView<String> poolList;
+
+    @FXML
     private TableView<OwnerEmployee> employeeTable;
     @FXML
     private TableColumn<OwnerEmployee, String> employeeID;
@@ -49,6 +52,11 @@ public class OwnerController implements Initializable {
     private TableColumn<OwnerIncome, String> expenses;
 
     public OwnerController() throws SQLException {
+    }
+
+    private void clearTables(){
+        employeeTable.getItems().clear();
+        incomeTable.getItems().clear();
     }
 
     private ObservableList<OwnerEmployee> getEmployees(Connection conn) throws SQLException {
@@ -108,8 +116,48 @@ public class OwnerController implements Initializable {
         incomeTable.getItems().addAll(incomes);
     }*/
 
+    private void initializePoolList(){
+        //TODO
+
+        //przykładowe
+        ObservableList<String> items = FXCollections.observableArrayList (
+                "Single", "Double", "Suite", "Family App");
+        poolList.setItems(items);
+    }
+
+    private void changeTables()
+    {
+        clearTables();
+
+        //TODO
+    }
+
+    private void setItemsEmployeeTable(String poolName) {
+        //TODO
+    }
+    private void setItemsIncomeTable(String poolName) {
+        //TODO
+    }
+
+    @FXML
+    public void poolItemClicked() {
+
+        String poolItem = poolList.getSelectionModel().getSelectedItem();
+
+        System.out.println("clicked on " + poolItem);   //debug
+
+        if(poolItem == null) return;
+
+        // set new items
+        clearTables();
+        setItemsEmployeeTable(poolItem);
+        setItemsIncomeTable(poolItem);
+
+    }
+
     @Override
     public void initialize(URL url, ResourceBundle rb){
+        initializePoolList();
         initializeEmployees();
         //initializeIncomes();
     }
