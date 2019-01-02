@@ -20,9 +20,17 @@ public class CashierClient {
         this.editButton = new Button("Edytuj");
         this.deleteButton = new Button("Usuń");
 
-        // change button color on mouse clicked
-        this.editButton.setOnAction(e -> {
-            this.editButton.setStyle("-fx-background-color: #ff0000; ");
+         this.editButton.setOnAction(e -> {
+            {
+                String [] textFieldArray = new String[] {"Imię", "Nazwisko", "Numer telefonu", "Adres e-mail"};
+                try {
+                    String []array = PopupWindowEdit.display(textFieldArray,"Edycja","Wprowadź dane:", 350);
+                    System.out.println(Arrays.toString(array));
+
+                } catch (IOException e1) {
+                    e1.printStackTrace();
+                }
+            }
         });
         this.deleteButton.setOnAction(e -> {
             this.deleteButton.setStyle("-fx-background-color: #ff0000; ");
