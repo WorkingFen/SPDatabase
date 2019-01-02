@@ -71,15 +71,35 @@ public class Reservation {
     }
 
     static public ClientPath getClientReservation(Connection conn, String msg, int id) throws SQLException {
-        PreparedStatement stmt = conn.prepareStatement("SELECT rt.Data_i_Godzina, rt.Numer_toru FROM Rezerwacje_Toru rt WHERE Numer_Rezerwacji = ? AND Status = 0 AND Data_I_Godzina > SYSDATE");
+        String date;
+        int noPath;
+        int noPool;
+        String poolName;
+        PreparedStatement stmt = conn.prepareStatement("SELECT Data_i_Godzina, Numer_toru, Baseny_Numer_Obiektu FROM " +
+                "(SELECT * FROM Rezerwacje_Toru rt JOIN Uslugi u ON rt.Ogolne_Numer_uslugi = u.Ogolne_Numer_Uslugi) " +
+                "WHERE Numer_Rezerwacji = ? AND Status = 0 AND Data_I_Godzina > SYSDATE");
         stmt.setInt(1, id);
         ResultSet rSet = stmt.executeQuery();
         if(rSet.next()){
-            String date = rSet.getString(1);
-            int noPath = rSet.getInt(2);
+            date = rSet.getString(1);
+            noPath = rSet.getInt(2);
+            noPool = rSet.getInt(3);
             rSet.close();
             stmt.close();
-            return new ClientPath(id, date, noPath, msg);
+        }
+        else{
+            rSet.close();
+            stmt.close();
+            return null;
+        }
+        stmt = conn.prepareStatement("SELECT Nazwa_Obiektu, Miasto FROM Baseny WHERE Numer_Obiektu = ?");
+        stmt.setInt(1, noPool);
+        rSet = stmt.executeQuery();
+        if(rSet.next()){
+            poolName = rSet.getString(1)+ ", "+ rSet.getString(2);
+            rSet.close();
+            stmt.close();
+            return new ClientPath(id, date, noPath, poolName, msg);
         }
         else{
             rSet.close();

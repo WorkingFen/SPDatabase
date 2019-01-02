@@ -35,19 +35,21 @@ public class ClientController implements Initializable {
     @FXML
     private TableColumn<ClientPath, String> pathNumber;
     @FXML
+    private TableColumn<ClientPath, String> pathPool;
+    @FXML
     private TableColumn<ClientPath, Button> reservePath;
 
     // zmienne potrzebne do dodawania lekcji
     @FXML
     private TableView<ClientLesson> lessonTable;
     @FXML
-    private TableColumn<ClientLesson, String> lessonName;
-    @FXML
     private TableColumn<ClientLesson, String> lessonDate;
     @FXML
     private TableColumn<ClientLesson, String> lessonEnrolled;
     @FXML
     private TableColumn<ClientLesson, String> lessonRescuer;
+    @FXML
+    private TableColumn<ClientLesson, String> lessonPool;
     @FXML
     private TableColumn<ClientLesson, Button> reserveLesson;
 
@@ -119,10 +121,10 @@ public class ClientController implements Initializable {
     private void initializeLessons(){
 
         // ustawienie typu kolumn czy coś
-        lessonName.setCellValueFactory(new PropertyValueFactory<>("name"));
         lessonDate.setCellValueFactory(new PropertyValueFactory<>("date"));
         lessonEnrolled.setCellValueFactory(new PropertyValueFactory<>("enrolled"));
         lessonRescuer.setCellValueFactory(new PropertyValueFactory<>("rescuer"));
+        lessonPool.setCellValueFactory(new PropertyValueFactory<>("poolName"));
         reserveLesson.setCellValueFactory(new PropertyValueFactory<>("enrollButton"));
 
         // dodanie wierszy
@@ -133,6 +135,7 @@ public class ClientController implements Initializable {
         number.setCellValueFactory(new PropertyValueFactory<>("number"));
         pathHours.setCellValueFactory(new PropertyValueFactory<>("date"));
         pathNumber.setCellValueFactory(new PropertyValueFactory<>("pathNumber"));
+        pathPool.setCellValueFactory(new PropertyValueFactory<>("poolName"));
         reservePath.setCellValueFactory(new PropertyValueFactory<>("reserveButton"));
 
         pathTable.getItems().addAll(clientPaths);

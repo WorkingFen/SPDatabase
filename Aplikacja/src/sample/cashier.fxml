@@ -43,12 +43,10 @@
          <content>
             <TableView fx:id="lessonTable" prefHeight="200.0" prefWidth="200.0">
                <columns>
-                  <TableColumn fx:id="lessonName" prefWidth="87.0" text="Numer lekcji" />
-                  <TableColumn fx:id="lessonDate" prefWidth="140.0" text="Data i godzina" />
-                  <TableColumn fx:id="lessonEnrolled" prefWidth="145.0" text="Liczba zapisanych osób" />
-                  <TableColumn fx:id="lessonRescuer" prefWidth="100.0" text="Prowadzący" />
-                  <TableColumn fx:id="reserveLesson" prefWidth="90.0" text="" />
-
+                   <TableColumn fx:id="lessonDate" prefWidth="140.0" text="Data i godzina" />
+                   <TableColumn fx:id="lessonEnrolled" prefWidth="145.0" text="Liczba zapisanych osób" />
+                   <TableColumn fx:id="lessonRescuer" prefWidth="100.0" text="Prowadzący" />
+                   <TableColumn fx:id="reserveLesson" prefWidth="90.0" text="" />
                      </columns>
             </TableView>
          </content>
@@ -57,11 +55,11 @@
          <content>
             <TableView fx:id="pathTable" prefHeight="200.0" prefWidth="200.0">
                <columns>
-                  <TableColumn fx:id="pathReservationNumber" prefWidth="135.0" text="Numer rezerwacji" />
-                  <TableColumn fx:id="pathHours" prefWidth="140.0" text="Data i godzina" />
+                   <TableColumn fx:id="pathReservationNumber" prefWidth="135.0" text="Numer rezerwacji" />
+                   <TableColumn fx:id="pathHours" prefWidth="140.0" text="Data i godzina" />
                    <TableColumn fx:id="pathNumber" prefWidth="75.0" text="Numer toru" />
                    <TableColumn fx:id="pathState" prefWidth="75.0" text="Status" />
-                  <TableColumn fx:id="reservePath" prefWidth="90.0" text="" />
+                   <TableColumn fx:id="reservePath" prefWidth="90.0" text="" />
                </columns>
             </TableView>
          </content>

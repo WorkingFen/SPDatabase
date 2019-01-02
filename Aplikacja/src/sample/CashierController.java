@@ -58,9 +58,7 @@ public class CashierController implements Initializable {
 
 
     @FXML
-    private TableView<CashierPath> pathTable;
-    @FXML
-    private TableColumn<ClientPath, String> lessonName;
+    private TableView<CashierLesson> lessonTable;
     @FXML
     private TableColumn<ClientPath, String> lessonDate;
     @FXML
@@ -72,7 +70,7 @@ public class CashierController implements Initializable {
 
 
     @FXML
-    private TableView<CashierLesson> lessonTable;
+    private TableView<CashierPath> pathTable;
     @FXML
     private TableColumn<ClientPath, String> pathReservationNumber;
     @FXML
@@ -172,7 +170,6 @@ public class CashierController implements Initializable {
     private void initializeLessons() {
 
         // ustawienie typu kolumn czy coś
-        lessonName.setCellValueFactory(new PropertyValueFactory<>("name"));
         lessonDate.setCellValueFactory(new PropertyValueFactory<>("date"));
         lessonEnrolled.setCellValueFactory(new PropertyValueFactory<>("enrolled"));
         lessonRescuer.setCellValueFactory(new PropertyValueFactory<>("rescuer"));

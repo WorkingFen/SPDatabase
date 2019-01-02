@@ -31,6 +31,7 @@
                                 <TableColumn fx:id="inspectionID" prefWidth="135.0" text="Numer przeglądu" />
                                 <TableColumn fx:id="inspectionObject" prefWidth="148.0" text="Obiekt" />
                                 <TableColumn fx:id="inspectionDate" minWidth="5.0" prefWidth="113.0" text="Data" />
+                                <TableColumn fx:id="comment" prefWidth="120.0" text="Uwagi" />
                             </columns>
                         </TableView>
                     </content>

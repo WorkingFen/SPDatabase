@@ -61,7 +61,7 @@ public class Inspection {
                 stmt2.close();
                 rSet.close();
                 stmt.close();
-                return new AuditorInspection(id, objectName, date);
+                return new AuditorInspection(id, objectName, date, "BRAK");
             }
             else{
                 rSet2.close();

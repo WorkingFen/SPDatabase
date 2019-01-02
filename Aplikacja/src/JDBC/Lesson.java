@@ -46,32 +46,23 @@ public class Lesson {
     }
 
     static public CashierLesson getCashierLesson(Connection conn, String msg, int id) throws SQLException {
-        String name = "PrObLEmO";
-        PreparedStatement stmt = conn.prepareStatement("SELECT lp.Data_i_Godzina, lp.Numer_ratownika, lp.Liczba_zapisanych_osob FROM Lekcje_Plywania lp WHERE Numer_Lekcji = ? AND Data_I_Godzina > SYSDATE");
+        String date;
+        String noAttendees;
+        int noPool;
+        String surname;
+        PreparedStatement stmt = conn.prepareStatement(
+                "SELECT Data_i_Godzina, Liczba_zapisanych_osob, Nazwisko FROM " +
+                        "(SELECT * FROM Lekcje_Plywania JOIN Pracownicy ON Numer_Ratownika = Numer_Identyfikacyjny) " +
+                        "WHERE Numer_Lekcji = ? AND Data_I_Godzina > SYSDATE");
         stmt.setInt(1, id);
         ResultSet rSet = stmt.executeQuery();
         if(rSet.next()){
-            String date = rSet.getString(1);
-            int noGuard = rSet.getInt(2);
-            String noAttendees = rSet.getString(3)+"/6";
-            PreparedStatement stmt2 = conn.prepareStatement("SELECT Nazwisko FROM Pracownicy WHERE Numer_Identyfikacyjny = ?");
-            stmt2.setInt(1, noGuard);
-            ResultSet rSet2 = stmt2.executeQuery();
-            if(rSet2.next()){
-                String surname = rSet2.getString(1);
-                rSet2.close();
-                stmt2.close();
-                rSet.close();
-                stmt.close();
-                return new CashierLesson(name, date, noAttendees, surname, msg);
-            }
-            else{
-                rSet2.close();
-                stmt2.close();
-                rSet.close();
-                stmt.close();
-                return new CashierLesson(name, date, noAttendees, "Informacja na basenie", msg);
-            }
+            date = rSet.getString(1);
+            noAttendees = rSet.getString(2)+"/6";
+            surname = rSet.getString(3);
+            rSet.close();
+            stmt.close();
+            return new CashierLesson(date, noAttendees, surname, msg);
         }
         else{
             rSet.close();
@@ -81,32 +72,38 @@ public class Lesson {
     }
 
     static public ClientLesson getClientLesson(Connection conn, String msg, int id) throws SQLException {
-        String name = "PrObLEmO";
-        PreparedStatement stmt = conn.prepareStatement("SELECT lp.Data_i_Godzina, lp.Numer_ratownika, lp.Liczba_zapisanych_osob FROM Lekcje_Plywania lp WHERE Numer_Lekcji = ? AND Liczba_zapisanych_osob < 6 AND Data_I_Godzina > SYSDATE");
+        String date;
+        String noAttendees;
+        int noPool;
+        String surname;
+        PreparedStatement stmt = conn.prepareStatement(
+                "SELECT Data_i_Godzina, Liczba_zapisanych_osob, Baseny_Numer_Obiektu, Nazwisko FROM " +
+                        "(SELECT * FROM Lekcje_Plywania JOIN Pracownicy ON Numer_Ratownika = Numer_Identyfikacyjny) " +
+                        "WHERE Numer_Lekcji = ? AND Liczba_zapisanych_osob < 6 AND Data_I_Godzina > SYSDATE");
         stmt.setInt(1, id);
         ResultSet rSet = stmt.executeQuery();
         if(rSet.next()){
-            String date = rSet.getString(1);
-            int noGuard = rSet.getInt(2);
-            String noAttendees = rSet.getString(3)+"/6";
-            PreparedStatement stmt2 = conn.prepareStatement("SELECT Nazwisko FROM Pracownicy WHERE Numer_Identyfikacyjny = ?");
-            stmt2.setInt(1, noGuard);
-            ResultSet rSet2 = stmt2.executeQuery();
-            if(rSet2.next()){
-                String surname = rSet2.getString(1);
-                rSet2.close();
-                stmt2.close();
-                rSet.close();
-                stmt.close();
-                return new ClientLesson(name, date, noAttendees, surname, msg);
-            }
-            else{
-                rSet2.close();
-                stmt2.close();
-                rSet.close();
-                stmt.close();
-                return new ClientLesson(name, date, noAttendees, "Informacja na basenie", msg);
-            }
+            date = rSet.getString(1);
+            noAttendees = rSet.getString(2)+"/6";
+            noPool = rSet.getInt(3);
+            surname = rSet.getString(4);
+            rSet.close();
+            stmt.close();
+        }
+        else{
+            rSet.close();
+            stmt.close();
+            return null;
+        }
+        stmt = conn.prepareStatement("SELECT Nazwa_Obiektu, Miasto FROM Baseny WHERE Numer_Obiektu = ?");
+        stmt.setInt(1, noPool);
+        rSet = stmt.executeQuery();
+        String poolName;
+        if(rSet.next()){
+            poolName = rSet.getString(1) +", "+ rSet.getString(2);
+            rSet.close();
+            stmt.close();
+            return new ClientLesson(date, noAttendees, surname, poolName, msg);
         }
         else{
             rSet.close();

@@ -50,6 +50,8 @@ public class AuditorController implements Initializable {
     private TableColumn<AuditorInspection, String> inspectionObject;
     @FXML
     private TableColumn<AuditorInspection, String> inspectionDate;
+    @FXML
+    private TableColumn<AuditorInspection, String> comment;
 
 
     @FXML
@@ -140,6 +142,7 @@ public class AuditorController implements Initializable {
         inspectionID.setCellValueFactory(new PropertyValueFactory<>("number"));
         inspectionObject.setCellValueFactory(new PropertyValueFactory<>("objectName"));
         inspectionDate.setCellValueFactory(new PropertyValueFactory<>("date"));
+        comment.setCellValueFactory(new PropertyValueFactory<>("comment"));
 
         inspectionTable.getItems().addAll(inspections);
     }
