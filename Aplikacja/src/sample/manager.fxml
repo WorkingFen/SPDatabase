@@ -7,78 +7,67 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.ManagerController">
-   <left>
-      <ListView fx:id="poolList" onMouseClicked="#poolItemClicked" prefHeight="296.0" prefWidth="143.0" BorderPane.alignment="CENTER" />
-   </left>
-   <bottom>
-      <Button mnemonicParsing="false" onAction="#logOutButtonPushed" prefHeight="38.0" prefWidth="101.0" text="Wyloguj się" BorderPane.alignment="TOP_LEFT" />
-   </bottom>
-   <right>
-      <TabPane prefHeight="295.0" prefWidth="457.0" tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER">
-        <tabs>
-          <Tab text="Przeglądy">
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <TabPane prefHeight="360.0" prefWidth="600.0" tabClosingPolicy="UNAVAILABLE">
+         <tabs>
+            <Tab text="Przeglądy">
                <content>
                   <TableView fx:id="inspectionsTable" prefHeight="200.0" prefWidth="200.0">
-                    <columns>
-                      <TableColumn fx:id="inspectionNumber" prefWidth="105.0" text="Numer przeglądu" />
+                     <columns>
+                        <TableColumn fx:id="inspectionNumber" prefWidth="105.0" text="Numer przeglądu" />
                         <TableColumn fx:id="inspectionDate" prefWidth="102.0" text="Data" />
                         <TableColumn fx:id="inspectionDescription" prefWidth="250.0" text="Opis" />
-                    </columns>
+                     </columns>
                   </TableView>
                </content>
-          </Tab>
+            </Tab>
             <Tab text="Pracownicy">
                <content>
                   <TableView fx:id="workersTable" prefHeight="200.0" prefWidth="200.0">
-                    <columns>
-                      <TableColumn fx:id="workerID" prefWidth="75.0" text="ID" />
-                      <TableColumn fx:id="workerFName" prefWidth="99.0" text="Imię" />
+                     <columns>
+                        <TableColumn fx:id="workerID" prefWidth="75.0" text="ID" />
+                        <TableColumn fx:id="workerFName" prefWidth="99.0" text="Imię" />
                         <TableColumn fx:id="workerLName" prefWidth="141.0" text="Nazwisko" />
                         <TableColumn fx:id="workerPosition" prefWidth="142.0" text="Stanowisko" />
-                    </columns>
+                     </columns>
                   </TableView>
                </content>
             </Tab>
             <Tab text="Transakcje">
                <content>
                   <TableView prefHeight="200.0" prefWidth="200.0">
-                    <columns>
-                      <TableColumn prefWidth="75.0" text="Numer" />
-                      <TableColumn prefWidth="75.0" text="Data" />
+                     <columns>
+                        <TableColumn prefWidth="75.0" text="Numer" />
+                        <TableColumn prefWidth="75.0" text="Data" />
                         <TableColumn prefWidth="75.0" text="Kwota" />
-                    </columns>
+                     </columns>
                   </TableView>
                </content>
             </Tab>
             <Tab text="Zestawienie zysków ">
                <content>
                   <TableView prefHeight="200.0" prefWidth="200.0">
-                    <columns>
-                      <TableColumn prefWidth="148.0" text="Miesiąc" />
-                      <TableColumn prefWidth="309.0" text="Zysk" />
-                    </columns>
+                     <columns>
+                        <TableColumn prefWidth="148.0" text="Miesiąc" />
+                        <TableColumn prefWidth="309.0" text="Zysk" />
+                     </columns>
                   </TableView>
                </content>
             </Tab>
             <Tab text="Zestawienie pensji">
                <content>
                   <TableView prefHeight="200.0" prefWidth="200.0">
-                    <columns>
-                      <TableColumn prefWidth="195.0" text="Miesiąc" />
-                      <TableColumn prefWidth="262.0" text="Kwota pensji" />
-                    </columns>
+                     <columns>
+                        <TableColumn prefWidth="195.0" text="Miesiąc" />
+                        <TableColumn prefWidth="262.0" text="Kwota pensji" />
+                     </columns>
                   </TableView>
                </content>
             </Tab>
-        </tabs>
+         </tabs>
       </TabPane>
-   </right>
-   <top>
-      <Text lineSpacing="1.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Wybierz basen:" wrappingWidth="396.455078125" BorderPane.alignment="TOP_LEFT">
-         <font>
-            <Font size="13.0" />
-         </font>
-      </Text>
-   </top>
-</BorderPane>
+      <Button layoutY="360.0" mnemonicParsing="false" onAction="#logOutButtonPushed" prefHeight="38.0" prefWidth="101.0" text="Wyloguj się" />
+   </children>
+</AnchorPane>
