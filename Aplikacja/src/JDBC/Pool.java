@@ -44,7 +44,7 @@ public class Pool {
         }
     }
 
-    static public String getClientPool(Connection conn, int id) throws SQLException {
+    static public String getPool(Connection conn, int id) throws SQLException {
         String poolName;
         PreparedStatement stmt = conn.prepareStatement("SELECT Nazwa_Obiektu, Miasto FROM Baseny WHERE Numer_Obiektu = ?");
         stmt.setInt(1, id);

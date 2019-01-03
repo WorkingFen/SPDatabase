@@ -164,9 +164,12 @@ public class Employee {
         }
     }
 
-    static public OwnerEmployee getOwnerEmployee(Connection conn, int id) throws SQLException {
-        PreparedStatement stmt = conn.prepareStatement("SELECT p.Imie, p.Nazwisko, p.Dodatek_Do_Pensji FROM Pracownicy p WHERE Numer_Identyfikacyjny = ?");
+    static public OwnerEmployee getOwnerEmployee(Connection conn, int id, String poolName) throws SQLException {
+        PreparedStatement stmt = conn.prepareStatement("SELECT Imie, Nazwisko, Dodatek_Do_Pensji FROM" +
+                "(SELECT p.Imie, p.Nazwisko, p.Dodatek_Do_Pensji, p.Numer_Identyfikacyjny, b.Nazwa_Obiektu FROM Pracownicy p JOIN Baseny b ON b.Numer_Obiektu = p.Baseny_Numer_Obiektu)" +
+                " WHERE Numer_Identyfikacyjny = ? AND Nazwa_Obiektu = ?");
         stmt.setInt(1, id);
+        stmt.setString(2, poolName);
         ResultSet rSet = stmt.executeQuery();
         if(rSet.next()){
             String name = rSet.getString(1);

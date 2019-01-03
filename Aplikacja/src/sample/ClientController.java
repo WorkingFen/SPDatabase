@@ -29,7 +29,6 @@ public class ClientController implements Initializable {
     @FXML
     private ListView<String> poolList;
 
-    // zmienne potrzebne do dodawania torów
     @FXML
     private TableView<ClientPath> pathTable;
     @FXML
@@ -41,7 +40,6 @@ public class ClientController implements Initializable {
     @FXML
     private TableColumn<ClientPath, Button> reservePath;
 
-    // zmienne potrzebne do dodawania lekcji
     @FXML
     private TableView<ClientLesson> lessonTable;
     @FXML
@@ -74,7 +72,7 @@ public class ClientController implements Initializable {
 
         ObservableList<String> list = FXCollections.observableArrayList();
         for(int i = 0; i < noPools; i++){
-            String temp = Pool.getClientPool(conn, i+1);
+            String temp = Pool.getPool(conn, i+1);
             if(temp != null) list.add(temp);
         }
         return list;
@@ -143,14 +141,11 @@ public class ClientController implements Initializable {
     private ObservableList<ClientPath> clientPaths = getReservations(Main.jdbc.getConn(), null);
 
     private void initializeLessons(){
-
-        // ustawienie typu kolumn czy coś
         lessonDate.setCellValueFactory(new PropertyValueFactory<>("date"));
         lessonEnrolled.setCellValueFactory(new PropertyValueFactory<>("enrolled"));
         lessonRescuer.setCellValueFactory(new PropertyValueFactory<>("rescuer"));
         reserveLesson.setCellValueFactory(new PropertyValueFactory<>("enrollButton"));
 
-        // dodanie wierszy
         lessonTable.getItems().addAll(lessons);
     }
 
@@ -200,7 +195,6 @@ public class ClientController implements Initializable {
         changeTables(poolName[0]);
     }
 
-    // powrót do okna logowania
     public void logOutButtonPushed(ActionEvent event) throws IOException {
 
         Parent tableViewParent = FXMLLoader.load(getClass().getResource("sample.fxml"));

@@ -1,6 +1,7 @@
 package sample;
 
 import JDBC.Employee;
+import JDBC.Pool;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -59,7 +60,26 @@ public class OwnerController implements Initializable {
         incomeTable.getItems().clear();
     }
 
-    private ObservableList<OwnerEmployee> getEmployees(Connection conn) throws SQLException {
+    private ObservableList<String> getPoolNames(Connection conn) throws SQLException {
+        int noPools;
+        PreparedStatement stmt = conn.prepareStatement("SELECT COUNT(*) FROM Baseny");
+        ResultSet rSet = stmt.executeQuery();
+
+        if(rSet.next()) noPools = rSet.getInt(1);
+        else noPools = 0;
+
+        rSet.close();
+        stmt.close();
+
+        ObservableList<String> list = FXCollections.observableArrayList();
+        for(int i = 0; i < noPools; i++){
+            String temp = Pool.getPool(conn, i+1);
+            if(temp != null) list.add(temp);
+        }
+        return list;
+    }
+
+    private ObservableList<OwnerEmployee> getEmployees(Connection conn, String poolItem) throws SQLException {
         int noEmployees;
         PreparedStatement stmt = conn.prepareStatement("SELECT COUNT(*) FROM Pracownicy");
         ResultSet rSet = stmt.executeQuery();
@@ -72,7 +92,8 @@ public class OwnerController implements Initializable {
 
         ObservableList<OwnerEmployee> list = FXCollections.observableArrayList();
         for(int i = 0; i < noEmployees; i++){
-            list.add(Employee.getOwnerEmployee(conn, i+1));
+            OwnerEmployee temp = Employee.getOwnerEmployee(conn, i+1, poolItem);
+            if(temp != null) list.add(temp);
         }
         return list;
     }
@@ -95,9 +116,9 @@ public class OwnerController implements Initializable {
         return list;
     }*/
 
-    private final ObservableList<OwnerEmployee> employees = getEmployees(Main.jdbc.getConn());
+    private ObservableList<OwnerEmployee> employees = getEmployees(Main.jdbc.getConn(), null);
 
-    //private final ObservableList<OwnerIncome> incomes = getIncomes(Main.jdbc.getConn());
+    //private ObservableList<OwnerIncome> incomes = getIncomes(Main.jdbc.getConn(), null);
 
     private void initializeEmployees() {
         employeeID.setCellValueFactory(new PropertyValueFactory<>("id"));
@@ -116,50 +137,41 @@ public class OwnerController implements Initializable {
         incomeTable.getItems().addAll(incomes);
     }*/
 
-    private void initializePoolList(){
-        //TODO
-
-        //przykładowe
-        ObservableList<String> items = FXCollections.observableArrayList (
-                "Single", "Double", "Suite", "Family App");
+    private void initializePoolList() throws SQLException {
+        ObservableList<String> items = getPoolNames(Main.jdbc.getConn());
         poolList.setItems(items);
     }
 
-    private void changeTables()
-    {
+    private void changeTables(String poolItem) throws SQLException {
         clearTables();
-
-        //TODO
-    }
-
-    private void setItemsEmployeeTable(String poolName) {
-        //TODO
-    }
-    private void setItemsIncomeTable(String poolName) {
-        //TODO
-    }
-
-    @FXML
-    public void poolItemClicked() {
-
-        String poolItem = poolList.getSelectionModel().getSelectedItem();
-
-        System.out.println("clicked on " + poolItem);   //debug
-
-        if(poolItem == null) return;
-
-        // set new items
-        clearTables();
-        setItemsEmployeeTable(poolItem);
-        setItemsIncomeTable(poolItem);
-
+        employees = getEmployees(Main.jdbc.getConn(), poolItem);
+        //incomes = getIncomes(Main.jdbc.getConn(), poolItem);
+        initializeEmployees();
+        //initializeIncomes();
     }
 
     @Override
     public void initialize(URL url, ResourceBundle rb){
-        initializePoolList();
+        try {
+            initializePoolList();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
         initializeEmployees();
         //initializeIncomes();
+    }
+
+    @FXML
+    public void poolItemClicked() throws SQLException {
+
+        String poolItem = poolList.getSelectionModel().getSelectedItem();
+
+        if(poolItem == null) return;
+
+        String[] poolName = poolItem.split(",");
+        System.out.println("clicked on " + poolItem);   //debug
+
+        changeTables(poolName[0]);
     }
 
     public void logOutButtonPushed(ActionEvent event) throws IOException {
