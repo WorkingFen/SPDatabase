@@ -19,7 +19,7 @@
                <content>
                   <TableView fx:id="employeeTable" prefHeight="315.0" prefWidth="750.0">
                      <columns>
-                        <TableColumn fx:id="employeeID" prefWidth="136.0" text="Numer identyfikacyjny" />
+                        <TableColumn fx:id="employeeID" prefWidth="136.0" text="Lp." />
                         <TableColumn fx:id="employeeName" minWidth="0.0" prefWidth="85.0" text="Imię" />
                         <TableColumn fx:id="employeeSurname" minWidth="0.0" prefWidth="146.0" text="Nazwisko" />
                         <TableColumn fx:id="employeePost" minWidth="0.0" prefWidth="169.0" text="Stanowisko" />
@@ -32,7 +32,7 @@
                <content>
                   <TableView fx:id="inspectionTable" prefHeight="200.0" prefWidth="200.0">
                      <columns>
-                        <TableColumn fx:id="inspectionID" prefWidth="116.0" text="Numer przeglądu" />
+                        <TableColumn fx:id="inspectionID" prefWidth="116.0" text="Lp." />
                         <TableColumn fx:id="inspectionObject" prefWidth="205.0" text="Obiekt" />
                         <TableColumn fx:id="inspectionDate" minWidth="5.0" prefWidth="119.0" text="Data" />
                         <TableColumn fx:id="comment" prefWidth="217.0" text="Uwagi" />
@@ -44,7 +44,7 @@
                <content>
                   <TableView fx:id="transactionTable" prefHeight="200.0" prefWidth="200.0">
                      <columns>
-                        <TableColumn fx:id="transactionID" prefWidth="122.0" text="Numer transakcji" />
+                        <TableColumn fx:id="transactionID" prefWidth="122.0" text="Lp." />
                         <TableColumn fx:id="transactionDate" prefWidth="136.0" text="Data" />
                         <TableColumn fx:id="transactionService" prefWidth="253.0" text="Usługa" />
                         <TableColumn fx:id="transactionPrice" prefWidth="146.0" text="Kwota" />

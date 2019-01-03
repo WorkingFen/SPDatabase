@@ -132,7 +132,7 @@ public class ClientController implements Initializable {
         lessonDate.setCellValueFactory(new PropertyValueFactory<>("date"));
         lessonEnrolled.setCellValueFactory(new PropertyValueFactory<>("enrolled"));
         lessonRescuer.setCellValueFactory(new PropertyValueFactory<>("rescuer"));
-        lessonPool.setCellValueFactory(new PropertyValueFactory<>("poolName"));
+        //lessonPool.setCellValueFactory(new PropertyValueFactory<>("poolName"));
         reserveLesson.setCellValueFactory(new PropertyValueFactory<>("enrollButton"));
 
         // dodanie wierszy
@@ -143,7 +143,7 @@ public class ClientController implements Initializable {
         number.setCellValueFactory(new PropertyValueFactory<>("number"));
         pathHours.setCellValueFactory(new PropertyValueFactory<>("date"));
         pathNumber.setCellValueFactory(new PropertyValueFactory<>("pathNumber"));
-        pathPool.setCellValueFactory(new PropertyValueFactory<>("poolName"));
+        //pathPool.setCellValueFactory(new PropertyValueFactory<>("poolName"));
         reservePath.setCellValueFactory(new PropertyValueFactory<>("reserveButton"));
 
         pathTable.getItems().addAll(clientPaths);

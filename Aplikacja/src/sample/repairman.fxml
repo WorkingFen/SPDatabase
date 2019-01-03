@@ -12,7 +12,7 @@
                     <content>
                         <TableView fx:id="inspectionTable" prefHeight="200.0" prefWidth="200.0">
                             <columns>
-                                <TableColumn fx:id="inspectionID" prefWidth="142.0" text="Numer przeglądu" />
+                                <TableColumn fx:id="inspectionID" prefWidth="142.0" text="Lp." />
                                 <TableColumn fx:id="inspectionDate" minWidth="0.0" prefWidth="74.0" text="Data" />
                                 <TableColumn fx:id="comment" prefWidth="233.0" text="Uwagi" />
                                 <TableColumn fx:id="delete" prefWidth="151.0" text="Usuwanie" />

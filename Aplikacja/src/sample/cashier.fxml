@@ -17,7 +17,7 @@
                      <children>
                         <TableView fx:id="clientTable" prefHeight="300.0" prefWidth="600.0">
                           <columns>
-                            <TableColumn fx:id="clientNumber" prefWidth="96.0" text="Numer klienta" />
+                            <TableColumn fx:id="clientNumber" prefWidth="96.0" text="Lp." />
                             <TableColumn fx:id="clientFName" prefWidth="54.0" text="Imię" />
                               <TableColumn fx:id="clientLName" prefWidth="75.0" text="Nazwisko" />
                               <TableColumn fx:id="clientPhone" prefWidth="107.0" text="Numer telefonu" />
@@ -55,7 +55,7 @@
          <content>
             <TableView fx:id="pathTable" prefHeight="200.0" prefWidth="200.0">
                <columns>
-                   <TableColumn fx:id="pathReservationNumber" prefWidth="135.0" text="Numer rezerwacji" />
+                   <TableColumn fx:id="pathReservationNumber" prefWidth="135.0" text="Lp." />
                    <TableColumn fx:id="pathHours" prefWidth="140.0" text="Data i godzina" />
                    <TableColumn fx:id="pathNumber" prefWidth="75.0" text="Numer toru" />
                    <TableColumn fx:id="pathState" prefWidth="75.0" text="Status" />

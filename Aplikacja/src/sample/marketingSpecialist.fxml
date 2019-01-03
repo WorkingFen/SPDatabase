@@ -22,7 +22,7 @@
                     <content>
                         <TableView fx:id="inspectionsTable" prefHeight="200.0" prefWidth="200.0">
                             <columns>
-                                <TableColumn fx:id="inspectionNumber" prefWidth="105.0" text="Numer przeglądu" />
+                                <TableColumn fx:id="inspectionNumber" prefWidth="105.0" text="Lp." />
                                 <TableColumn fx:id="inspectionDate" prefWidth="102.0" text="Data" />
                                 <TableColumn fx:id="inspectionDescription" prefWidth="250.0" text="Opis" />
                             </columns>
@@ -33,7 +33,7 @@
                     <content>
                         <TableView fx:id="clientsTable" prefHeight="200.0" prefWidth="200.0">
                             <columns>
-                                <TableColumn fx:id="clientID" prefWidth="75.0" text="ID" />
+                                <TableColumn fx:id="clientID" prefWidth="75.0" text="Lp." />
                                 <TableColumn fx:id="clientFName" prefWidth="99.0" text="Imię" />
                                 <TableColumn fx:id="clientLName" prefWidth="141.0" text="Nazwisko" />
                                 <TableColumn fx:id="clientPosition" prefWidth="142.0" text="Stanowisko" />
@@ -45,7 +45,7 @@
                     <content>
                         <TableView fx:id="topClientsTable" prefHeight="200.0" prefWidth="200.0">
                             <columns>
-                                <TableColumn fx:id="topClientNumber" prefWidth="50.0" text="Numer" />
+                                <TableColumn fx:id="topClientNumber" prefWidth="50.0" text="Lp." />
                                 <TableColumn fx:id="topClientLName" prefWidth="75.0" text="Imię" />
                                 <TableColumn fx:id="topClientFName" prefWidth="100.0" text="Nazwisko" />
                                 <TableColumn fx:id="topClientTransactionsNumber" prefWidth="100.0" text="Liczba transakcji" />

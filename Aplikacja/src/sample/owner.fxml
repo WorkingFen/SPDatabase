@@ -20,7 +20,7 @@
                <content>
                   <TableView fx:id="employeeTable" prefHeight="200.0" prefWidth="200.0">
                      <columns>
-                        <TableColumn fx:id="employeeID" prefWidth="142.0" text="Numer identyfikacyjny" />
+                        <TableColumn fx:id="employeeID" prefWidth="142.0" text="Lp." />
                         <TableColumn fx:id="employeeName" minWidth="0.0" prefWidth="145.0" text="Imię" />
                         <TableColumn fx:id="employeeSurname" prefWidth="162.0" text="Nazwisko" />
                         <TableColumn fx:id="employeePerk" prefWidth="151.0" text="Dodatek do pensji" />
@@ -28,11 +28,10 @@
                   </TableView>
                </content>
             </Tab>
-            <Tab text="Przychody i koszty obiektów">
+            <Tab text="Przychody i koszty">
                <content>
                   <TableView fx:id="incomeTable" prefHeight="200.0" prefWidth="200.0">
                      <columns>
-                        <TableColumn fx:id="objectName" prefWidth="202.0" text="Obiekt" />
                         <TableColumn fx:id="income" prefWidth="113.0" text="Przychody" />
                         <TableColumn fx:id="expenses" minWidth="0.0" prefWidth="115.0" text="Wydatki" />
                      </columns>

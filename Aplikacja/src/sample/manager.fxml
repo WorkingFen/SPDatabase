@@ -16,7 +16,7 @@
                <content>
                   <TableView fx:id="inspectionsTable" prefHeight="200.0" prefWidth="200.0">
                      <columns>
-                        <TableColumn fx:id="inspectionNumber" prefWidth="105.0" text="Numer przeglądu" />
+                        <TableColumn fx:id="inspectionNumber" prefWidth="105.0" text="Lp." />
                         <TableColumn fx:id="inspectionDate" prefWidth="102.0" text="Data" />
                         <TableColumn fx:id="inspectionComment" prefWidth="250.0" text="Uwagi" />
                      </columns>
@@ -27,7 +27,7 @@
                <content>
                   <TableView fx:id="employeeTable" prefHeight="200.0" prefWidth="200.0">
                      <columns>
-                        <TableColumn fx:id="employeeID" prefWidth="75.0" text="ID" />
+                        <TableColumn fx:id="employeeID" prefWidth="75.0" text="Lp." />
                         <TableColumn fx:id="employeeFName" prefWidth="99.0" text="Imię" />
                         <TableColumn fx:id="employeeLName" prefWidth="141.0" text="Nazwisko" />
                         <TableColumn fx:id="employeePosition" prefWidth="142.0" text="Stanowisko" />
@@ -39,7 +39,7 @@
                <content>
                   <TableView fx:id="transactionTable" prefHeight="200.0" prefWidth="200.0">
                      <columns>
-                        <TableColumn fx:id="transactionNumber" prefWidth="75.0" text="Numer" />
+                        <TableColumn fx:id="transactionNumber" prefWidth="75.0" text="Lp." />
                         <TableColumn fx:id="transactionDate" prefWidth="75.0" text="Data" />
                         <TableColumn fx:id="transactionPrice" prefWidth="75.0" text="Kwota" />
                      </columns>

@@ -14,7 +14,7 @@
                             <children>
                                 <TableView fx:id="employeeTable" prefHeight="300.0" prefWidth="600.0">
                                     <columns>
-                                        <TableColumn fx:id="employeeID" prefWidth="135.0" text="Numer identyfikacyjny" />
+                                        <TableColumn fx:id="employeeID" prefWidth="135.0" text="Lp." />
                                         <TableColumn fx:id="employeeFName" prefWidth="50.0" text="Imię" />
                                         <TableColumn fx:id="employeeLName" prefWidth="120.0" text="Nazwisko" />
                                         <TableColumn fx:id="employeePosition" prefWidth="90.0" text="Stanowisko" />
