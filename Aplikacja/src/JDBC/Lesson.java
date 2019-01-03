@@ -71,39 +71,25 @@ public class Lesson {
         }
     }
 
-    static public ClientLesson getClientLesson(Connection conn, String msg, int id) throws SQLException {
+    static public ClientLesson getClientLesson(Connection conn, String msg, int id, String poolItem) throws SQLException {
         String date;
         String noAttendees;
-        int noPool;
         String surname;
-        PreparedStatement stmt = conn.prepareStatement(
-                "SELECT Data_i_Godzina, Liczba_zapisanych_osob, Baseny_Numer_Obiektu, Nazwisko FROM " +
-                        "(SELECT * FROM Lekcje_Plywania JOIN Pracownicy ON Numer_Ratownika = Numer_Identyfikacyjny) " +
-                        "WHERE Numer_Lekcji = ? AND Liczba_zapisanych_osob < 6 AND Data_I_Godzina > SYSDATE");
+        PreparedStatement stmt = conn.prepareStatement("SELECT Data_i_Godzina, Liczba_Zapisanych_Osob, Nazwisko FROM" +
+                "((SELECT Data_i_Godzina, Liczba_Zapisanych_Osob, Nazwisko, Baseny_Numer_Obiektu FROM " +
+                "(SELECT lp.Data_i_Godzina, lp.Numer_Lekcji, lp.Liczba_Zapisanych_Osob, p.Nazwisko, p.Baseny_Numer_Obiektu FROM Lekcje_Plywania lp JOIN Pracownicy p ON lp.Numer_Ratownika = p.Numer_Identyfikacyjny) " +
+                "WHERE Numer_Lekcji = ? AND Liczba_zapisanych_osob < 6 AND Data_I_Godzina > SYSDATE) a JOIN Baseny b ON a.Baseny_Numer_Obiektu = b.Numer_Obiektu)" +
+                "WHERE Nazwa_Obiektu = ?");
         stmt.setInt(1, id);
+        stmt.setString(2, poolItem);
         ResultSet rSet = stmt.executeQuery();
         if(rSet.next()){
             date = rSet.getString(1);
             noAttendees = rSet.getString(2)+"/6";
-            noPool = rSet.getInt(3);
-            surname = rSet.getString(4);
+            surname = rSet.getString(3);
             rSet.close();
             stmt.close();
-        }
-        else{
-            rSet.close();
-            stmt.close();
-            return null;
-        }
-        stmt = conn.prepareStatement("SELECT Nazwa_Obiektu, Miasto FROM Baseny WHERE Numer_Obiektu = ?");
-        stmt.setInt(1, noPool);
-        rSet = stmt.executeQuery();
-        String poolName;
-        if(rSet.next()){
-            poolName = rSet.getString(1) +", "+ rSet.getString(2);
-            rSet.close();
-            stmt.close();
-            return new ClientLesson(date, noAttendees, surname, poolName, msg);
+            return new ClientLesson(date, noAttendees, surname, msg);
         }
         else{
             rSet.close();

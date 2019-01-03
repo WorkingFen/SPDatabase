@@ -43,4 +43,22 @@ public class Pool {
             conn.setAutoCommit(true);
         }
     }
+
+    static public String getClientPool(Connection conn, int id) throws SQLException {
+        String poolName;
+        PreparedStatement stmt = conn.prepareStatement("SELECT Nazwa_Obiektu, Miasto FROM Baseny WHERE Numer_Obiektu = ?");
+        stmt.setInt(1, id);
+        ResultSet rSet = stmt.executeQuery();
+        if(rSet.next()){
+            poolName = rSet.getString(1) +", "+ rSet.getString(2);
+            rSet.close();
+            stmt.close();
+            return poolName;
+        }
+        else{
+            rSet.close();
+            stmt.close();
+            return null;
+        }
+    }
 }

@@ -6,14 +6,12 @@ public class ClientPath {
     private int number;
     private String date;
     private int pathNumber;
-    private String poolName;
     private Button reserveButton;
 
-    public ClientPath(int number, String date, int pathNumber, String poolName, String msg){
+    public ClientPath(int number, String date, int pathNumber, String msg){
         this.number = number;
         this.date = date;
         this.pathNumber = pathNumber;
-        this.poolName = poolName;
         this.reserveButton = new Button(msg);
 
         // change button color on mouse clicked
@@ -41,10 +39,6 @@ public class ClientPath {
     public int getPathNumber() { return pathNumber; }
 
     public void setPathNumber(int pathNumber) { this.pathNumber = pathNumber; }
-
-    public String getPoolName() { return poolName; }
-
-    public void setPoolName(String poolName) { this.poolName = poolName; }
 
     public Button getReserveButton() {
         return reserveButton;

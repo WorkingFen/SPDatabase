@@ -1,6 +1,7 @@
 package sample;
 
 import JDBC.Lesson;
+import JDBC.Pool;
 import JDBC.Reservation;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -38,8 +39,6 @@ public class ClientController implements Initializable {
     @FXML
     private TableColumn<ClientPath, String> pathNumber;
     @FXML
-    private TableColumn<ClientPath, String> pathPool;
-    @FXML
     private TableColumn<ClientPath, Button> reservePath;
 
     // zmienne potrzebne do dodawania lekcji
@@ -52,8 +51,6 @@ public class ClientController implements Initializable {
     @FXML
     private TableColumn<ClientLesson, String> lessonRescuer;
     @FXML
-    private TableColumn<ClientLesson, String> lessonPool;
-    @FXML
     private TableColumn<ClientLesson, Button> reserveLesson;
 
     public ClientController() throws SQLException {
@@ -64,7 +61,26 @@ public class ClientController implements Initializable {
         lessonTable.getItems().clear();
     }
 
-    private ObservableList<ClientLesson> getLessons(Connection conn) throws SQLException {
+    private ObservableList<String> getPoolNames(Connection conn) throws SQLException {
+        int noPools;
+        PreparedStatement stmt = conn.prepareStatement("SELECT COUNT(*) FROM Baseny");
+        ResultSet rSet = stmt.executeQuery();
+
+        if(rSet.next()) noPools = rSet.getInt(1);
+        else noPools = 0;
+
+        rSet.close();
+        stmt.close();
+
+        ObservableList<String> list = FXCollections.observableArrayList();
+        for(int i = 0; i < noPools; i++){
+            String temp = Pool.getClientPool(conn, i+1);
+            if(temp != null) list.add(temp);
+        }
+        return list;
+    }
+
+    private ObservableList<ClientLesson> getLessons(Connection conn, String poolItem) throws SQLException {
         int minLesson;
         int maxLesson;
         PreparedStatement stmt = conn.prepareStatement("SELECT MIN(Numer_Lekcji) FROM Lekcje_Plywania WHERE Data_I_Godzina > SYSDATE");
@@ -87,13 +103,13 @@ public class ClientController implements Initializable {
 
         ObservableList<ClientLesson> list = FXCollections.observableArrayList();
         for(int i = minLesson-1; i < maxLesson; i++){
-            ClientLesson temp = Lesson.getClientLesson(conn, "Zapisz się", i+1);
+            ClientLesson temp = Lesson.getClientLesson(conn, "Zapisz się", i+1, poolItem);
             if(temp != null) list.add(temp);
         }
         return list;
     }
 
-    private ObservableList<ClientPath> getReservations(Connection conn) throws SQLException {
+    private ObservableList<ClientPath> getReservations(Connection conn, String poolItem) throws SQLException {
         int minReservation;
         int maxReservation;
         PreparedStatement stmt = conn.prepareStatement("SELECT MIN(Numer_Rezerwacji) FROM Rezerwacje_Toru WHERE Data_I_Godzina > SYSDATE");
@@ -116,15 +132,15 @@ public class ClientController implements Initializable {
 
         ObservableList<ClientPath> list = FXCollections.observableArrayList();
         for(int i = minReservation-1; i < maxReservation; i++){
-            ClientPath temp = Reservation.getClientReservation(conn, "Zarezerwuj", i+1);
+            ClientPath temp = Reservation.getClientReservation(conn, "Zarezerwuj", i+1, poolItem);
             if(temp != null) list.add(temp);
         }
         return list;
     }
 
-    private final ObservableList<ClientLesson> lessons = getLessons(Main.jdbc.getConn());
+    private ObservableList<ClientLesson> lessons = getLessons(Main.jdbc.getConn(), null);
 
-    private final ObservableList<ClientPath> clientPaths = getReservations(Main.jdbc.getConn());
+    private ObservableList<ClientPath> clientPaths = getReservations(Main.jdbc.getConn(), null);
 
     private void initializeLessons(){
 
@@ -132,7 +148,6 @@ public class ClientController implements Initializable {
         lessonDate.setCellValueFactory(new PropertyValueFactory<>("date"));
         lessonEnrolled.setCellValueFactory(new PropertyValueFactory<>("enrolled"));
         lessonRescuer.setCellValueFactory(new PropertyValueFactory<>("rescuer"));
-        //lessonPool.setCellValueFactory(new PropertyValueFactory<>("poolName"));
         reserveLesson.setCellValueFactory(new PropertyValueFactory<>("enrollButton"));
 
         // dodanie wierszy
@@ -143,57 +158,46 @@ public class ClientController implements Initializable {
         number.setCellValueFactory(new PropertyValueFactory<>("number"));
         pathHours.setCellValueFactory(new PropertyValueFactory<>("date"));
         pathNumber.setCellValueFactory(new PropertyValueFactory<>("pathNumber"));
-        //pathPool.setCellValueFactory(new PropertyValueFactory<>("poolName"));
         reservePath.setCellValueFactory(new PropertyValueFactory<>("reserveButton"));
 
         pathTable.getItems().addAll(clientPaths);
     }
 
-    private void initializePoolList(){
-        //TODO
-
-        //przykładowe
-        ObservableList<String> items = FXCollections.observableArrayList (
-                "Single", "Double", "Suite", "Family App");
+    private void initializePoolList() throws SQLException {
+        ObservableList<String> items = getPoolNames(Main.jdbc.getConn());
         poolList.setItems(items);
     }
 
-    private void changeTables()
-    {
+    private void changeTables(String poolItem) throws SQLException {
         clearTables();
-
-        //TODO
+        lessons = getLessons(Main.jdbc.getConn(), poolItem);
+        clientPaths = getReservations(Main.jdbc.getConn(), poolItem);
+        initializeLessons();
+        initializePaths();
     }
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        initializePoolList();
+        try {
+            initializePoolList();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
         initializeLessons();
         initializePaths();
-
-    }
-
-    private void setItemsLessonTable(String poolName) {
-        //TODO
-    }
-    private void setItemsPathTable(String poolName) {
-        //TODO
     }
 
     @FXML
-    public void poolItemClicked() {
+    public void poolItemClicked() throws SQLException {
 
         String poolItem = poolList.getSelectionModel().getSelectedItem();
 
-        System.out.println("clicked on " + poolItem);   //debug
-
         if(poolItem == null) return;
 
-        // set new items
-        clearTables();
-        setItemsLessonTable(poolItem);
-        setItemsPathTable(poolItem);
+        String[] poolName = poolItem.split(",");
+        System.out.println("clicked on " + poolName[0]);   //debug
 
+        changeTables(poolName[0]);
     }
 
     // powrót do okna logowania
