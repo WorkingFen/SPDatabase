@@ -1,6 +1,8 @@
 package sample;
 
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
+
 
 public class HREmployee {
     private int id;
@@ -8,7 +10,7 @@ public class HREmployee {
     private String surname;
     private String position;
     private Button fireEmployee;
-    private Button changePosition;
+    private ComboBox<String> changePosition;
 
     public HREmployee(int id, String name, String surname, String position) {
         this.id = id;
@@ -16,7 +18,26 @@ public class HREmployee {
         this.surname = surname;
         this.position = position;
         this.fireEmployee = new Button("Zwolnij");
-        this.changePosition = new Button("Zmień stanowisko");
+        this.changePosition = new ComboBox<String>();
+		
+		// add items to the ComboBox
+        this.changePosition.getItems().addAll("Piekarz",
+                ": D",
+                "XD");
+
+        // get ComboBox value after an action
+        this.changePosition.setOnAction(e -> {
+            {
+                Object option = this.changePosition.getValue();
+                System.out.println(option);
+            }
+        });
+		
+		// alert
+        this.fireButton.setOnAction(e -> {
+            boolean answer = PopupWindowAlert.display("Czy na pewno chcesz zwolnić śmierdziela?","Rozwolnienie", 350);
+            System.out.println(answer);
+        });		
     }
 
     public int getId() { return id; }
