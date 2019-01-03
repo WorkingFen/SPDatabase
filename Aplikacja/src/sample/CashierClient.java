@@ -2,6 +2,9 @@ package sample;
 
 import javafx.scene.control.Button;
 
+import java.io.IOException;
+import java.util.Arrays;
+
 public class CashierClient {
     private int number;
     private String firstName;

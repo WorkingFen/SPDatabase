@@ -2,6 +2,7 @@ package JDBC;
 
 import sample.AuditorEmployee;
 import sample.HREmployee;
+import sample.ManagerEmployee;
 import sample.OwnerEmployee;
 
 import java.sql.Connection;
@@ -174,6 +175,40 @@ public class Employee {
             rSet.close();
             stmt.close();
             return new OwnerEmployee(id, name, surname, perk);
+        }
+        else{
+            rSet.close();
+            stmt.close();
+            return null;
+        }
+    }
+
+    static public ManagerEmployee getManagerEmployee(Connection conn, int id) throws SQLException {
+        PreparedStatement stmt = conn.prepareStatement("SELECT p.Imie, p.Nazwisko, p.Stanowiska_Numer_Stanowiska FROM Pracownicy p WHERE Numer_Identyfikacyjny = ?");
+        stmt.setInt(1, id);
+        ResultSet rSet = stmt.executeQuery();
+        if(rSet.next()){
+            String name = rSet.getString(1);
+            String surname = rSet.getString(2);
+            int noPost = rSet.getInt(3);
+            PreparedStatement stmt2 = conn.prepareStatement("SELECT Nazwa FROM Stanowiska WHERE Numer_Stanowiska = ?");
+            stmt2.setInt(1, noPost);
+            ResultSet rSet2 = stmt2.executeQuery();
+            if(rSet2.next()){
+                String postName = rSet2.getString(1);
+                rSet2.close();
+                stmt2.close();
+                rSet.close();
+                stmt.close();
+                return new ManagerEmployee(id, name, surname, postName);
+            }
+            else{
+                rSet2.close();
+                stmt2.close();
+                rSet.close();
+                stmt.close();
+                return null;
+            }
         }
         else{
             rSet.close();

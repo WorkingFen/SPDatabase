@@ -1,6 +1,7 @@
 package JDBC;
 
 import sample.AuditorInspection;
+import sample.ManagerInspection;
 import sample.RepairmanInspection;
 
 import java.sql.Connection;
@@ -87,6 +88,23 @@ public class Inspection {
             rSet.close();
             stmt.close();
             return new RepairmanInspection(id, date, "BRAK");
+        }
+        else{
+            rSet.close();
+            stmt.close();
+            return null;
+        }
+    }
+
+    static public ManagerInspection getManagerInspection(Connection conn, int id) throws SQLException {
+        PreparedStatement stmt = conn.prepareStatement("SELECT p.Data FROM Przeglady p WHERE Numer_Przegladu = ?");
+        stmt.setInt(1, id);
+        ResultSet rSet = stmt.executeQuery();
+        if(rSet.next()){
+            String date = rSet.getString(1);
+            rSet.close();
+            stmt.close();
+            return new ManagerInspection(id, date, "BRAK");
         }
         else{
             rSet.close();
