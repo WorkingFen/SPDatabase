@@ -15,7 +15,10 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.stage.Stage;
+
 
 import java.io.IOException;
 import java.net.URL;
@@ -38,9 +41,9 @@ public class HRController implements Initializable {
     @FXML
     private TableColumn<HREmployee, String> employeePosition;
     @FXML
-    private TableColumn<HREmployee, String> fireEmployee;
+    private TableColumn<HREmployee, Button> fireEmployee;
     @FXML
-    private TableColumn<HREmployee, String> changeEmployeePosition;
+    private TableColumn<HREmployee, ComboBox> changeEmployeePosition;
 
 
     @FXML
