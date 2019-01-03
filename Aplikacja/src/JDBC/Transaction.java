@@ -43,43 +43,22 @@ public class Transaction {
         }
     }
 
-    static public AuditorTransaction getAuditorTransaction(Connection conn, int id) throws SQLException {
-        PreparedStatement stmt = conn.prepareStatement("SELECT t.Data FROM Transakcje t WHERE Numer_transakcji = ?");
+    static public AuditorTransaction getAuditorTransaction(Connection conn, int id, String poolName) throws SQLException {
+        PreparedStatement stmt = conn.prepareStatement("SELECT Data, Nazwa_Uslugi, (Ilosc*Cena) FROM " +
+                "(SELECT z.Numer_Transakcji, z.Data, z.Ilosc, z.Nazwa_Uslugi, z.Cena, b.Nazwa_Obiektu FROM " +
+                "(SELECT a.Numer_Transakcji, a.Data, a.Ilosc, u.Nazwa_Uslugi, u.Cena, u.Baseny_Numer_Obiektu FROM " +
+                "(SELECT t.Numer_Transakcji, t.Data, k.Ilosc, k.Uslugi_Numer_Uslugi FROM " +
+                "Transakcje t JOIN Koszyki k ON t.Numer_Transakcji = k.Transakcje_Numer_Transakcji) a " +
+                "JOIN Uslugi u ON a.Uslugi_Numer_Uslugi = u.Numer_Uslugi) z " +
+                "JOIN Baseny b ON z.Baseny_Numer_Obiektu = b.Numer_Obiektu) " +
+                "WHERE Numer_transakcji = ? AND Nazwa_Obiektu = ?");
         stmt.setInt(1, id);
+        stmt.setString(2, poolName);
         ResultSet rSet = stmt.executeQuery();
-        String date;
         if(rSet.next()){
-            date = rSet.getString(1);
-            rSet.close();
-            stmt.close();
-        }
-        else{
-            rSet.close();
-            stmt.close();
-            return null;
-        }
-        stmt = conn.prepareStatement("SELECT Uslugi_Numer_Uslugi, Ilosc FROM Koszyki WHERE Transakcje_Numer_Transakcji = ?");
-        stmt.setInt(1, id);
-        rSet = stmt.executeQuery();
-        int noService;
-        int amount;
-        if(rSet.next()){
-            noService = rSet.getInt(1);
-            amount = rSet.getInt(2);
-            rSet.close();
-            stmt.close();
-        }
-        else{
-            rSet.close();
-            stmt.close();
-            return null;
-        }
-        stmt = conn.prepareStatement("SELECT Nazwa_Uslugi, Cena FROM Uslugi WHERE Numer_Uslugi = ?");
-        stmt.setInt(1, noService);
-        rSet = stmt.executeQuery();
-        if(rSet.next()){
-            String serviceName = rSet.getString(1);
-            int price = rSet.getInt(2)*amount;
+            String date = rSet.getString(1);
+            String serviceName = rSet.getString(2);
+            int price = rSet.getInt(3);
             rSet.close();
             stmt.close();
             return new AuditorTransaction(id, date, serviceName, price);

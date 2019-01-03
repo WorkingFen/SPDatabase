@@ -95,33 +95,24 @@ public class Employee {
         }
     }
 
-    static public AuditorEmployee getAuditorEmployee(Connection conn, int id) throws SQLException {
-        PreparedStatement stmt = conn.prepareStatement("SELECT p.Imie, p.Nazwisko, p.Dodatek_do_Pensji, p.Stanowiska_Numer_Stanowiska FROM Pracownicy p WHERE Numer_Identyfikacyjny = ?");
+    static public AuditorEmployee getAuditorEmployee(Connection conn, int id, String poolName) throws SQLException {
+        PreparedStatement stmt = conn.prepareStatement("SELECT Imie, Nazwisko, Dodatek_do_Pensji, Nazwa FROM " +
+                "(SELECT a.Numer_Identyfikacyjny, a.Imie, a.Nazwisko, a.Dodatek_Do_Pensji, a.Nazwa, b.Nazwa_Obiektu FROM " +
+                "(SELECT p.Numer_Identyfikacyjny, p.Imie, p.Nazwisko, p.Dodatek_Do_Pensji, p.Baseny_Numer_Obiektu, s.Nazwa FROM " +
+                "Pracownicy p JOIN Stanowiska s ON p.Stanowiska_Numer_Stanowiska = s.Numer_Stanowiska) a " +
+                "JOIN Baseny b ON a.Baseny_Numer_Obiektu = b.Numer_Obiektu) " +
+                "WHERE Numer_Identyfikacyjny = ? AND Nazwa_Obiektu = ?");
         stmt.setInt(1, id);
+        stmt.setString(2, poolName);
         ResultSet rSet = stmt.executeQuery();
         if(rSet.next()){
             String name = rSet.getString(1);
             String surname = rSet.getString(2);
             int perk = rSet.getInt(3);
-            int noPost = rSet.getInt(4);
-            PreparedStatement stmt2 = conn.prepareStatement("SELECT Nazwa FROM Stanowiska WHERE Numer_Stanowiska = ?");
-            stmt2.setInt(1, noPost);
-            ResultSet rSet2 = stmt2.executeQuery();
-            if(rSet2.next()){
-                String postName = rSet2.getString(1);
-                rSet2.close();
-                stmt2.close();
-                rSet.close();
-                stmt.close();
-                return new AuditorEmployee(id, name, surname, postName, perk);
-            }
-            else{
-                rSet2.close();
-                stmt2.close();
-                rSet.close();
-                stmt.close();
-                return null;
-            }
+            String postName = rSet.getString(4);
+            rSet.close();
+            stmt.close();
+            return new AuditorEmployee(id, name, surname, postName, perk);
         }
         else{
             rSet.close();

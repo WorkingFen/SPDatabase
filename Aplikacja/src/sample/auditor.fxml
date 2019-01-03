@@ -33,7 +33,6 @@
                   <TableView fx:id="inspectionTable" prefHeight="200.0" prefWidth="200.0">
                      <columns>
                         <TableColumn fx:id="inspectionID" prefWidth="116.0" text="Lp." />
-                        <TableColumn fx:id="inspectionObject" prefWidth="205.0" text="Obiekt" />
                         <TableColumn fx:id="inspectionDate" minWidth="5.0" prefWidth="119.0" text="Data" />
                         <TableColumn fx:id="comment" prefWidth="217.0" text="Uwagi" />
                      </columns>

@@ -46,31 +46,18 @@ public class Inspection {
         }
     }
 
-    static public AuditorInspection getAuditorInspection(Connection conn, int id) throws SQLException {
-        PreparedStatement stmt = conn.prepareStatement("SELECT p.Data, p.Baseny_Numer_Obiektu FROM Przeglady p WHERE Numer_Przegladu = ?");
+    static public AuditorInspection getAuditorInspection(Connection conn, int id, String poolName) throws SQLException {
+        PreparedStatement stmt = conn.prepareStatement("SELECT Data FROM " +
+                "(SELECT p.Numer_Przegladu, p.Data, b.Nazwa_Obiektu FROM Przeglady p JOIN Baseny b ON p.Baseny_Numer_Obiektu = b.Numer_Obiektu) " +
+                "WHERE Numer_Przegladu = ? AND Nazwa_Obiektu = ?");
         stmt.setInt(1, id);
+        stmt.setString(2, poolName);
         ResultSet rSet = stmt.executeQuery();
         if(rSet.next()){
             String date = rSet.getString(1);
-            int noObject = rSet.getInt(2);
-            PreparedStatement stmt2 = conn.prepareStatement("SELECT b.Nazwa_Obiektu, b.Miasto FROM Baseny b WHERE Numer_Obiektu = ?");
-            stmt2.setInt(1, noObject);
-            ResultSet rSet2 = stmt2.executeQuery();
-            if(rSet2.next()){
-                String objectName = rSet2.getString(1) + ", " + rSet2.getString(2);
-                rSet2.close();
-                stmt2.close();
-                rSet.close();
-                stmt.close();
-                return new AuditorInspection(id, objectName, date, "BRAK");
-            }
-            else{
-                rSet2.close();
-                stmt2.close();
-                rSet.close();
-                stmt.close();
-                return null;
-            }
+            rSet.close();
+            stmt.close();
+            return new AuditorInspection(id, date, "BRAK");
         }
         else{
             rSet.close();

@@ -2,6 +2,7 @@ package sample;
 
 import JDBC.Employee;
 import JDBC.Inspection;
+import JDBC.Pool;
 import JDBC.Transaction;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -51,8 +52,6 @@ public class AuditorController implements Initializable {
     @FXML
     private TableColumn<AuditorInspection, String> inspectionID;
     @FXML
-    private TableColumn<AuditorInspection, String> inspectionObject;
-    @FXML
     private TableColumn<AuditorInspection, String> inspectionDate;
     @FXML
     private TableColumn<AuditorInspection, String> comment;
@@ -78,7 +77,26 @@ public class AuditorController implements Initializable {
         transactionTable.getItems().clear();
     }
 
-    private ObservableList<AuditorEmployee> getEmployees(Connection conn) throws SQLException {
+    private ObservableList<String> getPoolNames(Connection conn) throws SQLException {
+        int noPools;
+        PreparedStatement stmt = conn.prepareStatement("SELECT COUNT(*) FROM Baseny");
+        ResultSet rSet = stmt.executeQuery();
+
+        if(rSet.next()) noPools = rSet.getInt(1);
+        else noPools = 0;
+
+        rSet.close();
+        stmt.close();
+
+        ObservableList<String> list = FXCollections.observableArrayList();
+        for(int i = 0; i < noPools; i++){
+            String temp = Pool.getPool(conn, i+1);
+            if(temp != null) list.add(temp);
+        }
+        return list;
+    }
+
+    private ObservableList<AuditorEmployee> getEmployees(Connection conn, String poolItem) throws SQLException {
         int noEmployees;
         PreparedStatement stmt = conn.prepareStatement("SELECT COUNT(*) FROM Pracownicy");
         ResultSet rSet = stmt.executeQuery();
@@ -91,12 +109,13 @@ public class AuditorController implements Initializable {
 
         ObservableList<AuditorEmployee> list = FXCollections.observableArrayList();
         for(int i = 0; i < noEmployees; i++){
-            list.add(Employee.getAuditorEmployee(conn, i+1));
+            AuditorEmployee temp = Employee.getAuditorEmployee(conn, i+1, poolItem);
+            if(temp != null) list.add(temp);
         }
         return list;
     }
 
-    private ObservableList<AuditorInspection> getInspections(Connection conn) throws SQLException {
+    private ObservableList<AuditorInspection> getInspections(Connection conn, String poolItem) throws SQLException {
         int noInspections;
         PreparedStatement stmt = conn.prepareStatement("SELECT COUNT(*) FROM Przeglady");
         ResultSet rSet = stmt.executeQuery();
@@ -109,12 +128,13 @@ public class AuditorController implements Initializable {
 
         ObservableList<AuditorInspection> list = FXCollections.observableArrayList();
         for(int i = 0; i < noInspections; i++){
-            list.add(Inspection.getAuditorInspection(conn, i+1));
+            AuditorInspection temp = Inspection.getAuditorInspection(conn, i+1, poolItem);
+            if(temp != null) list.add(temp);
         }
         return list;
     }
 
-    private ObservableList<AuditorTransaction> getTransactions(Connection conn) throws SQLException {
+    private ObservableList<AuditorTransaction> getTransactions(Connection conn, String poolItem) throws SQLException {
         int noTransactions;
         PreparedStatement stmt = conn.prepareStatement("SELECT COUNT(*) FROM Transakcje");
         ResultSet rSet = stmt.executeQuery();
@@ -127,16 +147,17 @@ public class AuditorController implements Initializable {
 
         ObservableList<AuditorTransaction> list = FXCollections.observableArrayList();
         for(int i = 0; i < noTransactions; i++){
-            list.add(Transaction.getAuditorTransaction(conn, i+1));
+            AuditorTransaction temp = Transaction.getAuditorTransaction(conn, i+1, poolItem);
+            if(temp != null) list.add(temp);
         }
         return list;
     }
 
-    private final ObservableList<AuditorEmployee> employees = getEmployees(Main.jdbc.getConn());
+    private ObservableList<AuditorEmployee> employees = getEmployees(Main.jdbc.getConn(), null);
 
-    private final ObservableList<AuditorInspection> inspections = getInspections(Main.jdbc.getConn());
+    private ObservableList<AuditorInspection> inspections = getInspections(Main.jdbc.getConn(), null);
 
-    private final ObservableList<AuditorTransaction> transactions = getTransactions(Main.jdbc.getConn());
+    private ObservableList<AuditorTransaction> transactions = getTransactions(Main.jdbc.getConn(), null);
 
     private void initializeEmployees() {
         employeeID.setCellValueFactory(new PropertyValueFactory<>("number"));
@@ -150,7 +171,6 @@ public class AuditorController implements Initializable {
 
     private void initializeInspections() {
         inspectionID.setCellValueFactory(new PropertyValueFactory<>("number"));
-        inspectionObject.setCellValueFactory(new PropertyValueFactory<>("objectName"));
         inspectionDate.setCellValueFactory(new PropertyValueFactory<>("date"));
         comment.setCellValueFactory(new PropertyValueFactory<>("comment"));
 
@@ -166,54 +186,44 @@ public class AuditorController implements Initializable {
         transactionTable.getItems().addAll(transactions);
     }
 
-    private void initializePoolList(){
-        //TODO
-
-        //przykładowe
-        ObservableList<String> items = FXCollections.observableArrayList (
-                "Single", "Double", "Suite", "Family App");
+    private void initializePoolList() throws SQLException {
+        ObservableList<String> items = getPoolNames(Main.jdbc.getConn());
         poolList.setItems(items);
     }
 
-    private void changeTables()
-    {
+    private void changeTables(String poolItem) throws SQLException {
         clearTables();
-
-        //TODO
-    }
-
-    @Override
-    public void initialize(URL url, ResourceBundle rb){
-        initializePoolList();
+        employees = getEmployees(Main.jdbc.getConn(), poolItem);
+        inspections = getInspections(Main.jdbc.getConn(), poolItem);
+        transactions = getTransactions(Main.jdbc.getConn(), poolItem);
         initializeEmployees();
         initializeInspections();
         initializeTransactions();
     }
 
-    private void setItemsEmployeeTable(String poolName) {
-        //TODO
-    }
-    private void setItemsInspectionTable(String poolName) {
-        //TODO
-    }
-    private void setItemsTransactionTable(String poolName) {
-        //TODO
+    @Override
+    public void initialize(URL url, ResourceBundle rb){
+        try {
+            initializePoolList();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        initializeEmployees();
+        initializeInspections();
+        initializeTransactions();
     }
 
     @FXML
-    public void poolItemClicked() {
+    public void poolItemClicked() throws SQLException {
 
         String poolItem = poolList.getSelectionModel().getSelectedItem();
 
-        System.out.println("clicked on " + poolItem);   //debug
-
         if(poolItem == null) return;
 
-        // set new items
-        clearTables();
-        setItemsEmployeeTable(poolItem);
-        setItemsInspectionTable(poolItem);
-        setItemsTransactionTable(poolItem);
+        String[] poolName = poolItem.split(",");
+        System.out.println("clicked on " + poolName[0]);   //debug
+
+        changeTables(poolName[0]);
     }
 
     public void logOutButtonPushed(ActionEvent event) throws IOException {

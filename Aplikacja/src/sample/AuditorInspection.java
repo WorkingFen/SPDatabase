@@ -2,13 +2,11 @@ package sample;
 
 public class AuditorInspection {
     private int number;
-    private String objectName;
     private String date;
     private String comment;
 
-    public AuditorInspection(int number, String objectName, String date, String comment) {
+    public AuditorInspection(int number, String date, String comment) {
         this.number = number;
-        this.objectName = objectName;
         this.date = date;
         this.comment = comment;
     }
@@ -16,10 +14,6 @@ public class AuditorInspection {
     public int getNumber() { return number; }
 
     public void setNumber(int number) { this.number = number; }
-
-    public String getObjectName() { return objectName; }
-
-    public void setObjectName(String objectName) { this.objectName = objectName; }
 
     public String getDate() { return date; }
 
