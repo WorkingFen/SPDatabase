@@ -18,7 +18,7 @@ public class HREmployee {
         this.surname = surname;
         this.position = position;
         this.fireEmployee = new Button("Zwolnij");
-        this.changePosition = new ComboBox<String>();
+        this.changePosition = new ComboBox<>();
 		
 		// add items to the ComboBox
         this.changePosition.getItems().addAll("Piekarz",
@@ -34,7 +34,7 @@ public class HREmployee {
         });
 		
 		// alert
-        this.fireButton.setOnAction(e -> {
+        this.fireEmployee.setOnAction(e -> {
             boolean answer = PopupWindowAlert.display("Czy na pewno chcesz zwolnić śmierdziela?","Rozwolnienie", 350);
             System.out.println(answer);
         });		
@@ -60,7 +60,7 @@ public class HREmployee {
 
     public void setFireEmployee(Button fireEmployee) { this.fireEmployee = fireEmployee; }
 
-    public Button getChangePosition() { return changePosition; }
+    public ComboBox<String> getChangePosition() { return changePosition; }
 
-    public void setChangePosition(Button changePosition) { this.changePosition = changePosition; }
+    public void setChangePosition(ComboBox<String> changePosition) { this.changePosition = changePosition; }
 }
