@@ -116,41 +116,67 @@ public class ManagerController implements Initializable {
         return list;
     }
 
-    /*private ObservableList<ManagerIncome> getIncomes(Connection conn) throws SQLException {
-        int noIncomes;
-        PreparedStatement stmt = conn.prepareStatement("SELECT COUNT(*) FROM Pracownicy");
+    private ObservableList<ManagerIncome> getIncomes(Connection conn) throws SQLException {
+        int minYear;
+        int maxYear;
+        PreparedStatement stmt = conn.prepareStatement("SELECT MIN(to_char(Data, 'YYYY')) FROM Transakcje");
         ResultSet rSet = stmt.executeQuery();
 
-        if(rSet.next()) noIncomes = rSet.getInt(1);
-        else noIncomes = 0;
+        if(rSet.next()) minYear = rSet.getInt(1);
+        else minYear = 1970;
+
+        rSet.close();
+        stmt.close();
+
+        stmt = conn.prepareStatement("SELECT MAX(to_char(Data, 'YYYY')) FROM Transakcje");
+        rSet = stmt.executeQuery();
+
+        if(rSet.next()) maxYear = rSet.getInt(1);
+        else maxYear = 2037;
 
         rSet.close();
         stmt.close();
 
         ObservableList<ManagerIncome> list = FXCollections.observableArrayList();
-        for(int i = 0; i < noIncomes; i++){
-            list.add(Transaction.getManagerIncome(conn, i+1));
+        for(int year = minYear-1; year < maxYear; year++){
+            for(int month = 0; month < 12; month++){
+                ManagerIncome temp = Transaction.getManagerIncome(conn, Integer.toString(year+1), month+1);
+                if(temp != null) list.add(temp);
+            }
         }
         return list;
-    }*/
+    }
 
-    /*private ObservableList<ManagerSalary> getSalaries(Connection conn) throws SQLException {
-        int noEmployees;
-        PreparedStatement stmt = conn.prepareStatement("SELECT COUNT(*) FROM Pracownicy");
+    private ObservableList<ManagerSalary> getSalaries(Connection conn) throws SQLException {
+        int minYear;
+        int maxYear;
+        PreparedStatement stmt = conn.prepareStatement("SELECT MIN(to_char(Data, 'YYYY')) FROM Transakcje");
         ResultSet rSet = stmt.executeQuery();
 
-        if(rSet.next()) noEmployees = rSet.getInt(1);
-        else noEmployees = 0;
+        if(rSet.next()) minYear = rSet.getInt(1);
+        else minYear = 1970;
+
+        rSet.close();
+        stmt.close();
+
+        stmt = conn.prepareStatement("SELECT MAX(to_char(Data, 'YYYY')) FROM Transakcje");
+        rSet = stmt.executeQuery();
+
+        if(rSet.next()) maxYear = rSet.getInt(1);
+        else maxYear = 2037;
 
         rSet.close();
         stmt.close();
 
         ObservableList<ManagerSalary> list = FXCollections.observableArrayList();
-        for(int i = 0; i < noEmployees; i++){
-            list.add(Employee.getManagerEmployee(conn, i+1));
+        for(int year = minYear-1; year < maxYear; year++){
+            for(int month = 0; month < 12; month++){
+                ManagerSalary temp = Transaction.getManagerSalary(conn, Integer.toString(year+1), month+1);
+                if(temp != null) list.add(temp);
+            }
         }
         return list;
-    }*/
+    }
 
     private ObservableList<ManagerInspection> getInspections(Connection conn) throws SQLException {
         int noInspections;
@@ -174,9 +200,9 @@ public class ManagerController implements Initializable {
 
     private final ObservableList<ManagerTransaction> transactions = getTransactions(Main.jdbc.getConn());
 
-    //private final ObservableList<ManagerIncome> incomes = getEmployees(Main.jdbc.getConn());
+    private final ObservableList<ManagerIncome> incomes = getIncomes(Main.jdbc.getConn());
 
-    //private final ObservableList<ManagerSalary> salaries = getEmployees(Main.jdbc.getConn());
+    private final ObservableList<ManagerSalary> salaries = getSalaries(Main.jdbc.getConn());
 
     private final ObservableList<ManagerInspection> inspections = getInspections(Main.jdbc.getConn());
 
@@ -199,7 +225,7 @@ public class ManagerController implements Initializable {
         transactionTable.getItems().addAll(transactions);
     }
 
-    /*private void initializeIncome()
+    private void initializeIncome()
     {
         incomeMonth.setCellValueFactory(new PropertyValueFactory<>("month"));
         income.setCellValueFactory(new PropertyValueFactory<>("income"));
@@ -213,7 +239,7 @@ public class ManagerController implements Initializable {
         salary.setCellValueFactory(new PropertyValueFactory<>("salary"));
 
         salaryTable.getItems().addAll(salaries);
-    }*/
+    }
 
     private void initializeInspection()
     {
@@ -228,12 +254,11 @@ public class ManagerController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         initializeEmployee();
         initializeTransaction();
-        //initializeIncome();
-        //initializeSalary();
+        initializeIncome();
+        initializeSalary();
         initializeInspection();
     }
 
-    // powrót do okna logowania
     public void logOutButtonPushed(ActionEvent event) throws IOException {
 
         Parent tableViewParent = FXMLLoader.load(getClass().getResource("sample.fxml"));

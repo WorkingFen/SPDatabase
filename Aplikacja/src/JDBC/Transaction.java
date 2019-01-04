@@ -1,8 +1,6 @@
 package JDBC;
 
-import sample.AuditorTransaction;
-import sample.ManagerTransaction;
-import sample.OwnerIncome;
+import sample.*;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -110,6 +108,59 @@ public class Transaction {
             rSet.close();
             stmt.close();
             return new ManagerTransaction(id, date, price);
+        }
+        else{
+            rSet.close();
+            stmt.close();
+            return null;
+        }
+    }
+
+    static public ManagerIncome getManagerIncome(Connection conn, String year, int month) throws SQLException {
+        String date;
+        if(month < 10) date = year+"-0"+month;
+        else date = year+"-"+month;
+
+        int income;
+        PreparedStatement stmt = conn.prepareStatement(
+                "SELECT sum(Ilosc*Cena) FROM " +
+                        "(SELECT a.Data, a.Ilosc, u.Cena, u.Baseny_Numer_Obiektu FROM " +
+                        "(SELECT t.Data, k.Ilosc, k.Uslugi_Numer_Uslugi FROM Transakcje t JOIN Koszyki k ON t.Numer_Transakcji = k.Transakcje_Numer_Transakcji) a " +
+                        "JOIN Uslugi u ON a.Uslugi_Numer_Uslugi = u.Numer_Uslugi) " +
+                        "WHERE to_char(Data, 'YYYY-MM') = ?"
+        );
+        stmt.setString(1, date);
+        ResultSet rSet = stmt.executeQuery();
+        if(rSet.next()){
+            income = rSet.getInt(1);
+            rSet.close();
+            stmt.close();
+            return new ManagerIncome(date, income);
+        }
+        else{
+            rSet.close();
+            stmt.close();
+            return null;
+        }
+    }
+
+    static public ManagerSalary getManagerSalary(Connection conn, String year, int month) throws SQLException {
+        String date;
+        if(month < 10) date = year+"-0"+month;
+        else date = year+"-"+month;
+
+        int expenses;
+
+        PreparedStatement stmt = conn.prepareStatement(
+                "SELECT sum(Wynagrodzenie+Dodatek_Do_Pensji) FROM " +
+                        "(SELECT p.Dodatek_Do_Pensji, s.Wynagrodzenie FROM Pracownicy p JOIN Stanowiska s ON p.Stanowiska_Numer_Stanowiska = s.Numer_Stanowiska) "
+        );
+        ResultSet rSet = stmt.executeQuery();
+        if(rSet.next()){
+            expenses = rSet.getInt(1);
+            rSet.close();
+            stmt.close();
+            return new ManagerSalary(date, expenses);
         }
         else{
             rSet.close();
