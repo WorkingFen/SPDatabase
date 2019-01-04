@@ -136,9 +136,9 @@ public class ClientController implements Initializable {
         return list;
     }
 
-    private ObservableList<ClientLesson> lessons = getLessons(Main.jdbc.getConn(), null);
+    private ObservableList<ClientLesson> lessons = FXCollections.observableArrayList();
 
-    private ObservableList<ClientPath> clientPaths = getReservations(Main.jdbc.getConn(), null);
+    private ObservableList<ClientPath> clientPaths = FXCollections.observableArrayList();
 
     private void initializeLessons(){
         lessonDate.setCellValueFactory(new PropertyValueFactory<>("date"));

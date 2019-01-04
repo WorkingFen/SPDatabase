@@ -153,11 +153,11 @@ public class AuditorController implements Initializable {
         return list;
     }
 
-    private ObservableList<AuditorEmployee> employees = getEmployees(Main.jdbc.getConn(), null);
+    private ObservableList<AuditorEmployee> employees = FXCollections.observableArrayList();
 
-    private ObservableList<AuditorInspection> inspections = getInspections(Main.jdbc.getConn(), null);
+    private ObservableList<AuditorInspection> inspections = FXCollections.observableArrayList();
 
-    private ObservableList<AuditorTransaction> transactions = getTransactions(Main.jdbc.getConn(), null);
+    private ObservableList<AuditorTransaction> transactions = FXCollections.observableArrayList();
 
     private void initializeEmployees() {
         employeeID.setCellValueFactory(new PropertyValueFactory<>("number"));

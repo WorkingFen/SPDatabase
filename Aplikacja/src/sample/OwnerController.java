@@ -116,9 +116,9 @@ public class OwnerController implements Initializable {
         return list;
     }*/
 
-    private ObservableList<OwnerEmployee> employees = getEmployees(Main.jdbc.getConn(), null);
+    private ObservableList<OwnerEmployee> employees = FXCollections.observableArrayList();
 
-    //private ObservableList<OwnerIncome> incomes = getIncomes(Main.jdbc.getConn(), null);
+    //private ObservableList<OwnerIncome> incomes = FXCollections.observableArrayList();
 
     private void initializeEmployees() {
         employeeID.setCellValueFactory(new PropertyValueFactory<>("id"));

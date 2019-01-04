@@ -18,17 +18,6 @@
     <right>
         <TabPane prefHeight="295.0" prefWidth="457.0" tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER">
             <tabs>
-                <Tab text="Przeglądy">
-                    <content>
-                        <TableView fx:id="inspectionsTable" prefHeight="200.0" prefWidth="200.0">
-                            <columns>
-                                <TableColumn fx:id="inspectionNumber" prefWidth="105.0" text="Lp." />
-                                <TableColumn fx:id="inspectionDate" prefWidth="102.0" text="Data" />
-                                <TableColumn fx:id="inspectionDescription" prefWidth="250.0" text="Opis" />
-                            </columns>
-                        </TableView>
-                    </content>
-                </Tab>
                 <Tab text="Klienci">
                     <content>
                         <TableView fx:id="clientsTable" prefHeight="200.0" prefWidth="200.0">
@@ -88,12 +77,12 @@
                         </HBox>
                      </top>
                      <center>
-                        <TableView prefHeight="247.0" prefWidth="457.0" BorderPane.alignment="CENTER">
+                        <TableView fx:id="reservationsTable" prefHeight="247.0" prefWidth="457.0" BorderPane.alignment="CENTER">
                           <columns>
-                            <TableColumn prefWidth="75.0" text="Data" />
-                            <TableColumn prefWidth="75.0" text="Rodzaj" />
-                              <TableColumn prefWidth="75.0" text="Imię" />
-                              <TableColumn prefWidth="75.0" text="Nazwisko" />
+                            <TableColumn fx:id="reservationDate" prefWidth="75.0" text="Data" />
+                            <TableColumn fx:id="reservationType" prefWidth="75.0" text="Rodzaj" />
+                              <TableColumn fx:id="reservationFName" prefWidth="75.0" text="Imię" />
+                              <TableColumn fx:id="reservationLName" prefWidth="75.0" text="Nazwisko" />
                           </columns>
                         </TableView>
                      </center>
@@ -120,7 +109,7 @@
                <content>
                   <BorderPane prefHeight="200.0" prefWidth="200.0">
                      <center>
-                        <TableView prefHeight="247.0" prefWidth="457.0" BorderPane.alignment="CENTER">
+                        <TableView fx:id="transactionsTable" prefHeight="247.0" prefWidth="457.0" BorderPane.alignment="CENTER">
                            <columns>
                               <TableColumn fx:id="transactionDate" prefWidth="75.0" text="Data" />
                               <TableColumn fx:id="transactionValue" prefWidth="75.0" text="Wartość" />
