@@ -2,6 +2,7 @@ package JDBC;
 
 import sample.AuditorTransaction;
 import sample.ManagerTransaction;
+import sample.OwnerIncome;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -109,6 +110,75 @@ public class Transaction {
             rSet.close();
             stmt.close();
             return new ManagerTransaction(id, date, price);
+        }
+        else{
+            rSet.close();
+            stmt.close();
+            return null;
+        }
+    }
+
+    static public OwnerIncome getOwnerIncome(Connection conn, String year, int month, String poolName) throws SQLException {
+        String date;
+        if(month < 10) date = year+"-0"+month;
+        else date = year+"-"+month;
+
+        int income;
+        int expenses;
+        int noPool;
+        PreparedStatement stmt = conn.prepareStatement(
+                "SELECT Numer_Obiektu FROM " +
+                        "(SELECT b.Numer_Obiektu, b.Nazwa_Obiektu FROM " +
+                            "(SELECT u.Baseny_Numer_Obiektu FROM " +
+                                "(SELECT k.Uslugi_Numer_Uslugi FROM Transakcje t JOIN Koszyki k ON t.Numer_Transakcji = k.Transakcje_Numer_Transakcji) a " +
+                            "JOIN Uslugi u ON a.Uslugi_Numer_Uslugi = u.Numer_Uslugi) z " +
+                        "JOIN Baseny b ON z.Baseny_Numer_Obiektu = b.Numer_Obiektu) " +
+                     "WHERE Nazwa_Obiektu = ?"
+        );
+        stmt.setString(1, poolName);
+        ResultSet rSet = stmt.executeQuery();
+        if(rSet.next()){
+            noPool = rSet.getInt(1);
+            rSet.close();
+            stmt.close();
+        }
+        else{
+            rSet.close();
+            stmt.close();
+            return null;
+        }
+        stmt = conn.prepareStatement(
+                "SELECT sum(Ilosc*Cena) FROM " +
+                        "(SELECT a.Data, a.Ilosc, u.Cena, u.Baseny_Numer_Obiektu FROM " +
+                            "(SELECT t.Data, k.Ilosc, k.Uslugi_Numer_Uslugi FROM Transakcje t JOIN Koszyki k ON t.Numer_Transakcji = k.Transakcje_Numer_Transakcji) a " +
+                        "JOIN Uslugi u ON a.Uslugi_Numer_Uslugi = u.Numer_Uslugi) " +
+                    "WHERE Baseny_Numer_Obiektu = ? AND to_char(Data, 'YYYY-MM') = ?"
+        );
+        stmt.setInt(1, noPool);
+        stmt.setString(2, date);
+        rSet = stmt.executeQuery();
+        if(rSet.next()){
+            income = rSet.getInt(1);
+            rSet.close();
+            stmt.close();
+        }
+        else{
+            rSet.close();
+            stmt.close();
+            return null;
+        }
+        stmt = conn.prepareStatement(
+                "SELECT sum(Wynagrodzenie+Dodatek_Do_Pensji) FROM " +
+                        "(SELECT p.Baseny_Numer_Obiektu, p.Dodatek_Do_Pensji, s.Wynagrodzenie FROM Pracownicy p JOIN Stanowiska s ON p.Stanowiska_Numer_Stanowiska = s.Numer_Stanowiska) " +
+                    "WHERE Baseny_Numer_Obiektu = ?"
+        );
+        stmt.setInt(1, noPool);
+        rSet = stmt.executeQuery();
+        if(rSet.next()){
+            expenses = rSet.getInt(1);
+            rSet.close();
+            stmt.close();
+            return new OwnerIncome(date, income, expenses);
         }
         else{
             rSet.close();

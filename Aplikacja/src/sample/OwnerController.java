@@ -2,6 +2,7 @@ package sample;
 
 import JDBC.Employee;
 import JDBC.Pool;
+import JDBC.Transaction;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -46,7 +47,7 @@ public class OwnerController implements Initializable {
     @FXML
     private TableView<OwnerIncome> incomeTable;
     @FXML
-    private TableColumn<OwnerIncome, String> objectName;
+    private TableColumn<OwnerIncome, String> date;
     @FXML
     private TableColumn<OwnerIncome, String> income;
     @FXML
@@ -98,27 +99,40 @@ public class OwnerController implements Initializable {
         return list;
     }
 
-    /*private ObservableList<OwnerIncome> getIncomes(Connection conn) throws SQLException {
-        int noMonths;
-        PreparedStatement stmt = conn.prepareStatement("SELECT COUNT(*) FROM Rezerwacje_Toru");
+    private ObservableList<OwnerIncome> getIncomes(Connection conn, String poolItem) throws SQLException {
+        int minYear;
+        int maxYear;
+        PreparedStatement stmt = conn.prepareStatement("SELECT MIN(to_char(Data, 'YYYY')) FROM Transakcje");
         ResultSet rSet = stmt.executeQuery();
 
-        if(rSet.next()) noReservations = rSet.getInt(1);
-        else noReservations = 0;
+        if(rSet.next()) minYear = rSet.getInt(1);
+        else minYear = 1970;
 
         rSet.close();
         stmt.close();
 
-        ObservableList<CashierPath> list = FXCollections.observableArrayList();
-        for(int i = 0; i < noReservations; i++){
-            list.add(Reservation.getCashierReservation(conn, "Rezerwuj", i+1));
+        stmt = conn.prepareStatement("SELECT MAX(to_char(Data, 'YYYY')) FROM Transakcje");
+        rSet = stmt.executeQuery();
+
+        if(rSet.next()) maxYear = rSet.getInt(1);
+        else maxYear = 2037;
+
+        rSet.close();
+        stmt.close();
+
+        ObservableList<OwnerIncome> list = FXCollections.observableArrayList();
+        for(int year = minYear-1; year < maxYear; year++){
+            for(int month = 0; month < 12; month++){
+                OwnerIncome temp = Transaction.getOwnerIncome(conn, Integer.toString(year+1), month+1, poolItem);
+                if(temp != null) list.add(temp);
+            }
         }
         return list;
-    }*/
+    }
 
     private ObservableList<OwnerEmployee> employees = FXCollections.observableArrayList();
 
-    //private ObservableList<OwnerIncome> incomes = FXCollections.observableArrayList();
+    private ObservableList<OwnerIncome> incomes = FXCollections.observableArrayList();
 
     private void initializeEmployees() {
         employeeID.setCellValueFactory(new PropertyValueFactory<>("id"));
@@ -129,13 +143,13 @@ public class OwnerController implements Initializable {
         employeeTable.getItems().addAll(employees);
     }
 
-    /*private void initializeIncomes() {
-        objectName.setCellValueFactory(new PropertyValueFactory<>("objectName"));
+    private void initializeIncomes() {
+        date.setCellValueFactory(new PropertyValueFactory<>("date"));
         income.setCellValueFactory(new PropertyValueFactory<>("income"));
         expenses.setCellValueFactory(new PropertyValueFactory<>("expenses"));
 
         incomeTable.getItems().addAll(incomes);
-    }*/
+    }
 
     private void initializePoolList() throws SQLException {
         ObservableList<String> items = getPoolNames(Main.jdbc.getConn());
@@ -145,9 +159,9 @@ public class OwnerController implements Initializable {
     private void changeTables(String poolItem) throws SQLException {
         clearTables();
         employees = getEmployees(Main.jdbc.getConn(), poolItem);
-        //incomes = getIncomes(Main.jdbc.getConn(), poolItem);
+        incomes = getIncomes(Main.jdbc.getConn(), poolItem);
         initializeEmployees();
-        //initializeIncomes();
+        initializeIncomes();
     }
 
     @Override
@@ -158,7 +172,7 @@ public class OwnerController implements Initializable {
             e.printStackTrace();
         }
         initializeEmployees();
-        //initializeIncomes();
+        initializeIncomes();
     }
 
     @FXML

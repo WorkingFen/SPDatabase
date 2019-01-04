@@ -32,6 +32,7 @@
                <content>
                   <TableView fx:id="incomeTable" prefHeight="200.0" prefWidth="200.0">
                      <columns>
+                        <TableColumn fx:id="date" prefWidth="100.0" text="Rok i miesiąc" />
                         <TableColumn fx:id="income" prefWidth="113.0" text="Przychody" />
                         <TableColumn fx:id="expenses" minWidth="0.0" prefWidth="115.0" text="Wydatki" />
                      </columns>

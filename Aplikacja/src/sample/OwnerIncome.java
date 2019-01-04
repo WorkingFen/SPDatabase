@@ -1,19 +1,19 @@
 package sample;
 
 public class OwnerIncome {
-    private String objectName;
+    private String date;
     private int income;
     private int expenses;
 
-    public OwnerIncome(String objectName, int income, int expenses) {
-        this.objectName = objectName;
+    public OwnerIncome(String date, int income, int expenses) {
+        this.date = date;
         this.income = income;
         this.expenses = expenses;
     }
 
-    public String getObjectName() { return objectName; }
+    public String getDate() { return date; }
 
-    public void setObjectName(String objectName) { this.objectName = objectName; }
+    public void setDate(String date) { this.date = date; }
 
     public int getIncome() { return income; }
 
