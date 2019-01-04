@@ -16,7 +16,7 @@ public class Transaction {
 
             conn.setAutoCommit(false);
 
-            stmt = conn.prepareStatement("INSERT INTO Transakcje VALUES(?, SYSDATE)");
+            stmt = conn.prepareStatement("INSERT INTO Transakcje VALUES(?, to_date(SYSDATE, 'YYYY-MM-DD HH24:MI:SS'))");
 
             PreparedStatement stmt2 = conn.prepareStatement("SELECT MAX(Transakcje.Numer_transakcji) FROM Transakcje");
             ResultSet rset = stmt2.executeQuery();
@@ -44,7 +44,7 @@ public class Transaction {
     }
 
     static public AuditorTransaction getAuditorTransaction(Connection conn, int id, String poolName) throws SQLException {
-        PreparedStatement stmt = conn.prepareStatement("SELECT Data, Nazwa_Uslugi, (Ilosc*Cena) FROM " +
+        PreparedStatement stmt = conn.prepareStatement("SELECT to_char(Data, 'YYYY-MM-DD HH24:MI:SS'), Nazwa_Uslugi, (Ilosc*Cena) FROM " +
                 "(SELECT z.Numer_Transakcji, z.Data, z.Ilosc, z.Nazwa_Uslugi, z.Cena, b.Nazwa_Obiektu FROM " +
                 "(SELECT a.Numer_Transakcji, a.Data, a.Ilosc, u.Nazwa_Uslugi, u.Cena, u.Baseny_Numer_Obiektu FROM " +
                 "(SELECT t.Numer_Transakcji, t.Data, k.Ilosc, k.Uslugi_Numer_Uslugi FROM " +
@@ -71,7 +71,7 @@ public class Transaction {
     }
 
     static public ManagerTransaction getManagerTransaction(Connection conn, int id) throws SQLException {
-        PreparedStatement stmt = conn.prepareStatement("SELECT t.Data FROM Transakcje t WHERE Numer_transakcji = ?");
+        PreparedStatement stmt = conn.prepareStatement("SELECT to_char(t.Data, 'YYYY-MM-DD HH24:MI:SS') FROM Transakcje t WHERE Numer_transakcji = ?");
         stmt.setInt(1, id);
         ResultSet rSet = stmt.executeQuery();
         String date;

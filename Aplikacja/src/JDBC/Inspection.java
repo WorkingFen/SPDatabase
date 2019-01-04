@@ -17,7 +17,7 @@ public class Inspection {
 
             conn.setAutoCommit(false);
 
-            stmt=conn.prepareStatement("INSERT INTO Przeglady VALUES(?, to_date(?, 'YY/MM/DD'), ?)");
+            stmt=conn.prepareStatement("INSERT INTO Przeglady VALUES(?, to_date(?, 'YYYY-MM-DD'), ?)");
 
             PreparedStatement stmt2 = conn.prepareStatement("SELECT MAX(Przeglady.Numer_Przegladu) FROM Przeglady");
             ResultSet rset = stmt2.executeQuery();
@@ -47,7 +47,7 @@ public class Inspection {
     }
 
     static public AuditorInspection getAuditorInspection(Connection conn, int id, String poolName) throws SQLException {
-        PreparedStatement stmt = conn.prepareStatement("SELECT Data FROM " +
+        PreparedStatement stmt = conn.prepareStatement("SELECT to_char(Data, 'YYYY-MM-DD') FROM " +
                 "(SELECT p.Numer_Przegladu, p.Data, b.Nazwa_Obiektu FROM Przeglady p JOIN Baseny b ON p.Baseny_Numer_Obiektu = b.Numer_Obiektu) " +
                 "WHERE Numer_Przegladu = ? AND Nazwa_Obiektu = ?");
         stmt.setInt(1, id);
@@ -67,7 +67,7 @@ public class Inspection {
     }
 
     static public RepairmanInspection getRepairmanInspection(Connection conn, int id) throws SQLException {
-        PreparedStatement stmt = conn.prepareStatement("SELECT p.Data FROM Przeglady p WHERE Numer_Przegladu = ?");
+        PreparedStatement stmt = conn.prepareStatement("SELECT to_char(p.Data, 'YYYY-MM-DD') FROM Przeglady p WHERE Numer_Przegladu = ?");
         stmt.setInt(1, id);
         ResultSet rSet = stmt.executeQuery();
         if(rSet.next()){
@@ -84,7 +84,7 @@ public class Inspection {
     }
 
     static public ManagerInspection getManagerInspection(Connection conn, int id) throws SQLException {
-        PreparedStatement stmt = conn.prepareStatement("SELECT p.Data FROM Przeglady p WHERE Numer_Przegladu = ?");
+        PreparedStatement stmt = conn.prepareStatement("SELECT to_char(p.Data, 'YYYY-MM-DD') FROM Przeglady p WHERE Numer_Przegladu = ?");
         stmt.setInt(1, id);
         ResultSet rSet = stmt.executeQuery();
         if(rSet.next()){

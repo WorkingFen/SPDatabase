@@ -15,7 +15,7 @@ public class Lesson {
 
             conn.setAutoCommit(false);
 
-            stmt = conn.prepareStatement("INSERT INTO Lekcje_Plywania VALUES(?, to_date(?, 'YY/MM/DD HH24:MM'), ?, ?, 0)");
+            stmt = conn.prepareStatement("INSERT INTO Lekcje_Plywania VALUES(?, to_date(?, 'YYYY-MM-DD HH24:MI'), ?, ?, 0)");
 
             PreparedStatement stmt2 = conn.prepareStatement("SELECT MAX(Lekcje_Plywania.Numer_lekcji) FROM Lekcje_Plywania");
             ResultSet rset = stmt2.executeQuery();
@@ -51,7 +51,7 @@ public class Lesson {
         int noPool;
         String surname;
         PreparedStatement stmt = conn.prepareStatement(
-                "SELECT Data_i_Godzina, Liczba_zapisanych_osob, Nazwisko FROM " +
+                "SELECT to_char(Data_i_Godzina, 'YYYY-MM-DD HH24:MI'), Liczba_zapisanych_osob, Nazwisko FROM " +
                         "(SELECT * FROM Lekcje_Plywania JOIN Pracownicy ON Numer_Ratownika = Numer_Identyfikacyjny) " +
                         "WHERE Numer_Lekcji = ? AND Data_I_Godzina > SYSDATE");
         stmt.setInt(1, id);
@@ -75,7 +75,7 @@ public class Lesson {
         String date;
         String noAttendees;
         String surname;
-        PreparedStatement stmt = conn.prepareStatement("SELECT Data_i_Godzina, Liczba_Zapisanych_Osob, Nazwisko FROM" +
+        PreparedStatement stmt = conn.prepareStatement("SELECT to_char(Data_i_Godzina, 'YYYY-MM-DD HH24:MI'), Liczba_Zapisanych_Osob, Nazwisko FROM" +
                 "((SELECT Data_i_Godzina, Liczba_Zapisanych_Osob, Nazwisko, Baseny_Numer_Obiektu FROM " +
                 "(SELECT lp.Data_i_Godzina, lp.Numer_Lekcji, lp.Liczba_Zapisanych_Osob, p.Nazwisko, p.Baseny_Numer_Obiektu FROM Lekcje_Plywania lp JOIN Pracownicy p ON lp.Numer_Ratownika = p.Numer_Identyfikacyjny) " +
                 "WHERE Numer_Lekcji = ? AND Liczba_zapisanych_osob < 6 AND Data_I_Godzina > SYSDATE) a JOIN Baseny b ON a.Baseny_Numer_Obiektu = b.Numer_Obiektu)" +

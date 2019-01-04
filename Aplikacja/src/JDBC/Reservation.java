@@ -16,7 +16,7 @@ public class Reservation {
 
             conn.setAutoCommit(false);
 
-            stmt = conn.prepareStatement("INSERT INTO Rezerwacje_Toru VALUES(?, to_date(?, 'YY/MM/DD HH24:MM'), ?, ?, ?, ?)");
+            stmt = conn.prepareStatement("INSERT INTO Rezerwacje_Toru VALUES(?, to_date(?, 'YYYY-MM-DD HH24:MI'), ?, ?, ?, ?)");
 
             PreparedStatement stmt2 = conn.prepareStatement("SELECT MAX(Rezerwacje_Toru.Numer_rezerwacji) FROM Rezerwacje_Toru");
             ResultSet rset = stmt2.executeQuery();
@@ -49,7 +49,7 @@ public class Reservation {
     }
 
     static public CashierPath getCashierReservation(Connection conn, String msg, int id) throws SQLException {
-        PreparedStatement stmt = conn.prepareStatement("SELECT rt.Data_i_Godzina, rt.Numer_toru, rt.Status FROM Rezerwacje_Toru rt WHERE Numer_Rezerwacji = ? AND Data_I_Godzina > SYSDATE");
+        PreparedStatement stmt = conn.prepareStatement("SELECT to_char(rt.Data_i_Godzina, 'YYYY-MM-DD HH24:MI'), rt.Numer_toru, rt.Status FROM Rezerwacje_Toru rt WHERE Numer_Rezerwacji = ? AND Data_I_Godzina > SYSDATE");
         stmt.setInt(1, id);
         ResultSet rSet = stmt.executeQuery();
         if(rSet.next()){
@@ -73,7 +73,7 @@ public class Reservation {
     static public ClientPath getClientReservation(Connection conn, String msg, int id, String poolItem) throws SQLException {
         String date;
         int noPath;
-        PreparedStatement stmt = conn.prepareStatement("SELECT Data_i_Godzina, Numer_Toru FROM" +
+        PreparedStatement stmt = conn.prepareStatement("SELECT to_char(Data_i_Godzina, 'YYYY-MM-DD HH24:MI'), Numer_Toru FROM" +
                 "((SELECT Data_i_Godzina, Numer_Toru, Baseny_Numer_Obiektu FROM " +
                 "(SELECT rt.Data_i_Godzina, rt.Numer_Toru, u.Baseny_Numer_Obiektu, rt.Status, rt.Numer_Rezerwacji FROM Rezerwacje_Toru rt JOIN Uslugi u ON rt.Ogolne_Numer_uslugi = u.Ogolne_Numer_Uslugi) " +
                 "WHERE Numer_Rezerwacji = ? AND Status = 0 AND Data_I_Godzina > SYSDATE) a JOIN Baseny b ON a.Baseny_Numer_Obiektu = b.Numer_Obiektu)" +
