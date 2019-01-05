@@ -278,15 +278,15 @@ public class Transaction {
             if(noService != 0) {
                 PreparedStatement stmt2 = conn.prepareStatement(
                         "SELECT Imie, Nazwisko FROM " +
-                                "(SELECT za.Transakcje_Numer_Transakcji, za.Ogolne_Numer_Uslugi, za.Nazwa_Obiektu, kl.Imie, kl.Nazwisko FROM " +
-                                    "(SELECT az.Transakcje_Numer_Transakcji, az.Ogolne_Numer_Uslugi, az.Nazwa_Obiektu, ul.Klienci_Numer_Klienta FROM " +
-                                        "(SELECT z.Transakcje_Numer_Transakcji, z.Ogolne_Numer_Uslugi, z.Nazwa_Obiektu, lp.Numer_Lekcji FROM " +
-                                            "(SELECT a.Transakcje_Numer_Transakcji, a.Ogolne_Numer_Uslugi, b.Nazwa_Obiektu FROM " +
-                                                "(SELECT k.Transakcje_Numer_Transakcji, u.Baseny_Numer_Obiektu, u.Ogolne_Numer_Uslugi FROM Koszyki k JOIN Uslugi u ON k.Uslugi_Numer_Uslugi = u.Numer_Uslugi) a " +
-                                            "JOIN Baseny b ON a.Baseny_Numer_Obiektu = b.Numer_Obiektu) z " +
-                                        "JOIN Lekcje_Plywania lp ON lp.Ogolne_Numer_Uslugi = z.Ogolne_Numer_Uslugi) az " +
-                                    "JOIN Uczestnicy_Lekcji ul ON az.Numer_Lekcji = ul.Lekcje_Plywania_Numer_Lekcji) za " +
-                                "JOIN Klienci kl ON za.Klienci_Numer_Klienta = kl.Numer_Klienta) " +
+                                "(SELECT za.Imie, za.Nazwisko, za.Ogolne_Numer_Uslugi, za.Nazwa_Obiektu, k.Transakcje_Numer_Transakcji FROM " +
+                                    "(SELECT az.Imie, az.Nazwisko, az.Ogolne_Numer_Uslugi, az.Numer_Uslugi, b.Nazwa_Obiektu FROM " +
+                                        "(SELECT z.Imie, z.Nazwisko, z.Ogolne_Numer_Uslugi, u.Baseny_Numer_Obiektu, u.Numer_Uslugi FROM " +
+                                            "(SELECT a.Imie, a.Nazwisko, lp.Ogolne_Numer_Uslugi FROM " +
+                                                "(SELECT kl.Imie, kl.Nazwisko, ul.Lekcje_Plywania_Numer_Lekcji FROM Klienci kl JOIN Uczestnicy_Lekcji ul ON kl.Numer_Klienta = ul.Klienci_Numer_Klienta) a " +
+                                            "JOIN Lekcje_Plywania lp ON a.Lekcje_Plywania_Numer_Lekcji = lp.Numer_Lekcji) z " +
+                                        "JOIN Uslugi u ON z.Ogolne_Numer_Uslugi = u.Ogolne_Numer_Uslugi) az " +
+                                    "JOIN Baseny b ON az.Baseny_Numer_Obiektu = b.Numer_Obiektu) za " +
+                                "JOIN Koszyki k ON k.Uslugi_Numer_Uslugi = za.Numer_Uslugi) " +
                             "WHERE Transakcje_Numer_Transakcji = ? AND Nazwa_Obiektu = ? AND Ogolne_Numer_Uslugi = ?"
                 );
                 stmt2.setInt(1, id);
