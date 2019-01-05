@@ -1,6 +1,8 @@
 package JDBC;
 
 import sample.CashierClient;
+import sample.MarketingClient;
+import sample.MarketingTopClient;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -58,6 +60,80 @@ public class Client {
             rSet.close();
             stmt.close();
             return new CashierClient(id, name, surname, phone, email);
+        }
+        else{
+            rSet.close();
+            stmt.close();
+            return null;
+        }
+    }
+
+    static public MarketingClient getMarketingClient(Connection conn, int id) throws SQLException {
+        PreparedStatement stmt = conn.prepareStatement("SELECT Imie, Nazwisko FROM Klienci WHERE Numer_Klienta = ?");
+        stmt.setInt(1, id);
+        ResultSet rSet = stmt.executeQuery();
+        if(rSet.next()){
+            String name = rSet.getString(1);
+            String surname = rSet.getString(2);
+            rSet.close();
+            stmt.close();
+            return new MarketingClient(id, name, surname, "Yyyyy");
+        }
+        else{
+            rSet.close();
+            stmt.close();
+            return null;
+        }
+    }
+
+    static public MarketingTopClient getMarketingTopClient(Connection conn, int id) throws SQLException {
+        String name;
+        String surname;
+        int noTransactions;
+        PreparedStatement stmt = conn.prepareStatement("SELECT Imie, Nazwisko FROM Klienci WHERE Numer_Klienta = ?");
+        stmt.setInt(1, id);
+        ResultSet rSet = stmt.executeQuery();
+        if(rSet.next()){
+            name = rSet.getString(1);
+            surname = rSet.getString(2);
+            rSet.close();
+            stmt.close();
+        }
+        else{
+            rSet.close();
+            stmt.close();
+            return null;
+        }
+        stmt = conn.prepareStatement(
+                "SELECT COUNT(Lekcje_Plywania_Numer_Lekcji) FROM " +
+                        "(SELECT k.Numer_Klienta, ul.Lekcje_Plywania_Numer_Lekcji FROM Klienci k JOIN Uczestnicy_Lekcji ul ON k.Numer_Klienta = ul.Klienci_Numer_Klienta) " +
+                    "WHERE Numer_Klienta = ?"
+        );
+        stmt.setInt(1, id);
+        rSet = stmt.executeQuery();
+        if(rSet.next()){
+            noTransactions = rSet.getInt(1);
+            rSet.close();
+            stmt.close();
+        }
+        else{
+            rSet.close();
+            stmt.close();
+            return null;
+        }
+        stmt = conn.prepareStatement(
+                "SELECT COUNT(Numer_Rezerwacji) FROM " +
+                        "(SELECT k.Numer_Klienta, r.Numer_Rezerwacji FROM Klienci k JOIN Rezerwacje_Toru r ON k.Numer_Klienta = r.Klienci_Numer_Klienta) " +
+                    "WHERE Numer_Klienta = ?"
+        );
+        stmt.setInt(1, id);
+        rSet = stmt.executeQuery();
+        if(rSet.next()){
+            noTransactions += rSet.getInt(1);
+            rSet.close();
+            stmt.close();
+            if(noTransactions < 3) return null;
+            return new MarketingTopClient(id, name, surname, noTransactions);
         }
         else{
             rSet.close();

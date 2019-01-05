@@ -2,6 +2,7 @@ package JDBC;
 
 import sample.CashierPath;
 import sample.ClientPath;
+import sample.MarketingReservation;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -87,6 +88,37 @@ public class Reservation {
             rSet.close();
             stmt.close();
             return new ClientPath(id, date, noPath, msg);
+        }
+        else{
+            rSet.close();
+            stmt.close();
+            return null;
+        }
+    }
+
+    static public MarketingReservation getMarketingReservation(Connection conn, int id, String poolItem) throws SQLException {
+        String date;
+        String name;
+        String surname;
+        PreparedStatement stmt = conn.prepareStatement(
+                "SELECT to_char(Data_i_Godzina, 'YYYY-MM-DD HH24:MI'), Imie, Nazwisko FROM " +
+                        "(SELECT z.Numer_Rezerwacji, z.Data_i_Godzina, z.Imie, z.Nazwisko, b.Nazwa_Obiektu FROM " +
+                            "(SELECT a.Numer_Rezerwacji, a.Data_i_Godzina, a.Imie, a.Nazwisko, u.Baseny_Numer_Obiektu FROM " +
+                                "(SELECT rt.Numer_Rezerwacji, rt.Data_I_Godzina, rt.Ogolne_Numer_Uslugi, k.Imie, k.Nazwisko FROM Rezerwacje_Toru rt JOIN Klienci k ON rt.Klienci_Numer_Klienta = k.Numer_Klienta) a " +
+                            "JOIN Uslugi u ON a.Ogolne_Numer_Uslugi = u.Numer_Uslugi) z " +
+                        "JOIN Baseny b ON z.Baseny_Numer_Obiektu = b.Numer_Obiektu) " +
+                    "WHERE Numer_Rezerwacji = ? AND Nazwa_Obiektu = ?"
+        );
+        stmt.setInt(1, id);
+        stmt.setString(2, poolItem);
+        ResultSet rSet = stmt.executeQuery();
+        if(rSet.next()){
+            date = rSet.getString(1);
+            name = rSet.getString(2);
+            surname = rSet.getString(3);
+            rSet.close();
+            stmt.close();
+            return new MarketingReservation(date, "Yyyyy", name, surname);
         }
         else{
             rSet.close();

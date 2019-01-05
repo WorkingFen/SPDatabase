@@ -90,7 +90,7 @@ public class Controller implements Initializable {
             changeScreen("manager.fxml", event);
         }
         else if (loginInputText.equals("7") && passwordInputText.equals("")){
-            changeScreen("marketingSpecialist.fxml", event);
+            changeScreen("marketing.fxml", event);
         }
         else if (loginInputText.equals("8") && passwordInputText.equals("")){
             changeScreen("repairman.fxml", event);

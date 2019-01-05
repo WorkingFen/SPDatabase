@@ -237,4 +237,115 @@ public class Transaction {
             return null;
         }
     }
+
+    static public MarketingTransaction getMarketingTransaction(Connection conn, int id, String poolItem) throws SQLException {
+        String date;
+        String name;
+        String surname;
+        int value;
+        PreparedStatement stmt = conn.prepareStatement(
+                "SELECT to_char(Data, 'YYYY-MM-DD HH24:MI:SS'), (Ilosc*Cena) FROM " +
+                        "(SELECT z.Numer_Transakcji, z.Data, z.Ilosc, z.Cena, b.Nazwa_Obiektu FROM " +
+                            "(SELECT a.Numer_Transakcji, a.Data, a.Ilosc, u.Cena, u.Baseny_Numer_Obiektu FROM " +
+                                "(SELECT t.Numer_Transakcji, t.Data, k.Uslugi_Numer_Uslugi, k.Ilosc FROM Koszyki k JOIN Transakcje t ON t.Numer_Transakcji = k.Transakcje_Numer_Transakcji) a " +
+                            "JOIN Uslugi u ON a.Uslugi_Numer_Uslugi = u.Numer_Uslugi) z " +
+                        "JOIN Baseny b ON z.Baseny_Numer_Obiektu = b.Numer_Obiektu) " +
+                    "WHERE Numer_Transakcji = ? AND Nazwa_Obiektu = ?"
+        );
+        stmt.setInt(1, id);
+        stmt.setString(2, poolItem);
+        ResultSet rSet = stmt.executeQuery();
+        if(rSet.next()){
+            date = rSet.getString(1);
+            value = rSet.getInt(2);
+            rSet.close();
+            stmt.close();
+        }
+        else{
+            rSet.close();
+            stmt.close();
+            return null;
+        }
+        stmt = conn.prepareStatement(
+                "SELECT Ogolne_Numer_Uslugi FROM " +
+                        "(SELECT k.Transakcje_Numer_Transakcji, u.Ogolne_Numer_Uslugi FROM Koszyki k JOIN Uslugi u ON k.Uslugi_Numer_Uslugi = u.Numer_Uslugi) a " +
+                    "WHERE Transakcje_Numer_Transakcji = ?"
+        );
+        stmt.setInt(1, id);
+        rSet = stmt.executeQuery();
+        if(rSet.next()){
+            int noService = rSet.getInt(1);
+            if(noService != 0) {
+                PreparedStatement stmt2 = conn.prepareStatement(
+                        "SELECT Imie, Nazwisko FROM " +
+                                "(SELECT za.Transakcje_Numer_Transakcji, za.Ogolne_Numer_Uslugi, za.Nazwa_Obiektu, kl.Imie, kl.Nazwisko FROM " +
+                                    "(SELECT az.Transakcje_Numer_Transakcji, az.Ogolne_Numer_Uslugi, az.Nazwa_Obiektu, ul.Klienci_Numer_Klienta FROM " +
+                                        "(SELECT z.Transakcje_Numer_Transakcji, z.Ogolne_Numer_Uslugi, z.Nazwa_Obiektu, lp.Numer_Lekcji FROM " +
+                                            "(SELECT a.Transakcje_Numer_Transakcji, a.Ogolne_Numer_Uslugi, b.Nazwa_Obiektu FROM " +
+                                                "(SELECT k.Transakcje_Numer_Transakcji, u.Baseny_Numer_Obiektu, u.Ogolne_Numer_Uslugi FROM Koszyki k JOIN Uslugi u ON k.Uslugi_Numer_Uslugi = u.Numer_Uslugi) a " +
+                                            "JOIN Baseny b ON a.Baseny_Numer_Obiektu = b.Numer_Obiektu) z " +
+                                        "JOIN Lekcje_Plywania lp ON lp.Ogolne_Numer_Uslugi = z.Ogolne_Numer_Uslugi) az " +
+                                    "JOIN Uczestnicy_Lekcji ul ON az.Numer_Lekcji = ul.Lekcje_Plywania_Numer_Lekcji) za " +
+                                "JOIN Klienci kl ON za.Klienci_Numer_Klienta = kl.Numer_Klienta) " +
+                            "WHERE Transakcje_Numer_Transakcji = ? AND Nazwa_Obiektu = ? AND Ogolne_Numer_Uslugi = ?"
+                );
+                stmt2.setInt(1, id);
+                stmt2.setString(2, poolItem);
+                stmt2.setInt(3, noService);
+                ResultSet rSet2 = stmt2.executeQuery();
+                if (rSet2.next()) {
+                    name = rSet2.getString(1);
+                    surname = rSet2.getString(2);
+                    rSet2.close();
+                    stmt2.close();
+                    rSet.close();
+                    stmt.close();
+                    return new MarketingTransaction(date, value, name, surname);
+                }
+                rSet2.close();
+                stmt2.close();
+
+                stmt2 = conn.prepareStatement(
+                        "SELECT Imie, Nazwisko FROM " +
+                                "(SELECT az.Transakcje_Numer_Transakcji, az.Ogolne_Numer_Uslugi, az.Nazwa_Obiektu, kl.Imie, kl.Nazwisko FROM " +
+                                    "(SELECT z.Transakcje_Numer_Transakcji, z.Ogolne_Numer_Uslugi, z.Nazwa_Obiektu, rt.Klienci_Numer_Klienta FROM " +
+                                        "(SELECT a.Transakcje_Numer_Transakcji, a.Ogolne_Numer_Uslugi, b.Nazwa_Obiektu FROM " +
+                                            "(SELECT k.Transakcje_Numer_Transakcji, u.Baseny_Numer_Obiektu, u.Ogolne_Numer_Uslugi FROM Koszyki k JOIN Uslugi u ON k.Uslugi_Numer_Uslugi = u.Numer_Uslugi) a " +
+                                        "JOIN Baseny b ON a.Baseny_Numer_Obiektu = b.Numer_Obiektu) z " +
+                                    "JOIN Rezerwacje_Toru rt ON z.Ogolne_Numer_Uslugi = rt.Ogolne_Numer_Uslugi) az " +
+                                "JOIN Klienci kl ON kl.Numer_Klienta = az.Klienci_Numer_Klienta) " +
+                            "WHERE Transakcje_Numer_Transakcji = ? AND Nazwa_Obiektu = ? AND Ogolne_Numer_Uslugi = ?"
+                );
+                stmt2.setInt(1, id);
+                stmt2.setString(2, poolItem);
+                stmt2.setInt(3, noService);
+                rSet2 = stmt2.executeQuery();
+                if (rSet2.next()) {
+                    name = rSet2.getString(1);
+                    surname = rSet2.getString(2);
+                    rSet2.close();
+                    stmt2.close();
+                    rSet.close();
+                    stmt.close();
+                    return new MarketingTransaction(date, value, name, surname);
+                } else {
+                    rSet2.close();
+                    stmt2.close();
+                    rSet.close();
+                    stmt.close();
+                    return null;
+                }
+            }
+            else{
+                rSet.close();
+                stmt.close();
+                return new MarketingTransaction(date, value, "-", "-");
+            }
+        }
+        else{
+            rSet.close();
+            stmt.close();
+            return null;
+        }
+    }
 }
