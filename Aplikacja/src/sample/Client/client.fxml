@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import javafx.geometry.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Client.ClientController">
+   <bottom>
+      <Button mnemonicParsing="false" onAction="#logOutButtonPushed" prefHeight="38.0" prefWidth="101.0" text="Wyloguj się" BorderPane.alignment="TOP_LEFT" />
+   </bottom>
+   <left>
+      <ListView fx:id="poolList" onMouseClicked="#poolItemClicked" prefHeight="296.0" prefWidth="143.0" BorderPane.alignment="CENTER" />
+   </left>
+   <right>
+      <TabPane prefHeight="370.0" prefWidth="600.0" tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER">
+         <tabs>
+            <Tab text="Zamówienie lekcji">
+               <content>
+                  <TableView fx:id="lessonTable" prefHeight="200.0" prefWidth="200.0">
+                     <columns>
+                        <TableColumn fx:id="lessonDate" prefWidth="140.0" text="Data i godzina" />
+                        <TableColumn fx:id="lessonEnrolled" prefWidth="145.0" text="Liczba zapisanych osób" />
+                        <TableColumn fx:id="lessonRescuer" prefWidth="100.0" text="Prowadzący" />
+                        <TableColumn fx:id="reserveLesson" prefWidth="90.0" text="" />
+                     </columns>
+                  </TableView>
+               </content>
+            </Tab>
+            <Tab text="Rezerwacja toru">
+               <content>
+                  <TableView fx:id="pathTable" prefHeight="200.0" prefWidth="200.0">
+                     <columns>
+                        <TableColumn fx:id="number" prefWidth="135.0" text="Lp." />
+                        <TableColumn fx:id="pathHours" prefWidth="140.0" text="Data i godzina" />
+                        <TableColumn fx:id="pathNumber" prefWidth="135.0" text="Numer toru" />
+                        <TableColumn fx:id="reservePath" prefWidth="90.0" text="" />
+                     </columns>
+                  </TableView>
+               </content>
+            </Tab>
+         </tabs>
+      </TabPane>
+   </right>
+   <top>
+      <Text lineSpacing="1.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Wybierz basen:" wrappingWidth="396.455078125" BorderPane.alignment="TOP_LEFT">
+         <font>
+            <Font size="13.0" />
+         </font>
+      </Text>
+   </top>
+</BorderPane>

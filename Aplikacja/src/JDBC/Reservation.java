@@ -1,8 +1,8 @@
 package JDBC;
 
-import sample.CashierPath;
-import sample.ClientPath;
-import sample.MarketingReservation;
+import sample.Cashier.CashierPath;
+import sample.Client.ClientPath;
+import sample.Marketing.MarketingReservation;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;

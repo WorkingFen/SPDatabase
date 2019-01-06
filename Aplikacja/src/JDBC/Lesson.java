@@ -1,8 +1,8 @@
 package JDBC;
 
-import sample.CashierController;
-import sample.CashierLesson;
-import sample.ClientLesson;
+import sample.Cashier.CashierController;
+import sample.Cashier.CashierLesson;
+import sample.Client.ClientLesson;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;

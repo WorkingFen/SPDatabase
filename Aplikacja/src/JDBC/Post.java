@@ -1,6 +1,6 @@
 package JDBC;
 
-import sample.HRPost;
+import sample.HR.HRPost;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;

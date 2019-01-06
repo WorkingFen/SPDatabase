@@ -1,9 +1,9 @@
 package JDBC;
 
-import sample.CashierClient;
-import sample.CashierController;
-import sample.MarketingClient;
-import sample.MarketingTopClient;
+import sample.Cashier.CashierClient;
+import sample.Cashier.CashierController;
+import sample.Marketing.MarketingClient;
+import sample.Marketing.MarketingTopClient;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;

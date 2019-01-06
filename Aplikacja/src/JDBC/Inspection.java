@@ -1,9 +1,9 @@
 package JDBC;
 
-import sample.AuditorInspection;
-import sample.ManagerInspection;
-import sample.RepairmanController;
-import sample.RepairmanInspection;
+import sample.Auditor.AuditorInspection;
+import sample.Manager.ManagerInspection;
+import sample.Repairman.RepairmanController;
+import sample.Repairman.RepairmanInspection;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;

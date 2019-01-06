@@ -47,35 +47,35 @@ public class Controller implements Initializable {
         int source = LoginDetails.checkLoginDetails(Main.jdbc.getConn(), loginInputText, passwordInputText);
 
         if(loginInputText.equals("Klient")){
-            changeScreen("client.fxml", event);
+            changeScreen("Client/client.fxml", event);
             System.out.println("Klient");
         }
         else if(source == 1 || loginInputText.equals("Marketer")){
-            changeScreen("marketing.fxml", event);
+            changeScreen("Marketing/marketing.fxml", event);
             System.out.println("Marketer");
         }
         else if(source == 2 || loginInputText.equals("HR")){
-            changeScreen("HR.fxml", event);
+            changeScreen("HR/HR.fxml", event);
             System.out.println("HR");
         }
         else if(source == 3 || loginInputText.equals("Kasjer")){
-            changeScreen("cashier.fxml", event);
+            changeScreen("Cashier/cashier.fxml", event);
             System.out.println("Kasjer");
         }
         else if(source == 4 || loginInputText.equals("Kierownik")){
-            changeScreen("manager.fxml", event);
+            changeScreen("Manager/manager.fxml", event);
             System.out.println("Kierownik");
         }
         else if(source == 5 || loginInputText.equals("Konserwator")){
-            changeScreen("repairman.fxml", event);
+            changeScreen("Repairman/repairman.fxml", event);
             System.out.println("Konserwator");
         }
         else if(source == 6 || loginInputText.equals("Wlasciciel")){
-            changeScreen("owner.fxml", event);
+            changeScreen("Owner/owner.fxml", event);
             System.out.println("Wlasciciel");
         }
         else if(source == 7 || loginInputText.equals("Audytor")){
-            changeScreen("auditor.fxml", event);
+            changeScreen("Auditor/auditor.fxml", event);
             System.out.println("Audytor");
         }
         else{

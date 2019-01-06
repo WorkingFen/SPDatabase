@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Repairman.RepairmanController">
+    <children>
+        <TabPane layoutY="7.0" prefHeight="370.0" prefWidth="600.0" tabClosingPolicy="UNAVAILABLE">
+            <tabs>
+                <Tab text="Przeprowadzone przeglądy">
+                    <content>
+                        <TableView fx:id="inspectionTable" prefHeight="200.0" prefWidth="200.0">
+                            <columns>
+                                <TableColumn fx:id="inspectionID" prefWidth="142.0" text="Lp." />
+                                <TableColumn fx:id="inspectionDate" minWidth="0.0" prefWidth="74.0" text="Data" />
+                                <TableColumn fx:id="comment" prefWidth="233.0" text="Uwagi" />
+                                <TableColumn fx:id="delete" prefWidth="151.0" text="Usuwanie" />
+                            </columns>
+                        </TableView>
+                    </content>
+                </Tab>
+            </tabs>
+        </TabPane>      <Button layoutY="367.0" mnemonicParsing="false" onAction="#logOutButtonPushed" prefHeight="33.0" prefWidth="100.0" text="Wyloguj się" />
+    </children>
+</AnchorPane>

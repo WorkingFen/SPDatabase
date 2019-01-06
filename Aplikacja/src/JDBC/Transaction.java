@@ -1,6 +1,11 @@
 package JDBC;
 
-import sample.*;
+import sample.Auditor.AuditorTransaction;
+import sample.Manager.ManagerIncome;
+import sample.Manager.ManagerSalary;
+import sample.Manager.ManagerTransaction;
+import sample.Marketing.MarketingTransaction;
+import sample.Owner.OwnerIncome;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;

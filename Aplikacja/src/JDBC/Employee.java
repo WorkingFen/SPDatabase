@@ -1,9 +1,9 @@
 package JDBC;
 
-import sample.AuditorEmployee;
-import sample.HREmployee;
-import sample.ManagerEmployee;
-import sample.OwnerEmployee;
+import sample.Auditor.AuditorEmployee;
+import sample.HR.HREmployee;
+import sample.Manager.ManagerEmployee;
+import sample.Owner.OwnerEmployee;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
