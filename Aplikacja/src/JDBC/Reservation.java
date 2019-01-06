@@ -2,6 +2,7 @@ package JDBC;
 
 import sample.Cashier.CashierController;
 import sample.Cashier.CashierPath;
+import sample.Client.ClientController;
 import sample.Client.ClientPath;
 import sample.Marketing.MarketingReservation;
 
@@ -98,6 +99,30 @@ public class Reservation {
         }
     }
 
+    public static void addClientReservation(Connection conn, int id, int clientID) throws SQLException {
+        try {
+            PreparedStatement stmt;
+
+            conn.setAutoCommit(false);
+
+            stmt = conn.prepareStatement("UPDATE Rezerwacje_Toru SET Status = 1, Klienci_Numer_Klienta = ? WHERE Numer_Rezerwacji = ?");
+
+            stmt.setInt(1, clientID);
+            stmt.setInt(2, id);
+            stmt.executeQuery();
+            stmt.close();
+            conn.commit();
+        }
+
+        catch (Exception e) {
+            System.out.println(e.getMessage());
+            conn.rollback();
+        }
+        finally {
+            conn.setAutoCommit(true);
+        }
+    }
+
     static public CashierPath getCashierReservation(CashierController cc, Connection conn, String msgIn, String msgOut, int id) throws SQLException {
         PreparedStatement stmt = conn.prepareStatement("SELECT to_char(rt.Data_i_Godzina, 'YYYY-MM-DD HH24:MI'), rt.Numer_toru, rt.Status FROM Rezerwacje_Toru rt WHERE Numer_Rezerwacji = ? AND Data_I_Godzina > SYSDATE");
         stmt.setInt(1, id);
@@ -120,7 +145,7 @@ public class Reservation {
         }
     }
 
-    static public ClientPath getClientReservation(Connection conn, String msg, int id, String poolItem) throws SQLException {
+    static public ClientPath getClientReservation(ClientController cc, Connection conn, String msg, int id, String poolItem) throws SQLException {
         String date;
         int noPath;
         PreparedStatement stmt = conn.prepareStatement("SELECT to_char(Data_i_Godzina, 'YYYY-MM-DD HH24:MI'), Numer_Toru FROM" +
@@ -136,7 +161,7 @@ public class Reservation {
             noPath = rSet.getInt(2);
             rSet.close();
             stmt.close();
-            return new ClientPath(id, date, noPath, msg);
+            return new ClientPath(cc, id, date, noPath, msg);
         }
         else{
             rSet.close();

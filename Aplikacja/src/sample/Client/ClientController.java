@@ -1,8 +1,6 @@
 package sample.Client;
 
-import JDBC.Lesson;
-import JDBC.Pool;
-import JDBC.Reservation;
+import JDBC.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -51,6 +49,8 @@ public class ClientController implements Initializable {
     private TableColumn<ClientLesson, String> lessonRescuer;
     @FXML
     private TableColumn<ClientLesson, Button> reserveLesson;
+
+    private String[] poolName;
 
     public ClientController() throws SQLException {
     }
@@ -104,7 +104,7 @@ public class ClientController implements Initializable {
 
         ObservableList<ClientLesson> list = FXCollections.observableArrayList();
         for(int i = minLesson-1; i < maxLesson; i++){
-            ClientLesson temp = Lesson.getClientLesson(conn, "Zapisz się", i+1, poolItem);
+            ClientLesson temp = Lesson.getClientLesson(this, conn, "Zapisz się", i+1, poolItem);
             if(temp != null) list.add(temp);
         }
         return list;
@@ -134,10 +134,32 @@ public class ClientController implements Initializable {
 
         ObservableList<ClientPath> list = FXCollections.observableArrayList();
         for(int i = minReservation-1; i < maxReservation; i++){
-            ClientPath temp = Reservation.getClientReservation(conn, "Zarezerwuj", i+1, poolItem);
+            ClientPath temp = Reservation.getClientReservation(this, conn, "Zarezerwuj", i+1, poolItem);
             if(temp != null) list.add(temp);
         }
         return list;
+    }
+
+    int addNewClient(String name, String surname, String phone, String email) throws SQLException {
+        return Client.addClient(Main.jdbc.getConn(), name, surname, phone, email);
+    }
+
+    int getClientInstance(String name, String surname, String phone) throws SQLException {
+        return Client.getClient(Main.jdbc.getConn(), name, surname, phone);
+    }
+
+    void addReservation(int id, int clientID) throws SQLException {
+        Reservation.addClientReservation(Main.jdbc.getConn(), id, clientID);
+        pathTable.getItems().clear();
+        clientPaths = getReservations(poolName[0]);
+        initializePaths();
+    }
+
+    void addAttendee(int id, int clientID) throws SQLException {
+        Attendee.addAttendee(Main.jdbc.getConn(), id, clientID);
+        lessonTable.getItems().clear();
+        lessons = getLessons(poolName[0]);
+        initializeLessons();
     }
 
     private ObservableList<ClientLesson> lessons = FXCollections.observableArrayList();
@@ -193,7 +215,7 @@ public class ClientController implements Initializable {
 
         if(poolItem == null) return;
 
-        String[] poolName = poolItem.split(",");
+        poolName = poolItem.split(",");
         System.out.println("clicked on " + poolName[0]);   //debug
 
         changeTables(poolName[0]);
