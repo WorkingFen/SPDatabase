@@ -12,7 +12,7 @@ import java.sql.SQLException;
 
 public class Inspection {
 
-    private void addInspection(Connection conn, String date, int poolID) throws SQLException {
+    public static void addInspection(Connection conn, String date, String poolName) throws SQLException {
         try{
             PreparedStatement stmt;
 
@@ -26,6 +26,17 @@ public class Inspection {
             int id;
             if(rset.next()) id = rset.getInt(1)+1;
             else id = 1;
+
+            rset.close();
+            stmt2.close();
+
+            stmt2 = conn.prepareStatement("SELECT Numer_Obiektu FROM Baseny WHERE Nazwa_Obiektu = ?");
+            stmt2.setString(1, poolName);
+            rset = stmt2.executeQuery();
+
+            int poolID;
+            if(rset.next()) poolID = rset.getInt(1);
+            else return;
 
             rset.close();
             stmt2.close();

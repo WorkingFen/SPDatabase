@@ -10,14 +10,25 @@
             <tabs>
                 <Tab text="Przeprowadzone przeglądy">
                     <content>
-                        <TableView fx:id="inspectionTable" prefHeight="200.0" prefWidth="200.0">
-                            <columns>
-                                <TableColumn fx:id="inspectionID" prefWidth="142.0" text="Lp." />
-                                <TableColumn fx:id="inspectionDate" minWidth="0.0" prefWidth="74.0" text="Data" />
-                                <TableColumn fx:id="comment" prefWidth="233.0" text="Uwagi" />
-                                <TableColumn fx:id="delete" prefWidth="151.0" text="Usuwanie" />
-                            </columns>
-                        </TableView>
+                        <AnchorPane prefHeight="400.0" prefWidth="600.0">
+                            <children>
+                                <TableView fx:id="inspectionTable" prefHeight="300.0" prefWidth="600.0">
+                                    <columns>
+                                        <TableColumn fx:id="inspectionID" prefWidth="142.0" text="Lp." />
+                                        <TableColumn fx:id="inspectionDate" minWidth="0.0" prefWidth="74.0" text="Data" />
+                                        <TableColumn fx:id="comment" prefWidth="233.0" text="Uwagi" />
+                                        <TableColumn fx:id="delete" prefWidth="151.0" text="Usuwanie" />
+                                    </columns>
+                                </TableView>
+                                <HBox layoutY="300.0" prefHeight="37.0" prefWidth="600.0">
+                                    <children>
+                                        <TextField fx:id="dateField" prefHeight="30.0" prefWidth="101.0" promptText="YYYY-MM-DD" />
+                                        <TextField fx:id="poolField" prefHeight="30.0" prefWidth="101.0" promptText="Nazwa basenu" />
+                                        <Button mnemonicParsing="false" onAction="#addClientButtonPushed" prefHeight="30.0" prefWidth="48.0" text="Dodaj" />
+                                    </children>
+                                </HBox>
+                            </children>
+                        </AnchorPane>
                     </content>
                 </Tab>
             </tabs>
