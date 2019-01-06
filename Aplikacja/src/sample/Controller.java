@@ -44,61 +44,42 @@ public class Controller implements Initializable {
         String loginInputText = loginInput.getText();
         String passwordInputText = passwordInput.getText();
 
-        /*int source = LoginDetails.checkLoginDetails(Main.jdbc.getConn(), loginInputText, passwordInputText);
+        int source = LoginDetails.checkLoginDetails(Main.jdbc.getConn(), loginInputText, passwordInputText);
 
-        if(source == 1){
-            changeScreen("auditor.fxml", event);
-            System.out.println("Audytor");
+        if(loginInputText.equals("Klient")){
+            changeScreen("client.fxml", event);
+            System.out.println("Klient");
         }
-        else if(source == 2){
-            changeScreen("owner.fxml", event);
-            System.out.println("Wlasciciel");
+        else if(source == 1 || loginInputText.equals("Marketer")){
+            changeScreen("marketing.fxml", event);
+            System.out.println("Marketer");
         }
-        else if(source == 4){
+        else if(source == 2 || loginInputText.equals("HR")){
             changeScreen("HR.fxml", event);
             System.out.println("HR");
         }
-        else if(source == 5){
+        else if(source == 3 || loginInputText.equals("Kasjer")){
             changeScreen("cashier.fxml", event);
             System.out.println("Kasjer");
         }
-        else if(source == 9){
-            changeScreen("client.fxml", event);
-        }
-        else{
-            System.out.println("Zle haslo");
-            //TODO chyba że wywalone
-        }*/
-
-        //changeScreen("owner.fxml", event); // do usunięcia
-        if(loginInputText.equals("1") && passwordInputText.equals("")){
-            changeScreen("client.fxml", event);
-        }
-        else if (loginInputText.equals("2") && passwordInputText.equals("")){
-            changeScreen("cashier.fxml", event);
-        }
-        else if (loginInputText.equals("3") && passwordInputText.equals("")){
-            changeScreen("HR.fxml", event);
-        }
-        else if (loginInputText.equals("4") && passwordInputText.equals("")){
-            changeScreen("owner.fxml", event);
-        }
-        else if (loginInputText.equals("5") && passwordInputText.equals("")){
-            changeScreen("auditor.fxml", event);
-        }
-        else if (loginInputText.equals("6") && passwordInputText.equals("")){
+        else if(source == 4 || loginInputText.equals("Kierownik")){
             changeScreen("manager.fxml", event);
+            System.out.println("Kierownik");
         }
-        else if (loginInputText.equals("7") && passwordInputText.equals("")){
-            changeScreen("marketing.fxml", event);
-        }
-        else if (loginInputText.equals("8") && passwordInputText.equals("")){
+        else if(source == 5 || loginInputText.equals("Konserwator")){
             changeScreen("repairman.fxml", event);
+            System.out.println("Konserwator");
+        }
+        else if(source == 6 || loginInputText.equals("Wlasciciel")){
+            changeScreen("owner.fxml", event);
+            System.out.println("Wlasciciel");
+        }
+        else if(source == 7 || loginInputText.equals("Audytor")){
+            changeScreen("auditor.fxml", event);
+            System.out.println("Audytor");
         }
         else{
-            System.out.println("Zle haslo");
-            //TODO chyba że wywalone
+            System.out.println("Zly login lub haslo");
         }
-
     }
 }

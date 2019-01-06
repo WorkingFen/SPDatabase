@@ -64,7 +64,8 @@ public class HRController implements Initializable {
     public HRController() throws SQLException {
     }
 
-    private ObservableList<HREmployee> getEmployees(Connection conn) throws SQLException {
+    private ObservableList<HREmployee> getEmployees() throws SQLException {
+        Connection conn = Main.jdbc.getConn();
         int noEmployees;
         PreparedStatement stmt = conn.prepareStatement("SELECT COUNT(*) FROM Pracownicy");
         ResultSet rSet = stmt.executeQuery();
@@ -82,7 +83,8 @@ public class HRController implements Initializable {
         return list;
     }
 
-    private ObservableList<HRPost> getPosts(Connection conn) throws SQLException {
+    private ObservableList<HRPost> getPosts() throws SQLException {
+        Connection conn = Main.jdbc.getConn();
         int noPositions;
         PreparedStatement stmt = conn.prepareStatement("SELECT COUNT(*) FROM Stanowiska");
         ResultSet rSet = stmt.executeQuery();
@@ -100,9 +102,9 @@ public class HRController implements Initializable {
         return list;
     }
 
-    private final ObservableList<HREmployee> employees = getEmployees(Main.jdbc.getConn());
+    private final ObservableList<HREmployee> employees = getEmployees();
 
-    private final ObservableList<HRPost> posts = getPosts(Main.jdbc.getConn());
+    private final ObservableList<HRPost> posts = getPosts();
 
     private void initializeEmployees() {
         employeeID.setCellValueFactory(new PropertyValueFactory<>("id"));
@@ -129,13 +131,11 @@ public class HRController implements Initializable {
     }
 
     public void hireEmployeeButtonPushed(ActionEvent event) throws IOException {
-
         String fnameInput= fnameField.getText();
         String lnameInput = lnameField.getText();
         String positionInput = positionField.getText();
-
-
     }
+
     public void logOutButtonPushed(ActionEvent event)throws IOException {
 
         Parent tableViewParent = FXMLLoader.load(getClass().getResource("sample.fxml"));

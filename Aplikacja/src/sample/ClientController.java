@@ -59,7 +59,8 @@ public class ClientController implements Initializable {
         lessonTable.getItems().clear();
     }
 
-    private ObservableList<String> getPoolNames(Connection conn) throws SQLException {
+    private ObservableList<String> getPoolNames() throws SQLException {
+        Connection conn = Main.jdbc.getConn();
         int noPools;
         PreparedStatement stmt = conn.prepareStatement("SELECT COUNT(*) FROM Baseny");
         ResultSet rSet = stmt.executeQuery();
@@ -78,7 +79,8 @@ public class ClientController implements Initializable {
         return list;
     }
 
-    private ObservableList<ClientLesson> getLessons(Connection conn, String poolItem) throws SQLException {
+    private ObservableList<ClientLesson> getLessons(String poolItem) throws SQLException {
+        Connection conn = Main.jdbc.getConn();
         int minLesson;
         int maxLesson;
         PreparedStatement stmt = conn.prepareStatement("SELECT MIN(Numer_Lekcji) FROM Lekcje_Plywania WHERE Data_I_Godzina > SYSDATE");
@@ -107,7 +109,8 @@ public class ClientController implements Initializable {
         return list;
     }
 
-    private ObservableList<ClientPath> getReservations(Connection conn, String poolItem) throws SQLException {
+    private ObservableList<ClientPath> getReservations(String poolItem) throws SQLException {
+        Connection conn = Main.jdbc.getConn();
         int minReservation;
         int maxReservation;
         PreparedStatement stmt = conn.prepareStatement("SELECT MIN(Numer_Rezerwacji) FROM Rezerwacje_Toru WHERE Data_I_Godzina > SYSDATE");
@@ -159,14 +162,14 @@ public class ClientController implements Initializable {
     }
 
     private void initializePoolList() throws SQLException {
-        ObservableList<String> items = getPoolNames(Main.jdbc.getConn());
+        ObservableList<String> items = getPoolNames();
         poolList.setItems(items);
     }
 
     private void changeTables(String poolItem) throws SQLException {
         clearTables();
-        lessons = getLessons(Main.jdbc.getConn(), poolItem);
-        clientPaths = getReservations(Main.jdbc.getConn(), poolItem);
+        lessons = getLessons(poolItem);
+        clientPaths = getReservations(poolItem);
         initializeLessons();
         initializePaths();
     }

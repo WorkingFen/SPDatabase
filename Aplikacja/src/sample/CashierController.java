@@ -85,7 +85,8 @@ public class CashierController implements Initializable {
     public CashierController() throws SQLException {
     }
 
-    private ObservableList<CashierLesson> getLessons(Connection conn) throws SQLException {
+    private ObservableList<CashierLesson> getLessons() throws SQLException {
+        Connection conn = Main.jdbc.getConn();
         int minLesson;
         int maxLesson;
         PreparedStatement stmt = conn.prepareStatement("SELECT MIN(Numer_Lekcji) FROM Lekcje_Plywania WHERE Data_I_Godzina > SYSDATE");
@@ -114,7 +115,8 @@ public class CashierController implements Initializable {
         return list;
     }
 
-    private ObservableList<CashierPath> getReservations(Connection conn) throws SQLException {
+    private ObservableList<CashierPath> getReservations() throws SQLException {
+        Connection conn = Main.jdbc.getConn();
         int minReservation;
         int maxReservation;
         PreparedStatement stmt = conn.prepareStatement("SELECT MIN(Numer_Rezerwacji) FROM Rezerwacje_Toru WHERE Data_I_Godzina > SYSDATE");
@@ -143,7 +145,8 @@ public class CashierController implements Initializable {
         return list;
     }
 
-    private ObservableList<CashierClient> getClients(Connection conn) throws SQLException {
+    private ObservableList<CashierClient> getClients() throws SQLException {
+        Connection conn = Main.jdbc.getConn();
         int noClients;
         PreparedStatement stmt = conn.prepareStatement("SELECT COUNT(*) FROM Klienci");
         ResultSet rSet = stmt.executeQuery();
@@ -161,11 +164,11 @@ public class CashierController implements Initializable {
         return list;
     }
 
-    private final ObservableList<CashierLesson> lessons = getLessons(Main.jdbc.getConn());
+    private final ObservableList<CashierLesson> lessons = getLessons();
 
-    private final ObservableList<CashierPath> paths = getReservations(Main.jdbc.getConn());
+    private final ObservableList<CashierPath> paths = getReservations();
 
-    private final ObservableList<CashierClient> clients = getClients(Main.jdbc.getConn());
+    private final ObservableList<CashierClient> clients = getClients();
 
     private void initializeLessons() {
 

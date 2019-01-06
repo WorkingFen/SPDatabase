@@ -80,7 +80,8 @@ public class ManagerController implements Initializable {
     public ManagerController() throws SQLException {
     }
 
-    private ObservableList<ManagerEmployee> getEmployees(Connection conn) throws SQLException {
+    private ObservableList<ManagerEmployee> getEmployees() throws SQLException {
+        Connection conn = Main.jdbc.getConn();
         int noEmployees;
         PreparedStatement stmt = conn.prepareStatement("SELECT COUNT(*) FROM Pracownicy");
         ResultSet rSet = stmt.executeQuery();
@@ -98,7 +99,8 @@ public class ManagerController implements Initializable {
         return list;
     }
 
-    private ObservableList<ManagerTransaction> getTransactions(Connection conn) throws SQLException {
+    private ObservableList<ManagerTransaction> getTransactions() throws SQLException {
+        Connection conn = Main.jdbc.getConn();
         int noTransactions;
         PreparedStatement stmt = conn.prepareStatement("SELECT COUNT(*) FROM Transakcje");
         ResultSet rSet = stmt.executeQuery();
@@ -116,7 +118,8 @@ public class ManagerController implements Initializable {
         return list;
     }
 
-    private ObservableList<ManagerIncome> getIncomes(Connection conn) throws SQLException {
+    private ObservableList<ManagerIncome> getIncomes() throws SQLException {
+        Connection conn = Main.jdbc.getConn();
         int minYear;
         int maxYear;
         PreparedStatement stmt = conn.prepareStatement("SELECT MIN(to_char(Data, 'YYYY')) FROM Transakcje");
@@ -147,7 +150,8 @@ public class ManagerController implements Initializable {
         return list;
     }
 
-    private ObservableList<ManagerSalary> getSalaries(Connection conn) throws SQLException {
+    private ObservableList<ManagerSalary> getSalaries() throws SQLException {
+        Connection conn = Main.jdbc.getConn();
         int minYear;
         int maxYear;
         PreparedStatement stmt = conn.prepareStatement("SELECT MIN(to_char(Data, 'YYYY')) FROM Transakcje");
@@ -178,7 +182,8 @@ public class ManagerController implements Initializable {
         return list;
     }
 
-    private ObservableList<ManagerInspection> getInspections(Connection conn) throws SQLException {
+    private ObservableList<ManagerInspection> getInspections() throws SQLException {
+        Connection conn = Main.jdbc.getConn();
         int noInspections;
         PreparedStatement stmt = conn.prepareStatement("SELECT COUNT(*) FROM Przeglady");
         ResultSet rSet = stmt.executeQuery();
@@ -196,15 +201,15 @@ public class ManagerController implements Initializable {
         return list;
     }
 
-    private final ObservableList<ManagerEmployee> employees = getEmployees(Main.jdbc.getConn());
+    private final ObservableList<ManagerEmployee> employees = getEmployees();
 
-    private final ObservableList<ManagerTransaction> transactions = getTransactions(Main.jdbc.getConn());
+    private final ObservableList<ManagerTransaction> transactions = getTransactions();
 
-    private final ObservableList<ManagerIncome> incomes = getIncomes(Main.jdbc.getConn());
+    private final ObservableList<ManagerIncome> incomes = getIncomes();
 
-    private final ObservableList<ManagerSalary> salaries = getSalaries(Main.jdbc.getConn());
+    private final ObservableList<ManagerSalary> salaries = getSalaries();
 
-    private final ObservableList<ManagerInspection> inspections = getInspections(Main.jdbc.getConn());
+    private final ObservableList<ManagerInspection> inspections = getInspections();
 
     private void initializeEmployee()
     {

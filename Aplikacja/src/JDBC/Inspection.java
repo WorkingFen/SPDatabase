@@ -2,6 +2,7 @@ package JDBC;
 
 import sample.AuditorInspection;
 import sample.ManagerInspection;
+import sample.RepairmanController;
 import sample.RepairmanInspection;
 
 import java.sql.Connection;
@@ -19,7 +20,7 @@ public class Inspection {
 
             stmt=conn.prepareStatement("INSERT INTO Przeglady VALUES(?, to_date(?, 'YYYY-MM-DD'), ?)");
 
-            PreparedStatement stmt2 = conn.prepareStatement("SELECT MAX(Przeglady.Numer_Przegladu) FROM Przeglady");
+            PreparedStatement stmt2 = conn.prepareStatement("SELECT MAX(Numer_Przegladu) FROM Przeglady");
             ResultSet rset = stmt2.executeQuery();
 
             int id;
@@ -32,6 +33,29 @@ public class Inspection {
             stmt.setInt(1, id);
             stmt.setString(2, date);
             stmt.setInt(3, poolID);
+            stmt.executeQuery();
+            stmt.close();
+            conn.commit();
+        }
+
+        catch(Exception e){
+            System.out.println(e.getMessage());
+            conn.rollback();
+        }
+        finally{
+            conn.setAutoCommit(true);
+        }
+    }
+
+    static public void deleteInspection(Connection conn, int id) throws SQLException {
+        try{
+            PreparedStatement stmt;
+
+            conn.setAutoCommit(false);
+
+            stmt=conn.prepareStatement("DELETE FROM Przeglady WHERE Numer_Przegladu = ?");
+
+            stmt.setInt(1, id);
             stmt.executeQuery();
             stmt.close();
             conn.commit();
@@ -66,7 +90,7 @@ public class Inspection {
         }
     }
 
-    static public RepairmanInspection getRepairmanInspection(Connection conn, int id) throws SQLException {
+    static public RepairmanInspection getRepairmanInspection(RepairmanController rc, Connection conn, int id) throws SQLException {
         PreparedStatement stmt = conn.prepareStatement("SELECT to_char(p.Data, 'YYYY-MM-DD') FROM Przeglady p WHERE Numer_Przegladu = ?");
         stmt.setInt(1, id);
         ResultSet rSet = stmt.executeQuery();
@@ -74,7 +98,7 @@ public class Inspection {
             String date = rSet.getString(1);
             rSet.close();
             stmt.close();
-            return new RepairmanInspection(id, date, "BRAK");
+            return new RepairmanInspection(rc, id, date, "BRAK");
         }
         else{
             rSet.close();

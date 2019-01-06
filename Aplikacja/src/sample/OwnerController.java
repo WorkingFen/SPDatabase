@@ -61,7 +61,8 @@ public class OwnerController implements Initializable {
         incomeTable.getItems().clear();
     }
 
-    private ObservableList<String> getPoolNames(Connection conn) throws SQLException {
+    private ObservableList<String> getPoolNames() throws SQLException {
+        Connection conn = Main.jdbc.getConn();
         int noPools;
         PreparedStatement stmt = conn.prepareStatement("SELECT COUNT(*) FROM Baseny");
         ResultSet rSet = stmt.executeQuery();
@@ -80,7 +81,8 @@ public class OwnerController implements Initializable {
         return list;
     }
 
-    private ObservableList<OwnerEmployee> getEmployees(Connection conn, String poolItem) throws SQLException {
+    private ObservableList<OwnerEmployee> getEmployees(String poolItem) throws SQLException {
+        Connection conn = Main.jdbc.getConn();
         int noEmployees;
         PreparedStatement stmt = conn.prepareStatement("SELECT COUNT(*) FROM Pracownicy");
         ResultSet rSet = stmt.executeQuery();
@@ -99,7 +101,8 @@ public class OwnerController implements Initializable {
         return list;
     }
 
-    private ObservableList<OwnerIncome> getIncomes(Connection conn, String poolItem) throws SQLException {
+    private ObservableList<OwnerIncome> getIncomes(String poolItem) throws SQLException {
+        Connection conn = Main.jdbc.getConn();
         int minYear;
         int maxYear;
         PreparedStatement stmt = conn.prepareStatement("SELECT MIN(to_char(Data, 'YYYY')) FROM Transakcje");
@@ -152,14 +155,14 @@ public class OwnerController implements Initializable {
     }
 
     private void initializePoolList() throws SQLException {
-        ObservableList<String> items = getPoolNames(Main.jdbc.getConn());
+        ObservableList<String> items = getPoolNames();
         poolList.setItems(items);
     }
 
     private void changeTables(String poolItem) throws SQLException {
         clearTables();
-        employees = getEmployees(Main.jdbc.getConn(), poolItem);
-        incomes = getIncomes(Main.jdbc.getConn(), poolItem);
+        employees = getEmployees(poolItem);
+        incomes = getIncomes(poolItem);
         initializeEmployees();
         initializeIncomes();
     }

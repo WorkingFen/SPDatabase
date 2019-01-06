@@ -67,13 +67,13 @@ public class LoginDetails {
                 if(passNum == logNum){
                     int source = Employee.checkEmployee(conn, passNum);
                     if(source != 0){
-                        return source+2;
-                    }
-                    else if(Auditor.checkAuditor(conn, passNum)){
-                        return 1;
+                        return source;
                     }
                     else if(Owner.checkOwner(conn, passNum)){
-                        return 2;
+                        return 6;
+                    }
+                    else if(Auditor.checkAuditor(conn, passNum)) {
+                        return 7;
                     }
                     else
                         return 0;

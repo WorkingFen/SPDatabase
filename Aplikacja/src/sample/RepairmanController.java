@@ -39,8 +39,8 @@ public class RepairmanController implements Initializable {
     public RepairmanController() throws SQLException {
     }
 
-
-    private ObservableList<RepairmanInspection> getInspections(Connection conn) throws SQLException {
+    private ObservableList<RepairmanInspection> getInspections() throws SQLException {
+        Connection conn = Main.jdbc.getConn();
         int noInspections;
         PreparedStatement stmt = conn.prepareStatement("SELECT COUNT(*) FROM Przeglady");
         ResultSet rSet = stmt.executeQuery();
@@ -53,12 +53,20 @@ public class RepairmanController implements Initializable {
 
         ObservableList<RepairmanInspection> list = FXCollections.observableArrayList();
         for(int i = 0; i < noInspections; i++){
-            list.add(Inspection.getRepairmanInspection(conn, i+1));
+            RepairmanInspection temp = Inspection.getRepairmanInspection(this, conn, i+1);
+            if(temp != null) list.add(temp);
         }
         return list;
     }
 
-    private final ObservableList<RepairmanInspection> inspections = getInspections(Main.jdbc.getConn());
+    void deleteInspection(int id) throws SQLException {
+        Inspection.deleteInspection(Main.jdbc.getConn(), id);
+        inspectionTable.getItems().clear();
+        inspections = getInspections();
+        initializeInspections();
+    }
+
+    private ObservableList<RepairmanInspection> inspections = getInspections();
 
     private void initializeInspections() {
         inspectionID.setCellValueFactory(new PropertyValueFactory<>("id"));

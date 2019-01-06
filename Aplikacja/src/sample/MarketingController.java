@@ -96,7 +96,8 @@ public class MarketingController implements Initializable {
         transactionsTable.getItems().clear();
     }
 
-    private ObservableList<String> getPoolNames(Connection conn) throws SQLException {
+    private ObservableList<String> getPoolNames() throws SQLException {
+        Connection conn = Main.jdbc.getConn();
         int noPools;
         PreparedStatement stmt = conn.prepareStatement("SELECT COUNT(*) FROM Baseny");
         ResultSet rSet = stmt.executeQuery();
@@ -115,7 +116,8 @@ public class MarketingController implements Initializable {
         return list;
     }
 
-    private ObservableList<MarketingClient> getClients(Connection conn) throws SQLException {
+    private ObservableList<MarketingClient> getClients() throws SQLException {
+        Connection conn = Main.jdbc.getConn();
         int noClients;
         PreparedStatement stmt = conn.prepareStatement("SELECT COUNT(*) FROM Klienci ");
         ResultSet rSet = stmt.executeQuery();
@@ -134,7 +136,8 @@ public class MarketingController implements Initializable {
         return list;
     }
 
-    private ObservableList<MarketingTopClient> getTopClients(Connection conn) throws SQLException {
+    private ObservableList<MarketingTopClient> getTopClients() throws SQLException {
+        Connection conn = Main.jdbc.getConn();
         int noClients;
         PreparedStatement stmt = conn.prepareStatement("SELECT COUNT(*) FROM Klienci ");
         ResultSet rSet = stmt.executeQuery();
@@ -153,7 +156,8 @@ public class MarketingController implements Initializable {
         return list;
     }
 
-    private ObservableList<MarketingReservation> getReservations(Connection conn, String poolItem) throws SQLException {
+    private ObservableList<MarketingReservation> getReservations(String poolItem) throws SQLException {
+        Connection conn = Main.jdbc.getConn();
         int noReservations;
         PreparedStatement stmt = conn.prepareStatement("SELECT COUNT(*) FROM Rezerwacje_Toru");
         ResultSet rSet = stmt.executeQuery();
@@ -172,7 +176,8 @@ public class MarketingController implements Initializable {
         return list;
     }
 
-    private ObservableList<MarketingTransaction> getTransactions(Connection conn, String poolItem) throws SQLException {
+    private ObservableList<MarketingTransaction> getTransactions(String poolItem) throws SQLException {
+        Connection conn = Main.jdbc.getConn();
         int noTransactions;
         PreparedStatement stmt = conn.prepareStatement("SELECT COUNT(*) FROM Transakcje");
         ResultSet rSet = stmt.executeQuery();
@@ -191,9 +196,9 @@ public class MarketingController implements Initializable {
         return list;
     }
 
-    private ObservableList<MarketingClient> clients = getClients(Main.jdbc.getConn());
+    private ObservableList<MarketingClient> clients = getClients();
 
-    private ObservableList<MarketingTopClient> topClients = getTopClients(Main.jdbc.getConn());
+    private ObservableList<MarketingTopClient> topClients = getTopClients();
 
     private ObservableList<MarketingReservation> reservations = FXCollections.observableArrayList();
 
@@ -236,7 +241,7 @@ public class MarketingController implements Initializable {
     }
 
     private void initializePoolList() throws SQLException {
-        ObservableList<String> items = getPoolNames(Main.jdbc.getConn());
+        ObservableList<String> items = getPoolNames();
         poolList.setItems(items);
     }
 
@@ -246,8 +251,8 @@ public class MarketingController implements Initializable {
 
     private void changeTables(String poolItem) throws SQLException {
         clearTables();
-        reservations = getReservations(Main.jdbc.getConn(), poolItem);
-        transactions = getTransactions(Main.jdbc.getConn(), poolItem);
+        reservations = getReservations(poolItem);
+        transactions = getTransactions(poolItem);
         initializeReservations();
         initializeTransactions();
     }

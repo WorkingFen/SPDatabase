@@ -77,7 +77,8 @@ public class AuditorController implements Initializable {
         transactionTable.getItems().clear();
     }
 
-    private ObservableList<String> getPoolNames(Connection conn) throws SQLException {
+    private ObservableList<String> getPoolNames() throws SQLException {
+        Connection conn = Main.jdbc.getConn();
         int noPools;
         PreparedStatement stmt = conn.prepareStatement("SELECT COUNT(*) FROM Baseny");
         ResultSet rSet = stmt.executeQuery();
@@ -96,7 +97,8 @@ public class AuditorController implements Initializable {
         return list;
     }
 
-    private ObservableList<AuditorEmployee> getEmployees(Connection conn, String poolItem) throws SQLException {
+    private ObservableList<AuditorEmployee> getEmployees(String poolItem) throws SQLException {
+        Connection conn = Main.jdbc.getConn();
         int noEmployees;
         PreparedStatement stmt = conn.prepareStatement("SELECT COUNT(*) FROM Pracownicy");
         ResultSet rSet = stmt.executeQuery();
@@ -115,7 +117,8 @@ public class AuditorController implements Initializable {
         return list;
     }
 
-    private ObservableList<AuditorInspection> getInspections(Connection conn, String poolItem) throws SQLException {
+    private ObservableList<AuditorInspection> getInspections(String poolItem) throws SQLException {
+        Connection conn = Main.jdbc.getConn();
         int noInspections;
         PreparedStatement stmt = conn.prepareStatement("SELECT COUNT(*) FROM Przeglady");
         ResultSet rSet = stmt.executeQuery();
@@ -134,7 +137,8 @@ public class AuditorController implements Initializable {
         return list;
     }
 
-    private ObservableList<AuditorTransaction> getTransactions(Connection conn, String poolItem) throws SQLException {
+    private ObservableList<AuditorTransaction> getTransactions(String poolItem) throws SQLException {
+        Connection conn = Main.jdbc.getConn();
         int noTransactions;
         PreparedStatement stmt = conn.prepareStatement("SELECT COUNT(*) FROM Transakcje");
         ResultSet rSet = stmt.executeQuery();
@@ -187,15 +191,15 @@ public class AuditorController implements Initializable {
     }
 
     private void initializePoolList() throws SQLException {
-        ObservableList<String> items = getPoolNames(Main.jdbc.getConn());
+        ObservableList<String> items = getPoolNames();
         poolList.setItems(items);
     }
 
     private void changeTables(String poolItem) throws SQLException {
         clearTables();
-        employees = getEmployees(Main.jdbc.getConn(), poolItem);
-        inspections = getInspections(Main.jdbc.getConn(), poolItem);
-        transactions = getTransactions(Main.jdbc.getConn(), poolItem);
+        employees = getEmployees(poolItem);
+        inspections = getInspections(poolItem);
+        transactions = getTransactions(poolItem);
         initializeEmployees();
         initializeInspections();
         initializeTransactions();
