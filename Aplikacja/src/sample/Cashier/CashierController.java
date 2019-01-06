@@ -145,7 +145,7 @@ public class CashierController implements Initializable {
 
         ObservableList<CashierPath> list = FXCollections.observableArrayList();
         for(int i = minReservation-1; i < maxReservation; i++){
-            CashierPath temp = Reservation.getCashierReservation(conn, "Rezerwuj", "Anuluj", i+1);
+            CashierPath temp = Reservation.getCashierReservation(this, conn, "Rezerwuj", "Anuluj", i+1);
             if(temp != null) list.add(temp);
         }
         return list;
@@ -185,7 +185,7 @@ public class CashierController implements Initializable {
         initializeClients();
     }
 
-    int addNewLessonClient(String name, String surname, String phone, String email) throws SQLException {
+    int addNewClient(String name, String surname, String phone, String email) throws SQLException {
         int clientID = Client.addClient(Main.jdbc.getConn(), name, surname, phone, email);
         clientTable.getItems().clear();
         clients = getClients();
@@ -212,6 +212,20 @@ public class CashierController implements Initializable {
         initializeLessons();
     }
 
+    void addReservation(int id, int clientID) throws SQLException {
+        Reservation.addCashierReservation(Main.jdbc.getConn(), id, clientID);
+        pathTable.getItems().clear();
+        paths = getReservations();
+        initializePaths();
+    }
+
+    void deleteReservation(int id, int clientID) throws SQLException {
+        Reservation.deleteCashierReservation(Main.jdbc.getConn(), id, clientID);
+        pathTable.getItems().clear();
+        paths = getReservations();
+        initializePaths();
+    }
+
     private void addClient(String name, String surname, String phone, String email) throws SQLException {
         Client.addClient(Main.jdbc.getConn(), name, surname, phone, email);
         clientTable.getItems().clear();
@@ -226,7 +240,7 @@ public class CashierController implements Initializable {
 
     private ObservableList<CashierLesson> lessons = getLessons();
 
-    private final ObservableList<CashierPath> paths = getReservations();
+    private ObservableList<CashierPath> paths = getReservations();
 
     private ObservableList<CashierClient> clients = getClients();
 

@@ -1,5 +1,6 @@
 package JDBC;
 
+import sample.Cashier.CashierController;
 import sample.Cashier.CashierPath;
 import sample.Client.ClientPath;
 import sample.Marketing.MarketingReservation;
@@ -49,7 +50,55 @@ public class Reservation {
         }
     }
 
-    static public CashierPath getCashierReservation(Connection conn, String msgIn, String msgOut, int id) throws SQLException {
+    public static void addCashierReservation(Connection conn, int id, int clientID) throws SQLException {
+        try {
+            PreparedStatement stmt;
+
+            conn.setAutoCommit(false);
+
+            stmt = conn.prepareStatement("UPDATE Rezerwacje_Toru SET Status = 1, Klienci_Numer_Klienta = ? WHERE Numer_Rezerwacji = ?");
+
+            stmt.setInt(1, clientID);
+            stmt.setInt(2, id);
+            stmt.executeQuery();
+            stmt.close();
+            conn.commit();
+        }
+
+        catch (Exception e) {
+            System.out.println(e.getMessage());
+            conn.rollback();
+        }
+        finally {
+            conn.setAutoCommit(true);
+        }
+    }
+
+    public static void deleteCashierReservation(Connection conn, int id, int clientID) throws SQLException {
+        try {
+            PreparedStatement stmt;
+
+            conn.setAutoCommit(false);
+
+            stmt = conn.prepareStatement("UPDATE Rezerwacje_Toru SET Status = 0 WHERE Numer_Rezerwacji = ? AND Klienci_Numer_Klienta = ?");
+
+            stmt.setInt(1, id);
+            stmt.setInt(2, clientID);
+            stmt.executeQuery();
+            stmt.close();
+            conn.commit();
+        }
+
+        catch (Exception e) {
+            System.out.println(e.getMessage());
+            conn.rollback();
+        }
+        finally {
+            conn.setAutoCommit(true);
+        }
+    }
+
+    static public CashierPath getCashierReservation(CashierController cc, Connection conn, String msgIn, String msgOut, int id) throws SQLException {
         PreparedStatement stmt = conn.prepareStatement("SELECT to_char(rt.Data_i_Godzina, 'YYYY-MM-DD HH24:MI'), rt.Numer_toru, rt.Status FROM Rezerwacje_Toru rt WHERE Numer_Rezerwacji = ? AND Data_I_Godzina > SYSDATE");
         stmt.setInt(1, id);
         ResultSet rSet = stmt.executeQuery();
@@ -62,7 +111,7 @@ public class Reservation {
             else status = "Zajęty";
             rSet.close();
             stmt.close();
-            return new CashierPath(id, date, noPath, status, msgIn, msgOut);
+            return new CashierPath(cc, id, date, noPath, status, msgIn, msgOut);
         }
         else{
             rSet.close();
@@ -102,12 +151,12 @@ public class Reservation {
         String surname;
         PreparedStatement stmt = conn.prepareStatement(
                 "SELECT to_char(Data_i_Godzina, 'YYYY-MM-DD HH24:MI'), Imie, Nazwisko FROM " +
-                        "(SELECT z.Numer_Rezerwacji, z.Data_i_Godzina, z.Imie, z.Nazwisko, b.Nazwa_Obiektu FROM " +
-                            "(SELECT a.Numer_Rezerwacji, a.Data_i_Godzina, a.Imie, a.Nazwisko, u.Baseny_Numer_Obiektu FROM " +
-                                "(SELECT rt.Numer_Rezerwacji, rt.Data_I_Godzina, rt.Ogolne_Numer_Uslugi, k.Imie, k.Nazwisko FROM Rezerwacje_Toru rt JOIN Klienci k ON rt.Klienci_Numer_Klienta = k.Numer_Klienta) a " +
+                        "(SELECT z.Numer_Rezerwacji, z.Data_i_Godzina, z.Status, z.Imie, z.Nazwisko, b.Nazwa_Obiektu FROM " +
+                            "(SELECT a.Numer_Rezerwacji, a.Data_i_Godzina, a.Status, a.Imie, a.Nazwisko, u.Baseny_Numer_Obiektu FROM " +
+                                "(SELECT rt.Numer_Rezerwacji, rt.Data_I_Godzina, rt.Ogolne_Numer_Uslugi, rt.Status, k.Imie, k.Nazwisko FROM Rezerwacje_Toru rt JOIN Klienci k ON rt.Klienci_Numer_Klienta = k.Numer_Klienta) a " +
                             "JOIN Uslugi u ON a.Ogolne_Numer_Uslugi = u.Numer_Uslugi) z " +
                         "JOIN Baseny b ON z.Baseny_Numer_Obiektu = b.Numer_Obiektu) " +
-                    "WHERE Numer_Rezerwacji = ? AND Nazwa_Obiektu = ?"
+                    "WHERE Numer_Rezerwacji = ? AND Nazwa_Obiektu = ? AND Status = 0"
         );
         stmt.setInt(1, id);
         stmt.setString(2, poolItem);

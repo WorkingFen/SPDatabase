@@ -52,7 +52,7 @@ public class CashierLesson {
                         String []array = PopupWindowEdit.display(fieldFilling, textFieldArray,"Nowy klient","Wprowadź dane:", 350);
                         if(array != null){
                             if(array[0] == null || array[1] == null || array[2] == null) return;
-                            int clientID = cc.addNewLessonClient(array[0], array[1], array[2], array[3]);
+                            int clientID = cc.addNewClient(array[0], array[1], array[2], array[3]);
                             if(clientID != 0) cc.addAttendee(id, clientID);
                         }
                     } catch (IOException | SQLException e1) {
