@@ -49,7 +49,7 @@ public class Reservation {
         }
     }
 
-    static public CashierPath getCashierReservation(Connection conn, String msg, int id) throws SQLException {
+    static public CashierPath getCashierReservation(Connection conn, String msgIn, String msgOut, int id) throws SQLException {
         PreparedStatement stmt = conn.prepareStatement("SELECT to_char(rt.Data_i_Godzina, 'YYYY-MM-DD HH24:MI'), rt.Numer_toru, rt.Status FROM Rezerwacje_Toru rt WHERE Numer_Rezerwacji = ? AND Data_I_Godzina > SYSDATE");
         stmt.setInt(1, id);
         ResultSet rSet = stmt.executeQuery();
@@ -62,7 +62,7 @@ public class Reservation {
             else status = "Zajęty";
             rSet.close();
             stmt.close();
-            return new CashierPath(id, date, noPath, status, msg);
+            return new CashierPath(id, date, noPath, status, msgIn, msgOut);
         }
         else{
             rSet.close();

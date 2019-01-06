@@ -13,10 +13,10 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
-public class PopupWindowEdit {
+class PopupWindowEdit {
     static private String[] array;
 
-    public static String[] display(String [] setPromptArray, String title, String message, int minWidth) throws IOException {
+    static String[] display(String[] fieldFilling, String[] setPromptArray, String title, String message, int minWidth) throws IOException {
 
         array = new String[setPromptArray.length];
 
@@ -25,7 +25,6 @@ public class PopupWindowEdit {
         window.setTitle(title);
         window.setMinWidth(minWidth);
 
-
         Label label = new Label();
         label.setText(message);
 
@@ -33,15 +32,16 @@ public class PopupWindowEdit {
         for(int i = 0; i < array.length; i++)
         {
             text[i] = new TextField();
-            text[i].setPromptText(setPromptArray[i]);
+            if(fieldFilling[i] == null) text[i].setPromptText(setPromptArray[i]);
+            else text[i].setText(fieldFilling[i]);
         }
 
-        Button okButton = new Button("Ok");
+        Button okButton = new Button("OK");
         okButton.setOnAction(e ->{
             for(int i = 0; i < array.length; i++)
             {
-                array[i] = text[i].getText();
-
+                if(text[i].getText().equals("")) array[i] = null;
+                else array[i] = text[i].getText();
             }
             window.close();
         });
@@ -56,7 +56,8 @@ public class PopupWindowEdit {
         window.setScene(scene);
         window.showAndWait();
 
-        return array;
+        if(array != null) return array;
+        else return null;
     }
 
 }

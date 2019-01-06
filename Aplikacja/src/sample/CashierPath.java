@@ -8,18 +8,26 @@ public class CashierPath {
     private int pathNumber;
     private String state;
     private Button reserveButton;
+    private Button cancelButton;
 
-    public CashierPath(int number, String date, int pathNumber, String state, String msg){
+    public CashierPath(int number, String date, int pathNumber, String state, String msgIn, String msgOut){
         this.number = number;
         this.date = date;
         this.pathNumber = pathNumber;
         this.state = state;
-        this.reserveButton = new Button(msg);
+        if(state.equals("Wolny")) this.reserveButton = new Button(msgIn);
+        else if(state.equals("Zajęty")) this.cancelButton = new Button(msgOut);
 
-        // change button color on mouse clicked
-        this.reserveButton.setOnAction(e->{
-            this.reserveButton.setStyle("-fx-background-color: #ff0000; ");
-        });
+        if(reserveButton != null){
+            this.reserveButton.setOnAction(e->{
+                this.reserveButton.setStyle("-fx-background-color: #ff0000; ");
+            });
+        }
+        if(cancelButton != null){
+            this.cancelButton.setOnAction(e->{
+                this.cancelButton.setStyle("-fx-background-color: #ff0000; ");
+            });
+        }
     }
 
     public int getNumber() {
@@ -49,6 +57,10 @@ public class CashierPath {
     public void setState(String state) {
         this.state = state;
     }
+
+    public Button getCancelButton() { return cancelButton; }
+
+    public void setCancelButton(Button cancelButton) { this.cancelButton = cancelButton; }
 
     public Button getReserveButton() {
         return reserveButton;

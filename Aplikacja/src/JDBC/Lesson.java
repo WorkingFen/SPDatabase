@@ -1,5 +1,6 @@
 package JDBC;
 
+import sample.CashierController;
 import sample.CashierLesson;
 import sample.ClientLesson;
 import java.sql.Connection;
@@ -45,13 +46,13 @@ public class Lesson {
         }
     }
 
-    static public CashierLesson getCashierLesson(Connection conn, String msg, int id) throws SQLException {
+    static public CashierLesson getCashierLesson(CashierController cc, Connection conn, String msgIn, String msgOut, int id) throws SQLException {
         String date;
         String noAttendees;
-        int noPool;
+        int lessonID;
         String surname;
         PreparedStatement stmt = conn.prepareStatement(
-                "SELECT to_char(Data_i_Godzina, 'YYYY-MM-DD HH24:MI'), Liczba_zapisanych_osob, Nazwisko FROM " +
+                "SELECT to_char(Data_i_Godzina, 'YYYY-MM-DD HH24:MI'), Liczba_zapisanych_osob, Nazwisko, Numer_Lekcji FROM " +
                         "(SELECT * FROM Lekcje_Plywania JOIN Pracownicy ON Numer_Ratownika = Numer_Identyfikacyjny) " +
                         "WHERE Numer_Lekcji = ? AND Data_I_Godzina > SYSDATE");
         stmt.setInt(1, id);
@@ -60,9 +61,10 @@ public class Lesson {
             date = rSet.getString(1);
             noAttendees = rSet.getString(2)+"/6";
             surname = rSet.getString(3);
+            lessonID = rSet.getInt(4);
             rSet.close();
             stmt.close();
-            return new CashierLesson(date, noAttendees, surname, msg);
+            return new CashierLesson(cc, lessonID, date, noAttendees, surname, msgIn, msgOut);
         }
         else{
             rSet.close();

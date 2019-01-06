@@ -1,5 +1,6 @@
 package sample;
 
+import JDBC.Attendee;
 import JDBC.Client;
 import JDBC.Lesson;
 import JDBC.Reservation;
@@ -30,9 +31,9 @@ import java.util.ResourceBundle;
 public class CashierController implements Initializable {
 
     @FXML
-    private TextField fnameField;
+    private TextField fNameField;
     @FXML
-    private TextField lnameField;
+    private TextField lNameField;
     @FXML
     private TextField phoneNumberField;
     @FXML
@@ -42,45 +43,49 @@ public class CashierController implements Initializable {
     @FXML
     private TableView<CashierClient> clientTable;
     @FXML
-    private TableColumn<ClientPath, String> clientNumber;
+    private TableColumn<CashierClient, String> clientNumber;
     @FXML
-    private TableColumn<ClientPath, String> clientFName;
+    private TableColumn<CashierClient, String> clientFName;
     @FXML
-    private TableColumn<ClientPath, String> clientLName;
+    private TableColumn<CashierClient, String> clientLName;
     @FXML
-    private TableColumn<ClientPath, String> clientPhone;
+    private TableColumn<CashierClient, String> clientPhone;
     @FXML
-    private TableColumn<ClientPath, String> clientEMail;
+    private TableColumn<CashierClient, String> clientEMail;
     @FXML
-    private TableColumn<ClientPath, String> editClient;
+    private TableColumn<CashierClient, String> editClient;
     @FXML
-    private TableColumn<ClientPath, String> deleteClient;
+    private TableColumn<CashierClient, String> deleteClient;
 
 
     @FXML
     private TableView<CashierLesson> lessonTable;
     @FXML
-    private TableColumn<ClientPath, String> lessonDate;
+    private TableColumn<CashierLesson, String> lessonDate;
     @FXML
-    private TableColumn<ClientPath, String> lessonEnrolled;
+    private TableColumn<CashierLesson, String> lessonEnrolled;
     @FXML
-    private TableColumn<ClientPath, String> lessonRescuer;
+    private TableColumn<CashierLesson, String> lessonRescuer;
     @FXML
-    private TableColumn<ClientPath, String> reserveLesson;
+    private TableColumn<CashierLesson, String> reserveLesson;
+    @FXML
+    private TableColumn<CashierLesson, String> dismissLesson;
 
 
     @FXML
     private TableView<CashierPath> pathTable;
     @FXML
-    private TableColumn<ClientPath, String> pathReservationNumber;
+    private TableColumn<CashierPath, String> pathReservationNumber;
     @FXML
-    private TableColumn<ClientPath, String> pathHours;
+    private TableColumn<CashierPath, String> pathHours;
     @FXML
-    private TableColumn<ClientPath, String> pathNumber;
+    private TableColumn<CashierPath, String> pathNumber;
     @FXML
-    private TableColumn<ClientPath, String> pathState;
+    private TableColumn<CashierPath, String> pathState;
     @FXML
-    private TableColumn<ClientPath, String> reservePath;
+    private TableColumn<CashierPath, String> reservePath;
+    @FXML
+    private TableColumn<CashierPath, String> cancelReservation;
 
     public CashierController() throws SQLException {
     }
@@ -109,7 +114,7 @@ public class CashierController implements Initializable {
 
         ObservableList<CashierLesson> list = FXCollections.observableArrayList();
         for(int i = minLesson-1; i < maxLesson; i++){
-            CashierLesson temp = Lesson.getCashierLesson(conn, "Zapisz", i+1);
+            CashierLesson temp = Lesson.getCashierLesson(this, conn, "Zapisz", "Wypisz", i+1);
             if(temp != null) list.add(temp);
         }
         return list;
@@ -139,7 +144,7 @@ public class CashierController implements Initializable {
 
         ObservableList<CashierPath> list = FXCollections.observableArrayList();
         for(int i = minReservation-1; i < maxReservation; i++){
-            CashierPath temp = Reservation.getCashierReservation(conn, "Rezerwuj", i+1);
+            CashierPath temp = Reservation.getCashierReservation(conn, "Rezerwuj", "Anuluj", i+1);
             if(temp != null) list.add(temp);
         }
         return list;
@@ -159,45 +164,93 @@ public class CashierController implements Initializable {
 
         ObservableList<CashierClient> list = FXCollections.observableArrayList();
         for(int i = 0; i < noClients; i++){
-            list.add(Client.getCashierClient(conn,i+1));
+            CashierClient temp = Client.getCashierClient(this, conn, i+1);
+            if(temp != null) list.add(temp);
         }
         return list;
     }
 
-    private final ObservableList<CashierLesson> lessons = getLessons();
+    void deleteClientInstance(String name, String surname, String email) throws SQLException {
+        Client.deleteClient(Main.jdbc.getConn(), name, surname, email);
+        clientTable.getItems().clear();
+        clients = getClients();
+        initializeClients();
+    }
+
+    void editClientInstance(int number, String name, String surname, String phone, String email) throws SQLException {
+        Client.editClient(Main.jdbc.getConn(), number, name, surname, phone, email);
+        clientTable.getItems().clear();
+        clients = getClients();
+        initializeClients();
+    }
+
+    int addNewLessonClient(String name, String surname, String phone, String email) throws SQLException {
+        int clientID = Client.addClient(Main.jdbc.getConn(), name, surname, phone, email);
+        clientTable.getItems().clear();
+        clients = getClients();
+        initializeClients();
+
+        return clientID;
+    }
+
+    int getClientInstance(String name, String surname, String phone) throws SQLException {
+        return Client.getClient(Main.jdbc.getConn(), name, surname, phone);
+    }
+
+    void addAttendee(int id, int clientID) throws SQLException {
+        Attendee.addAttendee(Main.jdbc.getConn(), id, clientID);
+        lessonTable.getItems().clear();
+        lessons = getLessons();
+        initializeLessons();
+    }
+
+    void deleteAttendee(int id, int clientID) throws  SQLException {
+        Attendee.deleteAttendee(Main.jdbc.getConn(), id, clientID);
+        lessonTable.getItems().clear();
+        lessons = getLessons();
+        initializeLessons();
+    }
+
+    private void addClient(String name, String surname, String phone, String email) throws SQLException {
+        Client.addClient(Main.jdbc.getConn(), name, surname, phone, email);
+        clientTable.getItems().clear();
+        clients = getClients();
+        initializeClients();
+
+        fNameField.setText(null);
+        lNameField.setText(null);
+        phoneNumberField.setText(null);
+        emailField.setText(null);
+    }
+
+    private ObservableList<CashierLesson> lessons = getLessons();
 
     private final ObservableList<CashierPath> paths = getReservations();
 
-    private final ObservableList<CashierClient> clients = getClients();
+    private ObservableList<CashierClient> clients = getClients();
 
     private void initializeLessons() {
-
-        // ustawienie typu kolumn czy coś
         lessonDate.setCellValueFactory(new PropertyValueFactory<>("date"));
         lessonEnrolled.setCellValueFactory(new PropertyValueFactory<>("enrolled"));
         lessonRescuer.setCellValueFactory(new PropertyValueFactory<>("rescuer"));
         reserveLesson.setCellValueFactory(new PropertyValueFactory<>("enrollButton"));
+        dismissLesson.setCellValueFactory(new PropertyValueFactory<>("dismissButton"));
 
-        // dodanie wierszy
         lessonTable.getItems().addAll(lessons);
     }
 
     private void initializePaths() {
-
-        // ustawienie typu kolumn czy coś
         pathReservationNumber.setCellValueFactory(new PropertyValueFactory<>("number"));
         pathHours.setCellValueFactory(new PropertyValueFactory<>("date"));
         pathNumber.setCellValueFactory(new PropertyValueFactory<>("pathNumber"));
         pathState.setCellValueFactory(new PropertyValueFactory<>("state"));
         reservePath.setCellValueFactory(new PropertyValueFactory<>("reserveButton"));
+        cancelReservation.setCellValueFactory(new PropertyValueFactory<>("cancelButton"));
 
-        // dodanie wierszy
         pathTable.getItems().addAll(paths);
     }
 
     private void initializeClients() {
-
-        // ustawienie typu kolumn czy coś
         clientNumber.setCellValueFactory(new PropertyValueFactory<>("number"));
         clientFName.setCellValueFactory(new PropertyValueFactory<>("firstName"));
         clientLName.setCellValueFactory(new PropertyValueFactory<>("lastName"));
@@ -206,7 +259,6 @@ public class CashierController implements Initializable {
         editClient.setCellValueFactory(new PropertyValueFactory<>("editButton"));
         deleteClient.setCellValueFactory(new PropertyValueFactory<>("deleteButton"));
 
-        // dodanie wierszy
         clientTable.getItems().addAll(clients);
     }
 
@@ -221,17 +273,21 @@ public class CashierController implements Initializable {
 
     public void addClientButtonPushed(ActionEvent event) throws IOException {
 
-        String fnameInput= fnameField.getText();
-        String lnameInput = lnameField.getText();
+        String fNameInput= fNameField.getText();
+        String lNameInput = lNameField.getText();
         String phoneNumberInput = phoneNumberField.getText();
         String emailInput = emailField.getText();
 
+        if(fNameInput.equals("") || lNameInput.equals("") || phoneNumberInput.equals("")) return;
 
-        //CashierClient client = new CashierClient("1337",fnameInput, lnameInput, phoneNumberInput, emailInput,new Button("Edytuj"),new Button("Usuń"));
-
-        //clientTable.getItems().add(client);
-
-        //TODO dodanie do BD i jakieś ify
+        boolean answer = PopupWindowAlert.display("Czy na pewno chcesz dodać nowego klienta?","Dodawanie klienta", 350);
+        if(answer){
+            try {
+                this.addClient(fNameInput, lNameInput, phoneNumberInput, emailInput);
+            } catch (SQLException e1) {
+                e1.printStackTrace();
+            }
+        }
     }
 
     public void logOutButtonPushed(ActionEvent event)throws IOException {

@@ -3,9 +3,10 @@ package sample;
 import javafx.scene.control.Button;
 
 import java.io.IOException;
-import java.util.Arrays;
+import java.sql.SQLException;
 
 public class CashierClient {
+    private CashierController cc;
     private int number;
     private String firstName;
     private String lastName;
@@ -14,7 +15,8 @@ public class CashierClient {
     private Button editButton;
     private Button deleteButton;
 
-    public CashierClient(int number, String firstName, String lastName, String phone, String email) {
+    public CashierClient(CashierController cc, int number, String firstName, String lastName, String phone, String email) {
+        this.cc = cc;
         this.number = number;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -23,22 +25,33 @@ public class CashierClient {
         this.editButton = new Button("Edytuj");
         this.deleteButton = new Button("Usuń");
 
-         this.editButton.setOnAction(e -> {
+        this.editButton.setOnAction(e -> {
             {
-                String [] textFieldArray = new String[] {"Imię", "Nazwisko", "Numer telefonu", "Adres e-mail"};
+                String[] fieldFilling = new String[] {firstName, lastName, phone, email};
+                String[] textFieldArray = new String[] {"Imię", "Nazwisko", "Numer telefonu", "Adres e-mail"};
                 try {
-                    String []array = PopupWindowEdit.display(textFieldArray,"Edycja","Wprowadź dane:", 350);
-                    System.out.println(Arrays.toString(array));
-
-                } catch (IOException e1) {
+                    String []array = PopupWindowEdit.display(fieldFilling, textFieldArray,"Edycja","Wprowadź dane:", 350);
+                    if(array != null) cc.editClientInstance(number, array[0], array[1], array[2], array[3]);
+                } catch (IOException | SQLException e1) {
                     e1.printStackTrace();
                 }
             }
         });
         this.deleteButton.setOnAction(e -> {
-            this.deleteButton.setStyle("-fx-background-color: #ff0000; ");
+            boolean answer = PopupWindowAlert.display("Czy na pewno chcesz usunąć tego klienta?","Usuwanie klienta", 350);
+            if(answer){
+                try {
+                    cc.deleteClientInstance(firstName, lastName, email);
+                } catch (SQLException e1) {
+                    e1.printStackTrace();
+                }
+            }
         });
     }
+
+    public CashierController getCc() { return cc; }
+
+    public void setCc(CashierController cc) { this.cc = cc; }
 
     public int getNumber() {
         return number;
