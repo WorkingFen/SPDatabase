@@ -24,8 +24,8 @@
                                 </TableView>
                                 <HBox layoutY="300.0" prefHeight="37.0" prefWidth="600.0">
                                     <children>
-                                        <TextField fx:id="fnameField" prefHeight="30.0" prefWidth="89.0" promptText="Imię" />
-                                        <TextField fx:id="lnameField" prefHeight="30.0" prefWidth="89.0" promptText="Nazwisko" />
+                                        <TextField fx:id="fNameField" prefHeight="30.0" prefWidth="89.0" promptText="Imię" />
+                                        <TextField fx:id="lNameField" prefHeight="30.0" prefWidth="89.0" promptText="Nazwisko" />
                                         <TextField fx:id="positionField" prefHeight="30.0" prefWidth="101.0" promptText="Stanowisko" />
                                         <Button mnemonicParsing="false" onAction="#hireEmployeeButtonPushed" prefHeight="30.0" prefWidth="48.0" text="Dodaj" />
                                     </children>

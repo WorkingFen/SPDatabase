@@ -54,7 +54,7 @@ public class LoginDetails {
     }
 
     public static int checkLoginDetails(Connection conn, String login, String password) throws SQLException {
-        PreparedStatement stmt = conn.prepareStatement("SELECT Dane_Do_Logowania.Osoby_Numer_Identyfikacyjny FROM Dane_Do_Logowania WHERE Login = ?");
+        PreparedStatement stmt = conn.prepareStatement("SELECT Osoby_Numer_Identyfikacyjny FROM Dane_Do_Logowania WHERE Login = ?");
         stmt.setString(1, login);
         ResultSet rSet = stmt.executeQuery();
         if(rSet.next()){
@@ -89,6 +89,46 @@ public class LoginDetails {
             rSet.close();
             stmt.close();
             return 0;
+        }
+    }
+
+    public static void deleteLoginDetails(Connection conn, int id) throws SQLException {
+        String login;
+        try{
+            PreparedStatement stmt;
+
+            conn.setAutoCommit(false);
+
+            stmt = conn.prepareStatement("SELECT Login FROM Dane_Do_Logowania WHERE Osoby_Numer_Identyfikacyjny = ?");
+            stmt.setInt(1, id);
+            ResultSet rSet = stmt.executeQuery();
+
+            if(rSet.next()){
+                login = Integer.toString(rSet.getString(1).hashCode());
+                rSet.close();
+                stmt.close();
+            }
+            else{
+                rSet.close();
+                stmt.close();
+                return;
+            }
+
+            stmt=conn.prepareStatement("UPDATE Dane_Do_Logowania SET Login = ? WHERE Osoby_Numer_Identyfikacyjny = ?");
+
+            stmt.setString(1, login);
+            stmt.setInt(2, id);
+            stmt.executeQuery();
+            stmt.close();
+            conn.commit();
+        }
+
+        catch(Exception e){
+            System.out.println(e.getMessage());
+            conn.rollback();
+        }
+        finally{
+            conn.setAutoCommit(true);
         }
     }
 }

@@ -61,4 +61,21 @@ public class Post {
             return null;
         }
     }
+
+    static public String getHRPostNames(Connection conn, int id) throws SQLException {
+        PreparedStatement stmt = conn.prepareStatement("SELECT Nazwa FROM Stanowiska WHERE Numer_Stanowiska = ?");
+        stmt.setInt(1, id);
+        ResultSet rSet = stmt.executeQuery();
+        if(rSet.next()){
+            String name = rSet.getString(1);
+            rSet.close();
+            stmt.close();
+            return name;
+        }
+        else{
+            rSet.close();
+            stmt.close();
+            return null;
+        }
+    }
 }

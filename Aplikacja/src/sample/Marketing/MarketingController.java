@@ -108,8 +108,8 @@ public class MarketingController implements Initializable {
         stmt.close();
 
         ObservableList<String> list = FXCollections.observableArrayList();
-        for(int i = 0; i < noPools; i++){
-            String temp = Pool.getPool(conn, i+1);
+        for(int i = 1; i < noPools; i++){
+            String temp = Pool.getPool(conn, i);
             if(temp != null) list.add(temp);
         }
         return list;

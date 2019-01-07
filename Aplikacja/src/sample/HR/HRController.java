@@ -1,6 +1,7 @@
 package sample.HR;
 
 import JDBC.Employee;
+import JDBC.LoginDetails;
 import JDBC.Post;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -19,6 +20,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.stage.Stage;
 import sample.Main;
+import sample.PopupWindows.PopupWindowAlert;
 
 
 import java.io.IOException;
@@ -56,9 +58,9 @@ public class HRController implements Initializable {
 
 
     @FXML
-    private TextField fnameField;
+    private TextField fNameField;
     @FXML
-    private TextField lnameField;
+    private TextField lNameField;
     @FXML
     private TextField positionField;
 
@@ -79,7 +81,7 @@ public class HRController implements Initializable {
 
         ObservableList<HREmployee> list = FXCollections.observableArrayList();
         for(int i = 0; i < noEmployees; i++){
-            list.add(Employee.getHREmployee(conn, i+1));
+            list.add(Employee.getHREmployee(this, conn, i+1));
         }
         return list;
     }
@@ -97,13 +99,58 @@ public class HRController implements Initializable {
         stmt.close();
 
         ObservableList<HRPost> list = FXCollections.observableArrayList();
-        for(int i = 0; i < noPositions; i++){
-            list.add(Post.getHRPost(conn, i+1));
+        for(int i = 1; i < noPositions; i++){
+            list.add(Post.getHRPost(conn, i));
         }
         return list;
     }
 
-    private final ObservableList<HREmployee> employees = getEmployees();
+    void fireEmployeeInstance(int id) throws  SQLException {
+        Employee.deleteEmployee(Main.jdbc.getConn(), id);
+        LoginDetails.deleteLoginDetails(Main.jdbc.getConn(), id);
+        employeeTable.getItems().clear();
+        employees = getEmployees();
+        initializeEmployees();
+    }
+
+    String[] getPostsNames() throws SQLException {
+        Connection conn = Main.jdbc.getConn();
+        int noPositions;
+        PreparedStatement stmt = conn.prepareStatement("SELECT COUNT(*) FROM Stanowiska");
+        ResultSet rSet = stmt.executeQuery();
+
+        if(rSet.next()) noPositions = rSet.getInt(1);
+        else noPositions = 0;
+
+        rSet.close();
+        stmt.close();
+
+        String[] list = new String[noPositions];
+        for(int i = 1; i < noPositions; i++){
+            list[i] = Post.getHRPostNames(conn, i);
+        }
+        return list;
+    }
+
+    void changePost(String post, int id) throws SQLException {
+        Employee.changeEmployeePost(Main.jdbc.getConn(), post, id);
+        employeeTable.getItems().clear();
+        employees = getEmployees();
+        initializeEmployees();
+    }
+
+    private void addEmployee(String name, String surname, String post) throws SQLException {
+        Employee.addEmployee(Main.jdbc.getConn(), name, surname, post);
+        employeeTable.getItems().clear();
+        employees = getEmployees();
+        initializeEmployees();
+
+        fNameField.setText(null);
+        lNameField.setText(null);
+        positionField.setText(null);
+    }
+
+    private ObservableList<HREmployee> employees = getEmployees();
 
     private final ObservableList<HRPost> posts = getPosts();
 
@@ -132,9 +179,20 @@ public class HRController implements Initializable {
     }
 
     public void hireEmployeeButtonPushed(ActionEvent event) throws IOException {
-        String fnameInput= fnameField.getText();
-        String lnameInput = lnameField.getText();
+        String fNameInput= fNameField.getText();
+        String lNameInput = lNameField.getText();
         String positionInput = positionField.getText();
+
+        if(fNameInput.equals("") || lNameInput.equals("") || positionInput.equals("")) return;
+
+        boolean answer = PopupWindowAlert.display("Czy na pewno chcesz dodać nowego pracownika?","Dodawanie pracownika", 350);
+        if(answer){
+            try {
+                this.addEmployee(fNameInput, lNameInput, positionInput);
+            } catch (SQLException e1) {
+                e1.printStackTrace();
+            }
+        }
     }
 
     public void logOutButtonPushed(ActionEvent event)throws IOException {

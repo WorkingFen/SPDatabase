@@ -65,6 +65,8 @@ LOGGING;
 
 ALTER TABLE baseny ADD CONSTRAINT baseny_pk PRIMARY KEY ( numer_obiektu );
 
+INSERT INTO baseny VALUES(0, 'Deleted', 0, NULL, NULL);
+
 -----------------------------------------------------Dane do logowania----------------------------------------------------------
 CREATE TABLE dane_do_logowania (
     id                            INTEGER NOT NULL,
@@ -266,6 +268,8 @@ CREATE TABLE stanowiska (
 LOGGING;
 
 ALTER TABLE stanowiska ADD CONSTRAINT stanowiska_pk PRIMARY KEY ( numer_stanowiska );
+
+INSERT INTO stanowiska VALUES(0, 'deleted', 0);
 
 ------------------------------------------------------Transakcje----------------------------------------------------------------
 CREATE TABLE transakcje (
