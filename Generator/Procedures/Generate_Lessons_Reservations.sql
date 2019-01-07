@@ -40,7 +40,7 @@ BEGIN
 	FOR counter1 IN 1..lessons_in_general
 	LOOP
 
-		pool_id := dbms_random.value(1, number_of_pools+0.49);
+		pool_id := dbms_random.value(2, number_of_pools+0.49);
 
         SELECT Numer_uslugi INTO service_id FROM USLUGI WHERE Baseny_Numer_obiektu = pool_id AND Nazwa_uslugi = 'lekcja p³ywania';
 

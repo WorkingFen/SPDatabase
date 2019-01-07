@@ -7,7 +7,7 @@ inspection_id NUMBER(4);
 BEGIN
     inspection_id := 1;
     SELECT COUNT(*) into number_of_pools FROM BASENY;
-	FOR counter1 IN 1..number_of_pools
+	FOR counter1 IN 2..number_of_pools
 	LOOP
 	
 		number_of_inspections := dbms_random.value(1,max_number_of_inspections+0.49);
