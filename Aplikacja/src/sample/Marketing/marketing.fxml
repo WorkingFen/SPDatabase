@@ -8,14 +8,21 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Marketing.MarketingController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Marketing.MarketingController">
     <left>
         <ListView fx:id="poolList" onMouseClicked="#poolItemClicked" prefHeight="296.0" prefWidth="143.0" BorderPane.alignment="CENTER" />
     </left>
     <bottom>
         <Button mnemonicParsing="false" onAction="#logOutButtonPushed" prefHeight="38.0" prefWidth="101.0" text="Wyloguj się" BorderPane.alignment="TOP_LEFT" />
     </bottom>
-    <right>
+    <top>
+        <Text lineSpacing="1.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Wybierz basen:" wrappingWidth="396.455078125" BorderPane.alignment="TOP_LEFT">
+            <font>
+                <Font size="13.0" />
+            </font>
+        </Text>
+    </top>
+   <center>
         <TabPane prefHeight="295.0" prefWidth="457.0" tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER">
             <tabs>
                 <Tab text="Klienci">
@@ -23,9 +30,9 @@
                         <TableView fx:id="clientsTable" prefHeight="200.0" prefWidth="200.0">
                             <columns>
                                 <TableColumn fx:id="clientID" prefWidth="75.0" text="Lp." />
-                                <TableColumn fx:id="clientFName" prefWidth="99.0" text="Imię" />
-                                <TableColumn fx:id="clientLName" prefWidth="141.0" text="Nazwisko" />
-                                <TableColumn fx:id="clientPosition" prefWidth="142.0" text="Stanowisko" />
+                                <TableColumn fx:id="clientFName" prefWidth="183.0" text="Imię" />
+                                <TableColumn fx:id="clientLName" prefWidth="274.0" text="Nazwisko" />
+                                <TableColumn fx:id="clientPosition" prefWidth="225.0" text="Stanowisko" />
                             </columns>
                         </TableView>
                     </content>
@@ -34,132 +41,39 @@
                     <content>
                         <TableView fx:id="topClientsTable" prefHeight="200.0" prefWidth="200.0">
                             <columns>
-                                <TableColumn fx:id="topClientNumber" prefWidth="50.0" text="Lp." />
-                                <TableColumn fx:id="topClientLName" prefWidth="75.0" text="Imię" />
-                                <TableColumn fx:id="topClientFName" prefWidth="100.0" text="Nazwisko" />
-                                <TableColumn fx:id="topClientTransactionsNumber" prefWidth="100.0" text="Liczba transakcji" />
+                                <TableColumn fx:id="topClientNumber" prefWidth="57.0" text="Lp." />
+                                <TableColumn fx:id="topClientLName" prefWidth="221.0" text="Imię" />
+                                <TableColumn fx:id="topClientFName" prefWidth="289.0" text="Nazwisko" />
+                                <TableColumn fx:id="topClientTransactionsNumber" prefWidth="190.0" text="Liczba transakcji" />
                             </columns>
                         </TableView>
                     </content>
                 </Tab>
                 <Tab text="Zestawienie rezerwacji">
                <content>
-                  <BorderPane prefHeight="200.0" prefWidth="200.0">
-                     <top>
-                        <HBox prefHeight="32.0" prefWidth="457.0" BorderPane.alignment="CENTER">
-                           <children>
-                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Od:" wrappingWidth="18.71484375">
-                                 <HBox.margin>
-                                    <Insets left="5.0" right="5.0" top="6.0" />
-                                 </HBox.margin>
-                              </Text>
-                              <TextField fx:id="reservationDateFromField" prefHeight="25.0" prefWidth="121.0">
-                                 <HBox.margin>
-                                    <Insets top="3.0" />
-                                 </HBox.margin>
-                              </TextField>
-                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Do:">
-                                 <HBox.margin>
-                                    <Insets left="5.0" right="5.0" top="6.0" />
-                                 </HBox.margin>
-                              </Text>
-                              <TextField fx:id="reservationDateToField">
-                                 <HBox.margin>
-                                    <Insets top="3.0" />
-                                 </HBox.margin>
-                              </TextField>
-                              <Button mnemonicParsing="false" onAction="#changeReservationsPeriod" text="Zatwierdź">
-                                 <HBox.margin>
-                                    <Insets left="10.0" top="3.0" />
-                                 </HBox.margin>
-                              </Button>
-                           </children>
-                        </HBox>
-                     </top>
-                     <center>
-                        <TableView fx:id="reservationsTable" prefHeight="247.0" prefWidth="457.0" BorderPane.alignment="CENTER">
-                          <columns>
-                            <TableColumn fx:id="reservationDate" prefWidth="75.0" text="Data" />
-                            <TableColumn fx:id="reservationType" prefWidth="75.0" text="Rodzaj" />
-                              <TableColumn fx:id="reservationFName" prefWidth="75.0" text="Imię" />
-                              <TableColumn fx:id="reservationLName" prefWidth="75.0" text="Nazwisko" />
-                          </columns>
-                        </TableView>
-                     </center>
-                     <bottom>
-                        <HBox prefHeight="27.0" prefWidth="457.0" BorderPane.alignment="CENTER">
-                           <children>
-                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Procent wykorzystanych rezerwacji: ">
-                                 <HBox.margin>
-                                    <Insets top="4.0" />
-                                 </HBox.margin>
-                              </Text>
-                              <Text fx:id="usedReservationsText" fill="#ab1111" strokeType="OUTSIDE" strokeWidth="0.0" text="0.001%">
-                                 <HBox.margin>
-                                    <Insets top="4.0" />
-                                 </HBox.margin>
-                              </Text>
-                           </children>
-                        </HBox>
-                     </bottom>
-                  </BorderPane>
+                  <TableView fx:id="reservationsTable" prefHeight="247.0" prefWidth="457.0">
+                    <columns>
+                      <TableColumn fx:id="reservationDate" prefWidth="142.0" text="Data" />
+                      <TableColumn fx:id="reservationType" prefWidth="208.0" text="Rodzaj" />
+                        <TableColumn fx:id="reservationFName" prefWidth="162.0" text="Imię" />
+                        <TableColumn fx:id="reservationLName" prefWidth="245.0" text="Nazwisko" />
+                    </columns>
+                  </TableView>
                </content>
                 </Tab>
             <Tab text="Zestawienie transakcji">
                <content>
-                  <BorderPane prefHeight="200.0" prefWidth="200.0">
-                     <center>
-                        <TableView fx:id="transactionsTable" prefHeight="247.0" prefWidth="457.0" BorderPane.alignment="CENTER">
-                           <columns>
-                              <TableColumn fx:id="transactionDate" prefWidth="75.0" text="Data" />
-                              <TableColumn fx:id="transactionValue" prefWidth="75.0" text="Wartość" />
-                              <TableColumn fx:id="transactionFName" prefWidth="75.0" text="Imię" />
-                              <TableColumn fx:id="transactionLName" prefWidth="75.0" text="Nazwisko" />
-                           </columns>
-                        </TableView>
-                     </center>
-                     <top>
-                        <HBox prefHeight="32.0" prefWidth="457.0" BorderPane.alignment="CENTER">
-                           <children>
-                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Od:" wrappingWidth="18.71484375">
-                                 <HBox.margin>
-                                    <Insets left="5.0" right="5.0" top="6.0" />
-                                 </HBox.margin>
-                              </Text>
-                              <TextField fx:id="transactionDateFromField" prefHeight="25.0" prefWidth="121.0">
-                                 <HBox.margin>
-                                    <Insets top="3.0" />
-                                 </HBox.margin>
-                              </TextField>
-                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Do:">
-                                 <HBox.margin>
-                                    <Insets left="5.0" right="5.0" top="6.0" />
-                                 </HBox.margin>
-                              </Text>
-                              <TextField fx:id="transactionDateToField">
-                                 <HBox.margin>
-                                    <Insets top="3.0" />
-                                 </HBox.margin>
-                              </TextField>
-                              <Button mnemonicParsing="false" onAction="#changeTransactionsPeriod" text="Zatwierdź">
-                                 <HBox.margin>
-                                    <Insets left="10.0" top="3.0" />
-                                 </HBox.margin>
-                              </Button>
-                           </children>
-                        </HBox>
-                     </top>
-                  </BorderPane>
+                  <TableView fx:id="transactionsTable" prefHeight="247.0" prefWidth="457.0">
+                     <columns>
+                        <TableColumn fx:id="transactionDate" prefWidth="169.0" text="Data" />
+                        <TableColumn fx:id="transactionValue" prefWidth="134.0" text="Wartość" />
+                        <TableColumn fx:id="transactionFName" prefWidth="215.0" text="Imię" />
+                        <TableColumn fx:id="transactionLName" prefWidth="239.0" text="Nazwisko" />
+                     </columns>
+                  </TableView>
                </content>
             </Tab>
             </tabs>
         </TabPane>
-    </right>
-    <top>
-        <Text lineSpacing="1.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Wybierz basen:" wrappingWidth="396.455078125" BorderPane.alignment="TOP_LEFT">
-            <font>
-                <Font size="13.0" />
-            </font>
-        </Text>
-    </top>
+   </center>
 </BorderPane>

@@ -6,24 +6,31 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Owner.OwnerController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Owner.OwnerController">
    <bottom>
       <Button mnemonicParsing="false" onAction="#logOutButtonPushed" prefHeight="38.0" prefWidth="101.0" text="Wyloguj się" BorderPane.alignment="TOP_LEFT" />
    </bottom>
    <left>
       <ListView fx:id="poolList" onMouseClicked="#poolItemClicked" prefHeight="296.0" prefWidth="143.0" BorderPane.alignment="CENTER" />
    </left>
-   <right>
+   <top>
+      <Text lineSpacing="1.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Wybierz basen:" wrappingWidth="396.455078125" BorderPane.alignment="TOP_LEFT">
+         <font>
+            <Font size="13.0" />
+         </font>
+      </Text>
+   </top>
+   <center>
       <TabPane prefHeight="370.0" prefWidth="600.0" tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER">
          <tabs>
             <Tab text="Lista pracowników">
                <content>
                   <TableView fx:id="employeeTable" prefHeight="200.0" prefWidth="200.0">
                      <columns>
-                        <TableColumn fx:id="employeeID" prefWidth="142.0" text="Lp." />
-                        <TableColumn fx:id="employeeName" minWidth="0.0" prefWidth="145.0" text="Imię" />
-                        <TableColumn fx:id="employeeSurname" prefWidth="162.0" text="Nazwisko" />
-                        <TableColumn fx:id="employeePerk" prefWidth="151.0" text="Dodatek do pensji" />
+                        <TableColumn fx:id="employeeID" prefWidth="71.0" text="Lp." />
+                        <TableColumn fx:id="employeeName" minWidth="0.0" prefWidth="177.0" text="Imię" />
+                        <TableColumn fx:id="employeeSurname" prefWidth="294.0" text="Nazwisko" />
+                        <TableColumn fx:id="employeePerk" prefWidth="215.0" text="Dodatek do pensji" />
                      </columns>
                   </TableView>
                </content>
@@ -32,21 +39,14 @@
                <content>
                   <TableView fx:id="incomeTable" prefHeight="200.0" prefWidth="200.0">
                      <columns>
-                        <TableColumn fx:id="date" prefWidth="100.0" text="Rok i miesiąc" />
-                        <TableColumn fx:id="income" prefWidth="113.0" text="Przychody" />
-                        <TableColumn fx:id="expenses" minWidth="0.0" prefWidth="115.0" text="Wydatki" />
+                        <TableColumn fx:id="date" prefWidth="228.0" text="Rok i miesiąc" />
+                        <TableColumn fx:id="income" prefWidth="269.0" text="Przychody" />
+                        <TableColumn fx:id="expenses" minWidth="0.0" prefWidth="260.0" text="Wydatki" />
                      </columns>
                   </TableView>
                </content>
             </Tab>
          </tabs>
       </TabPane>
-   </right>
-   <top>
-      <Text lineSpacing="1.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Wybierz basen:" wrappingWidth="396.455078125" BorderPane.alignment="TOP_LEFT">
-         <font>
-            <Font size="13.0" />
-         </font>
-      </Text>
-   </top>
+   </center>
 </BorderPane>

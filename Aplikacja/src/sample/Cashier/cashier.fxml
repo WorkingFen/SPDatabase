@@ -7,32 +7,32 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Cashier.CashierController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Cashier.CashierController">
 <children>
-<TabPane layoutY="7.0" prefHeight="370.0" prefWidth="600.0" tabClosingPolicy="UNAVAILABLE">
+<TabPane layoutY="-2.0" prefHeight="564.0" prefWidth="900.0" tabClosingPolicy="UNAVAILABLE">
    <tabs>
             <Tab text="Klienci">
                <content>
-                  <AnchorPane prefHeight="400.0" prefWidth="600.0">
+                  <AnchorPane prefHeight="600.0" prefWidth="900.0">
                      <children>
-                        <TableView fx:id="clientTable" prefHeight="300.0" prefWidth="600.0">
+                        <TableView fx:id="clientTable" prefHeight="498.0" prefWidth="900.0">
                           <columns>
-                            <TableColumn fx:id="clientNumber" prefWidth="96.0" text="Lp." />
-                            <TableColumn fx:id="clientFName" prefWidth="54.0" text="Imię" />
-                              <TableColumn fx:id="clientLName" prefWidth="75.0" text="Nazwisko" />
-                              <TableColumn fx:id="clientPhone" prefWidth="107.0" text="Numer telefonu" />
-                              <TableColumn fx:id="clientEMail" prefWidth="92.0" text="Adres e-mail" />
-                              <TableColumn fx:id="editClient" prefWidth="75.0" />
-                              <TableColumn fx:id="deleteClient" prefWidth="75.0" />
+                            <TableColumn fx:id="clientNumber" prefWidth="50.0" text="Lp." />
+                            <TableColumn fx:id="clientFName" prefWidth="113.0" text="Imię" />
+                              <TableColumn fx:id="clientLName" prefWidth="174.0" text="Nazwisko" />
+                              <TableColumn fx:id="clientPhone" prefWidth="114.0" text="Numer telefonu" />
+                              <TableColumn fx:id="clientEMail" prefWidth="310.0" text="Adres e-mail" />
+                              <TableColumn fx:id="editClient" minWidth="0.0" prefWidth="71.0" />
+                              <TableColumn fx:id="deleteClient" minWidth="3.0" prefWidth="67.0" />
                           </columns>
                         </TableView>
-                        <HBox layoutY="300.0" prefHeight="37.0" prefWidth="600.0">
+                        <HBox layoutX="2.0" layoutY="504.0" prefHeight="37.0" prefWidth="600.0">
                            <children>
-                              <TextField fx:id="fNameField" prefHeight="30.0" prefWidth="89.0" promptText="Imię" />
-                              <TextField fx:id="lNameField" prefHeight="30.0" prefWidth="89.0" promptText="Nazwisko" />
+                              <TextField fx:id="fNameField" prefHeight="30.0" prefWidth="80.0" promptText="Imię" />
+                              <TextField fx:id="lNameField" prefHeight="30.0" prefWidth="100.0" promptText="Nazwisko" />
                               <TextField fx:id="phoneNumberField" prefHeight="30.0" prefWidth="101.0" promptText="Numer telefonu" />
-                              <TextField fx:id="emailField" prefHeight="30.0" prefWidth="89.0" promptText="Adres e-mail" />
-                              <Button mnemonicParsing="false" onAction="#addClientButtonPushed" prefHeight="30.0" prefWidth="48.0" text="Dodaj" />
+                              <TextField fx:id="emailField" prefHeight="30.0" prefWidth="200.0" promptText="Adres e-mail" />
+                              <Button mnemonicParsing="false" onAction="#addClientButtonPushed" prefHeight="30.0" prefWidth="80.0" text="Dodaj" />
                            </children>
                         </HBox>
                      </children>
@@ -41,13 +41,13 @@
             </Tab>
       <Tab text="Rezerwacje lekcji pływania">
          <content>
-            <TableView fx:id="lessonTable" prefHeight="200.0" prefWidth="200.0">
+            <TableView fx:id="lessonTable" prefHeight="515.0" prefWidth="900.0">
                <columns>
-                   <TableColumn fx:id="lessonDate" prefWidth="140.0" text="Data i godzina" />
-                   <TableColumn fx:id="lessonEnrolled" prefWidth="145.0" text="Liczba zapisanych osób" />
-                   <TableColumn fx:id="lessonRescuer" prefWidth="100.0" text="Prowadzący" />
-                   <TableColumn fx:id="reserveLesson" prefWidth="90.0" text="" />
-                   <TableColumn fx:id="dismissLesson" prefWidth="90.0" text="" />
+                   <TableColumn fx:id="lessonDate" prefWidth="217.0" text="Data i godzina" />
+                   <TableColumn fx:id="lessonEnrolled" prefWidth="137.0" text="Liczba zapisanych osób" />
+                   <TableColumn fx:id="lessonRescuer" prefWidth="351.0" text="Prowadzący" />
+                   <TableColumn fx:id="reserveLesson" prefWidth="94.0" text="" />
+                   <TableColumn fx:id="dismissLesson" prefWidth="101.0" text="" />
                </columns>
             </TableView>
          </content>
@@ -56,18 +56,18 @@
          <content>
             <TableView fx:id="pathTable" prefHeight="200.0" prefWidth="200.0">
                <columns>
-                   <TableColumn fx:id="pathReservationNumber" prefWidth="135.0" text="Lp." />
-                   <TableColumn fx:id="pathHours" prefWidth="140.0" text="Data i godzina" />
-                   <TableColumn fx:id="pathNumber" prefWidth="75.0" text="Numer toru" />
-                   <TableColumn fx:id="pathState" prefWidth="75.0" text="Status" />
-                   <TableColumn fx:id="reservePath" prefWidth="90.0" text="" />
-                   <TableColumn fx:id="cancelReservation" prefWidth="90.0" text="" />
+                   <TableColumn fx:id="pathReservationNumber" prefWidth="128.0" text="Lp." />
+                   <TableColumn fx:id="pathHours" prefWidth="310.0" text="Data i godzina" />
+                   <TableColumn fx:id="pathNumber" prefWidth="109.0" text="Numer toru" />
+                   <TableColumn fx:id="pathState" prefWidth="186.0" text="Status" />
+                   <TableColumn fx:id="reservePath" prefWidth="87.0" text="" />
+                   <TableColumn fx:id="cancelReservation" text="" />
                </columns>
             </TableView>
          </content>
       </Tab>
    </tabs>
 </TabPane>
-      <Button layoutY="367.0" mnemonicParsing="false" onAction="#logOutButtonPushed" prefHeight="33.0" prefWidth="100.0" text="Wyloguj się" />
+      <Button layoutX="2.0" layoutY="564.0" mnemonicParsing="false" onAction="#logOutButtonPushed" prefHeight="33.0" prefWidth="100.0" text="Wyloguj się" />
 </children>
 </AnchorPane>

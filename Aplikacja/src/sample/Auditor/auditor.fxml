@@ -19,11 +19,11 @@
                <content>
                   <TableView fx:id="employeeTable" prefHeight="315.0" prefWidth="750.0">
                      <columns>
-                        <TableColumn fx:id="employeeID" prefWidth="136.0" text="Lp." />
-                        <TableColumn fx:id="employeeName" minWidth="0.0" prefWidth="85.0" text="Imię" />
-                        <TableColumn fx:id="employeeSurname" minWidth="0.0" prefWidth="146.0" text="Nazwisko" />
+                        <TableColumn fx:id="employeeID" prefWidth="70.0" text="Lp." />
+                        <TableColumn fx:id="employeeName" minWidth="0.0" prefWidth="128.0" text="Imię" />
+                        <TableColumn fx:id="employeeSurname" minWidth="0.0" prefWidth="168.0" text="Nazwisko" />
                         <TableColumn fx:id="employeePost" minWidth="0.0" prefWidth="169.0" text="Stanowisko" />
-                        <TableColumn fx:id="employeePerk" prefWidth="114.0" text="Dodatek do pensji" />
+                        <TableColumn fx:id="employeePerk" prefWidth="115.0" text="Dodatek do pensji" />
                      </columns>
                   </TableView>
                </content>
@@ -32,9 +32,9 @@
                <content>
                   <TableView fx:id="inspectionTable" prefHeight="200.0" prefWidth="200.0">
                      <columns>
-                        <TableColumn fx:id="inspectionID" prefWidth="116.0" text="Lp." />
-                        <TableColumn fx:id="inspectionDate" minWidth="5.0" prefWidth="119.0" text="Data" />
-                        <TableColumn fx:id="comment" prefWidth="217.0" text="Uwagi" />
+                        <TableColumn fx:id="inspectionID" prefWidth="70.0" text="Lp." />
+                        <TableColumn fx:id="inspectionDate" minWidth="5.0" prefWidth="218.0" text="Data" />
+                        <TableColumn fx:id="comment" prefWidth="362.0" text="Uwagi" />
                      </columns>
                   </TableView>
                </content>
@@ -43,10 +43,10 @@
                <content>
                   <TableView fx:id="transactionTable" prefHeight="200.0" prefWidth="200.0">
                      <columns>
-                        <TableColumn fx:id="transactionID" prefWidth="122.0" text="Lp." />
-                        <TableColumn fx:id="transactionDate" prefWidth="136.0" text="Data" />
+                        <TableColumn fx:id="transactionID" prefWidth="70.0" text="Lp." />
+                        <TableColumn fx:id="transactionDate" prefWidth="165.0" text="Data" />
                         <TableColumn fx:id="transactionService" prefWidth="253.0" text="Usługa" />
-                        <TableColumn fx:id="transactionPrice" prefWidth="146.0" text="Kwota" />
+                        <TableColumn fx:id="transactionPrice" prefWidth="162.0" text="Kwota" />
                      </columns>
                   </TableView>
                </content>

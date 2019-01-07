@@ -7,18 +7,17 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Manager.ManagerController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Manager.ManagerController">
    <children>
-      <TabPane prefHeight="360.0" prefWidth="600.0" tabClosingPolicy="UNAVAILABLE">
+      <TabPane prefHeight="555.0" prefWidth="900.0" tabClosingPolicy="UNAVAILABLE">
          <tabs>
             <Tab text="Przeglądy">
                <content>
-                  <TableView fx:id="inspectionsTable" prefHeight="200.0" prefWidth="200.0">
+                  <TableView fx:id="inspectionsTable" prefHeight="526.0" prefWidth="895.0">
                      <columns>
                         <TableColumn fx:id="inspectionNumber" prefWidth="105.0" text="Lp." />
-                        <TableColumn fx:id="inspectionDate" prefWidth="102.0" text="Data" />
-                        <TableColumn fx:id="inspectionComment" prefWidth="250.0" text="Uwagi" />
+                        <TableColumn fx:id="inspectionDate" prefWidth="158.0" text="Data" />
+                        <TableColumn fx:id="inspectionComment" prefWidth="637.0" text="Uwagi" />
                      </columns>
                   </TableView>
                </content>
@@ -28,9 +27,9 @@
                   <TableView fx:id="employeeTable" prefHeight="200.0" prefWidth="200.0">
                      <columns>
                         <TableColumn fx:id="employeeID" prefWidth="75.0" text="Lp." />
-                        <TableColumn fx:id="employeeFName" prefWidth="99.0" text="Imię" />
-                        <TableColumn fx:id="employeeLName" prefWidth="141.0" text="Nazwisko" />
-                        <TableColumn fx:id="employeePosition" prefWidth="142.0" text="Stanowisko" />
+                        <TableColumn fx:id="employeeFName" prefWidth="154.0" text="Imię" />
+                        <TableColumn fx:id="employeeLName" prefWidth="345.0" text="Nazwisko" />
+                        <TableColumn fx:id="employeePosition" prefWidth="326.0" text="Stanowisko" />
                      </columns>
                   </TableView>
                </content>
@@ -39,9 +38,9 @@
                <content>
                   <TableView fx:id="transactionTable" prefHeight="200.0" prefWidth="200.0">
                      <columns>
-                        <TableColumn fx:id="transactionNumber" prefWidth="75.0" text="Lp." />
-                        <TableColumn fx:id="transactionDate" prefWidth="75.0" text="Data" />
-                        <TableColumn fx:id="transactionPrice" prefWidth="75.0" text="Kwota" />
+                        <TableColumn fx:id="transactionNumber" prefWidth="131.0" text="Lp." />
+                        <TableColumn fx:id="transactionDate" prefWidth="295.0" text="Data" />
+                        <TableColumn fx:id="transactionPrice" prefWidth="474.0" text="Kwota" />
                      </columns>
                   </TableView>
                </content>
@@ -50,8 +49,8 @@
                <content>
                   <TableView fx:id="incomeTable" prefHeight="200.0" prefWidth="200.0">
                      <columns>
-                        <TableColumn fx:id="incomeMonth" prefWidth="148.0" text="Miesiąc" />
-                        <TableColumn fx:id="income" prefWidth="309.0" text="Zysk" />
+                        <TableColumn fx:id="incomeMonth" prefWidth="434.0" text="Miesiąc" />
+                        <TableColumn fx:id="income" prefWidth="466.0" text="Zysk" />
                      </columns>
                   </TableView>
                </content>
@@ -60,14 +59,14 @@
                <content>
                   <TableView fx:id="salaryTable" prefHeight="200.0" prefWidth="200.0">
                      <columns>
-                        <TableColumn fx:id="salaryMonth" prefWidth="195.0" text="Miesiąc" />
-                        <TableColumn fx:id="salary" prefWidth="262.0" text="Kwota pensji" />
+                        <TableColumn fx:id="salaryMonth" prefWidth="434.0" text="Miesiąc" />
+                        <TableColumn fx:id="salary" prefWidth="466.0" text="Kwota pensji" />
                      </columns>
                   </TableView>
                </content>
             </Tab>
          </tabs>
       </TabPane>
-      <Button layoutY="360.0" mnemonicParsing="false" onAction="#logOutButtonPushed" prefHeight="38.0" prefWidth="101.0" text="Wyloguj się" />
+      <Button layoutX="2.0" layoutY="560.0" mnemonicParsing="false" onAction="#logOutButtonPushed" prefHeight="38.0" prefWidth="101.0" text="Wyloguj się" />
    </children>
 </AnchorPane>
