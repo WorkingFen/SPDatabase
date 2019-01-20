@@ -84,6 +84,23 @@ CREATE UNIQUE INDEX dane_do_logowania__idx ON
 
 ALTER TABLE dane_do_logowania ADD CONSTRAINT dane_do_logowania_pk PRIMARY KEY ( id );
 
+-------------------------------------------------Dane do logowania klienci------------------------------------------------------
+CREATE TABLE dane_do_logowania_klienci (
+    id                      INTEGER NOT NULL,
+    login                   VARCHAR2(4000) NOT NULL,
+    haslo                   VARCHAR2(4000) NOT NULL,
+    klienci_numer_klienta   INTEGER NOT NULL
+)
+LOGGING;
+
+CREATE UNIQUE INDEX dane_do_logowania_klienci__idx ON
+    dane_do_logowania_klienci (
+        klienci_numer_klienta
+    ASC )
+        LOGGING;
+
+ALTER TABLE dane_do_logowania_klienci ADD CONSTRAINT dane_do_logowania_klienci_pk PRIMARY KEY ( id );
+
 ----------------------------------------------------------Klienci---------------------------------------------------------------
 CREATE TABLE klienci (
     numer_klienta    INTEGER NOT NULL,
@@ -199,6 +216,8 @@ CREATE TABLE pracownicy (
     imie                          VARCHAR2(4000) NOT NULL,
     nazwisko                      VARCHAR2(4000) NOT NULL,
     dodatek_do_pensji             INTEGER,
+    data_zatrudnienia             DATE NOT NULL,
+    data_zwolnienia               DATE,
     stanowiska_numer_stanowiska   INTEGER NOT NULL,
     baseny_numer_obiektu          INTEGER NOT NULL
 )
@@ -358,6 +377,11 @@ ALTER TABLE wlasciciele ADD CONSTRAINT wlasciciele_pk PRIMARY KEY ( numer_identy
 ----========================================================================================================================----
 ----===-----------------------------------------Dodawanie kluczy obcych--------------------------------------------------===----
 ----========================================================================================================================----
+ALTER TABLE dane_do_logowania_klienci
+    ADD CONSTRAINT dane_do_logowania_klienci_fk FOREIGN KEY ( klienci_numer_klienta )
+        REFERENCES klienci ( numer_klienta )
+    NOT DEFERRABLE;
+
 ALTER TABLE dane_do_logowania
     ADD CONSTRAINT dane_do_logowania_osoby_fk FOREIGN KEY ( osoby_numer_identyfikacyjny )
         REFERENCES osoby ( numer_identyfikacyjny )
