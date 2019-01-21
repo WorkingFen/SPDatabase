@@ -49,7 +49,7 @@ public class MarketingController implements Initializable {
     @FXML
     private TableColumn<MarketingClient, String> clientLName;
     @FXML
-    private TableColumn<MarketingClient, String> clientPosition;
+    private TableColumn<MarketingClient, String> clientEmail;
 
     @FXML
     private TableView<MarketingTopClient> topClientsTable;
@@ -80,12 +80,11 @@ public class MarketingController implements Initializable {
     @FXML
     private TableColumn<MarketingTransaction, String> transactionValue;
     @FXML
+    private TableColumn<MarketingTransaction, String> transactionType;
+    @FXML
     private TableColumn<MarketingTransaction, String> transactionFName;
     @FXML
     private TableColumn<MarketingTransaction, String> transactionLName;
-
-    @FXML
-    private Text usedReservationsText;
 
     public MarketingController() throws SQLException {
     }
@@ -207,7 +206,7 @@ public class MarketingController implements Initializable {
         clientID.setCellValueFactory(new PropertyValueFactory<>("id"));
         clientFName.setCellValueFactory(new PropertyValueFactory<>("name"));
         clientLName.setCellValueFactory(new PropertyValueFactory<>("surname"));
-        clientPosition.setCellValueFactory(new PropertyValueFactory<>("position"));
+        clientEmail.setCellValueFactory(new PropertyValueFactory<>("email"));
 
         clientsTable.getItems().addAll(clients);
     }
@@ -233,6 +232,7 @@ public class MarketingController implements Initializable {
     private void initializeTransactions(){
         transactionDate.setCellValueFactory(new PropertyValueFactory<>("date"));
         transactionValue.setCellValueFactory(new PropertyValueFactory<>("value"));
+        transactionType.setCellValueFactory(new PropertyValueFactory<>("type"));
         transactionFName.setCellValueFactory(new PropertyValueFactory<>("name"));
         transactionLName.setCellValueFactory(new PropertyValueFactory<>("surname"));
 
@@ -242,10 +242,6 @@ public class MarketingController implements Initializable {
     private void initializePoolList() throws SQLException {
         ObservableList<String> items = getPoolNames();
         poolList.setItems(items);
-    }
-
-    private void initializeUsedReservations(){
-        usedReservationsText.setText("0.005%");
     }
 
     private void changeTables(String poolItem) throws SQLException {
@@ -267,18 +263,8 @@ public class MarketingController implements Initializable {
         initializeTopClients();
         initializeReservations();
         initializeTransactions();
-        initializeUsedReservations();
     }
 
-
-    @FXML
-    public void changeReservationsPeriod(){
-
-    }
-    @FXML
-    public void changeTransactionsPeriod(){
-
-    }
     @FXML
     public void poolItemClicked() throws SQLException {
 

@@ -154,15 +154,17 @@ public class Client {
     }
 
     static public MarketingClient getMarketingClient(Connection conn, int id) throws SQLException {
-        PreparedStatement stmt = conn.prepareStatement("SELECT Imie, Nazwisko FROM Klienci WHERE Numer_Klienta = ?");
+        PreparedStatement stmt = conn.prepareStatement("SELECT Imie, Nazwisko, \"Adres_e-mail\" FROM Klienci WHERE Numer_Klienta = ?");
         stmt.setInt(1, id);
         ResultSet rSet = stmt.executeQuery();
         if(rSet.next()){
             String name = rSet.getString(1);
             String surname = rSet.getString(2);
+            String email = rSet.getString(3);
             rSet.close();
             stmt.close();
-            return new MarketingClient(id, name, surname, "Yyyyy");
+            if(name.equals("Person") && surname.equals("Deleted") && email == null) return null;
+            return new MarketingClient(id, name, surname, email);
         }
         else{
             rSet.close();

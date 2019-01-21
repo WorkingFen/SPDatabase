@@ -32,7 +32,7 @@
                                 <TableColumn fx:id="clientID" prefWidth="75.0" text="Lp." />
                                 <TableColumn fx:id="clientFName" prefWidth="183.0" text="Imię" />
                                 <TableColumn fx:id="clientLName" prefWidth="274.0" text="Nazwisko" />
-                                <TableColumn fx:id="clientPosition" prefWidth="225.0" text="Stanowisko" />
+                                <TableColumn fx:id="clientEmail" prefWidth="225.0" text="Email" />
                             </columns>
                         </TableView>
                     </content>
@@ -42,8 +42,8 @@
                         <TableView fx:id="topClientsTable" prefHeight="200.0" prefWidth="200.0">
                             <columns>
                                 <TableColumn fx:id="topClientNumber" prefWidth="57.0" text="Lp." />
-                                <TableColumn fx:id="topClientLName" prefWidth="221.0" text="Imię" />
-                                <TableColumn fx:id="topClientFName" prefWidth="289.0" text="Nazwisko" />
+                                <TableColumn fx:id="topClientFName" prefWidth="221.0" text="Imię" />
+                                <TableColumn fx:id="topClientLName" prefWidth="289.0" text="Nazwisko" />
                                 <TableColumn fx:id="topClientTransactionsNumber" prefWidth="190.0" text="Liczba transakcji" />
                             </columns>
                         </TableView>
@@ -54,7 +54,7 @@
                   <TableView fx:id="reservationsTable" prefHeight="247.0" prefWidth="457.0">
                     <columns>
                       <TableColumn fx:id="reservationDate" prefWidth="142.0" text="Data" />
-                      <TableColumn fx:id="reservationType" prefWidth="208.0" text="Rodzaj" />
+                      <TableColumn fx:id="reservationType" prefWidth="208.0" text="Stan" />
                         <TableColumn fx:id="reservationFName" prefWidth="162.0" text="Imię" />
                         <TableColumn fx:id="reservationLName" prefWidth="245.0" text="Nazwisko" />
                     </columns>
@@ -65,10 +65,11 @@
                <content>
                   <TableView fx:id="transactionsTable" prefHeight="247.0" prefWidth="457.0">
                      <columns>
-                        <TableColumn fx:id="transactionDate" prefWidth="169.0" text="Data" />
-                        <TableColumn fx:id="transactionValue" prefWidth="134.0" text="Wartość" />
-                        <TableColumn fx:id="transactionFName" prefWidth="215.0" text="Imię" />
-                        <TableColumn fx:id="transactionLName" prefWidth="239.0" text="Nazwisko" />
+                         <TableColumn fx:id="transactionDate" prefWidth="169.0" text="Data" />
+                         <TableColumn fx:id="transactionValue" prefWidth="134.0" text="Wartość" />
+                         <TableColumn fx:id="transactionType" prefWidth="120.0" text="Rodzaj" />
+                         <TableColumn fx:id="transactionFName" prefWidth="165.0" text="Imię" />
+                         <TableColumn fx:id="transactionLName" prefWidth="165.0" text="Nazwisko" />
                      </columns>
                   </TableView>
                </content>

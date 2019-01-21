@@ -4,13 +4,13 @@ public class MarketingClient {
     private int id;
     private String name;
     private String surname;
-    private String position;
+    private String email;
 
-    public MarketingClient(int id, String name, String surname, String position) {
+    public MarketingClient(int id, String name, String surname, String email) {
         this.id = id;
         this.name = name;
         this.surname = surname;
-        this.position = position;
+        this.email = email;
     }
 
     public int getId() { return id; }
@@ -25,7 +25,7 @@ public class MarketingClient {
 
     public void setSurname(String surname) { this.surname = surname; }
 
-    public String getPosition() { return position; }
+    public String getEmail() { return email; }
 
-    public void setPosition(String position) { this.position = position; }
+    public void setEmail(String email) { this.email = email; }
 }

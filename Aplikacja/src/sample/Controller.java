@@ -47,8 +47,9 @@ public class Controller implements Initializable {
         String passwordInputText = passwordInput.getText();
 
         int source = LoginDetails.checkLoginDetails(Main.jdbc.getConn(), loginInputText, passwordInputText);
+        if(source==0) source = LoginDetails.checkClientLoginDetails(Main.jdbc.getConn(), loginInputText, passwordInputText);
 
-        if(loginInputText.equals("Klient")){
+        if(source == 0 || loginInputText.equals("Klient")){
             changeScreen("Client/client.fxml", event,"Klient");
             System.out.println("Klient");
         }

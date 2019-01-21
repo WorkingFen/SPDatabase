@@ -92,6 +92,34 @@ public class LoginDetails {
         }
     }
 
+    public static int checkClientLoginDetails(Connection conn, String login, String password) throws SQLException {
+        PreparedStatement stmt = conn.prepareStatement("SELECT Klienci_Numer_Klienta FROM Dane_Do_Logowania_Klienci WHERE Login = ?");
+        stmt.setString(1, login);
+        ResultSet rSet = stmt.executeQuery();
+        if(rSet.next()){
+            int logNum = rSet.getInt(1);
+            PreparedStatement stmt2 = conn.prepareStatement("SELECT RN FROM (SELECT Haslo AS HA, ROWNUM AS RN FROM Generator_Passwords) WHERE HA = ?");
+            stmt2.setString(1, password);
+            ResultSet rSet2 = stmt2.executeQuery();
+            if(rSet2.next()){
+                int passNum = rSet2.getInt(1);
+                if((passNum+127) == logNum){
+                    return 0;
+                }
+            }
+            rSet2.close();
+            stmt2.close();
+            rSet.close();
+            stmt.close();
+            return 42;
+        }
+        else{
+            rSet.close();
+            stmt.close();
+            return 42;
+        }
+    }
+
     public static void deleteLoginDetails(Connection conn, int id) throws SQLException {
         String login;
         try{
@@ -115,6 +143,46 @@ public class LoginDetails {
             }
 
             stmt=conn.prepareStatement("UPDATE Dane_Do_Logowania SET Login = ? WHERE Osoby_Numer_Identyfikacyjny = ?");
+
+            stmt.setString(1, login);
+            stmt.setInt(2, id);
+            stmt.executeQuery();
+            stmt.close();
+            conn.commit();
+        }
+
+        catch(Exception e){
+            System.out.println(e.getMessage());
+            conn.rollback();
+        }
+        finally{
+            conn.setAutoCommit(true);
+        }
+    }
+
+    public static void deleteClientLoginDetails(Connection conn, int id) throws SQLException {
+        String login;
+        try{
+            PreparedStatement stmt;
+
+            conn.setAutoCommit(false);
+
+            stmt = conn.prepareStatement("SELECT Login FROM Dane_Do_Logowania_Klienci WHERE Klienci_Numer_Klienta = ?");
+            stmt.setInt(1, id);
+            ResultSet rSet = stmt.executeQuery();
+
+            if(rSet.next()){
+                login = Integer.toString(rSet.getString(1).hashCode());
+                rSet.close();
+                stmt.close();
+            }
+            else{
+                rSet.close();
+                stmt.close();
+                return;
+            }
+
+            stmt=conn.prepareStatement("UPDATE Dane_Do_Logowania_Klienci SET Login = ? WHERE Klienci_Numer_Klienta = ?");
 
             stmt.setString(1, login);
             stmt.setInt(2, id);

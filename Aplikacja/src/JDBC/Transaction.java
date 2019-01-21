@@ -247,11 +247,12 @@ public class Transaction {
         String date;
         String name;
         String surname;
+        String transactionType;
         int value;
         PreparedStatement stmt = conn.prepareStatement(
-                "SELECT to_char(Data, 'YYYY-MM-DD HH24:MI:SS'), (Ilosc*Cena) FROM " +
-                        "(SELECT z.Numer_Transakcji, z.Data, z.Ilosc, z.Cena, b.Nazwa_Obiektu FROM " +
-                            "(SELECT a.Numer_Transakcji, a.Data, a.Ilosc, u.Cena, u.Baseny_Numer_Obiektu FROM " +
+                "SELECT to_char(Data, 'YYYY-MM-DD HH24:MI:SS'), (Ilosc*Cena), Nazwa_Uslugi FROM " +
+                        "(SELECT z.Numer_Transakcji, z.Data, z.Ilosc, z.Cena, z.Nazwa_Uslugi, b.Nazwa_Obiektu FROM " +
+                            "(SELECT a.Numer_Transakcji, a.Data, a.Ilosc, u.Cena, u.Baseny_Numer_Obiektu, u.Nazwa_Uslugi FROM " +
                                 "(SELECT t.Numer_Transakcji, t.Data, k.Uslugi_Numer_Uslugi, k.Ilosc FROM Koszyki k JOIN Transakcje t ON t.Numer_Transakcji = k.Transakcje_Numer_Transakcji) a " +
                             "JOIN Uslugi u ON a.Uslugi_Numer_Uslugi = u.Numer_Uslugi) z " +
                         "JOIN Baseny b ON z.Baseny_Numer_Obiektu = b.Numer_Obiektu) " +
@@ -263,6 +264,7 @@ public class Transaction {
         if(rSet.next()){
             date = rSet.getString(1);
             value = rSet.getInt(2);
+            transactionType = rSet.getString(3);
             rSet.close();
             stmt.close();
         }
@@ -305,7 +307,7 @@ public class Transaction {
                     stmt2.close();
                     rSet.close();
                     stmt.close();
-                    return new MarketingTransaction(date, value, name, surname);
+                    return new MarketingTransaction(date, value, transactionType, name, surname);
                 }
                 rSet2.close();
                 stmt2.close();
@@ -332,7 +334,7 @@ public class Transaction {
                     stmt2.close();
                     rSet.close();
                     stmt.close();
-                    return new MarketingTransaction(date, value, name, surname);
+                    return new MarketingTransaction(date, value, transactionType, name, surname);
                 } else {
                     rSet2.close();
                     stmt2.close();
@@ -344,7 +346,7 @@ public class Transaction {
             else{
                 rSet.close();
                 stmt.close();
-                return new MarketingTransaction(date, value, "-", "-");
+                return new MarketingTransaction(date, value, transactionType,"-", "-");
             }
         }
         else{
