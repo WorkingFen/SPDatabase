@@ -46,7 +46,7 @@ BEGIN
         INSERT INTO KLIENCI
         VALUES (counter, first_name, last_name, phone_number, email_address);
 
-                    SELECT LOGIN into login FROM (SELECT LOGIN, ROWNUM AS RN FROM GENERATOR_LOGINS_C) WHERE RN = counter;
+                    SELECT LOGIN into login FROM (SELECT LOGIN, ROWNUM AS RN FROM GENERATOR_LOGINS_CLIENTS) WHERE RN = counter;
                     SELECT PASSWORD_HASH into password_hash FROM (SELECT PASSWORD_HASH, ROWNUM AS RN FROM GENERATOR_PASSWORD_HASHES_C) WHERE RN = counter;
 
                 INSERT INTO DANE_DO_LOGOWANIA_KLIENCI

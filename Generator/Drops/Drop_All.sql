@@ -4,6 +4,7 @@
 DROP TABLE Audytorzy CASCADE CONSTRAINTS PURGE;
 DROP TABLE Baseny CASCADE CONSTRAINTS PURGE;
 DROP TABLE Dane_do_logowania CASCADE CONSTRAINTS PURGE;
+DROP TABLE Dane_do_logowania_klienci CASCADE CONSTRAINTS PURGE;
 DROP TABLE Klienci CASCADE CONSTRAINTS PURGE;
 DROP TABLE Koszyki CASCADE CONSTRAINTS PURGE;
 DROP TABLE Lekcje_plywania CASCADE CONSTRAINTS PURGE;
@@ -23,11 +24,14 @@ DROP TABLE Wlasciciele CASCADE CONSTRAINTS PURGE;
 ----===-----------------------------------------Usuwanie tabel generatorów-----------------------------------------------===----
 ----========================================================================================================================----
 DROP TABLE Generator_logins CASCADE CONSTRAINTS PURGE;
+DROP TABLE Generator_logins_clients CASCADE CONSTRAINTS PURGE;
 DROP TABLE Generator_men_lasts CASCADE CONSTRAINTS PURGE;
 DROP TABLE Generator_men_names CASCADE CONSTRAINTS PURGE;
 DROP TABLE Generator_men_posts CASCADE CONSTRAINTS PURGE;
 DROP TABLE Generator_password_hashes CASCADE CONSTRAINTS PURGE;
+DROP TABLE Generator_password_hashes_c CASCADE CONSTRAINTS PURGE;
 DROP TABLE Generator_passwords CASCADE CONSTRAINTS PURGE;
+DROP TABLE Generator_passwords_clients CASCADE CONSTRAINTS PURGE;
 DROP TABLE Generator_pool_names CASCADE CONSTRAINTS PURGE;
 DROP TABLE Generator_services CASCADE CONSTRAINTS PURGE;
 DROP TABLE Generator_streets CASCADE CONSTRAINTS PURGE;
