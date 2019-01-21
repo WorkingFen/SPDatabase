@@ -36,8 +36,6 @@ public class ClientController implements Initializable {
     private TableColumn<ClientPath, String> pathHours;
     @FXML
     private TableColumn<ClientPath, String> pathNumber;
-    @FXML
-    private TableColumn<ClientPath, Button> reservePath;
 
     @FXML
     private TableView<ClientLesson> lessonTable;
@@ -134,7 +132,7 @@ public class ClientController implements Initializable {
 
         ObservableList<ClientPath> list = FXCollections.observableArrayList();
         for(int i = minReservation-1; i < maxReservation; i++){
-            ClientPath temp = Reservation.getClientReservation(this, conn, "Zarezerwuj", i+1, poolItem);
+            ClientPath temp = Reservation.getClientReservation(this, conn, i+1, poolItem);
             if(temp != null) list.add(temp);
         }
         return list;
@@ -179,7 +177,6 @@ public class ClientController implements Initializable {
         number.setCellValueFactory(new PropertyValueFactory<>("number"));
         pathHours.setCellValueFactory(new PropertyValueFactory<>("date"));
         pathNumber.setCellValueFactory(new PropertyValueFactory<>("pathNumber"));
-        reservePath.setCellValueFactory(new PropertyValueFactory<>("reserveButton"));
 
         pathTable.getItems().addAll(clientPaths);
     }

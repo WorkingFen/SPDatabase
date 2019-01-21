@@ -123,7 +123,7 @@ public class Reservation {
         }
     }
 
-    static public CashierPath getCashierReservation(CashierController cc, Connection conn, String msgIn, String msgOut, int id) throws SQLException {
+    static public CashierPath getCashierReservation(CashierController cc, Connection conn, int id) throws SQLException {
         PreparedStatement stmt = conn.prepareStatement("SELECT to_char(rt.Data_i_Godzina, 'YYYY-MM-DD HH24:MI'), rt.Numer_toru, rt.Status FROM Rezerwacje_Toru rt WHERE Numer_Rezerwacji = ? AND Data_I_Godzina > SYSDATE");
         stmt.setInt(1, id);
         ResultSet rSet = stmt.executeQuery();
@@ -132,11 +132,11 @@ public class Reservation {
             int noPath = rSet.getInt(2);
             int state = rSet.getInt(3);
             String status;
-            if(state == 0) status = "Wolny";
-            else status = "Zajęty";
+            if(state == 0) status = "Nie skorzystano";
+            else status = "Skorzystano";
             rSet.close();
             stmt.close();
-            return new CashierPath(cc, id, date, noPath, status, msgIn, msgOut);
+            return new CashierPath(cc, id, date, noPath, status);
         }
         else{
             rSet.close();
@@ -145,7 +145,7 @@ public class Reservation {
         }
     }
 
-    static public ClientPath getClientReservation(ClientController cc, Connection conn, String msg, int id, String poolItem) throws SQLException {
+    static public ClientPath getClientReservation(ClientController cc, Connection conn, int id, String poolItem) throws SQLException {
         String date;
         int noPath;
         PreparedStatement stmt = conn.prepareStatement("SELECT to_char(Data_i_Godzina, 'YYYY-MM-DD HH24:MI'), Numer_Toru FROM" +
@@ -161,7 +161,7 @@ public class Reservation {
             noPath = rSet.getInt(2);
             rSet.close();
             stmt.close();
-            return new ClientPath(cc, id, date, noPath, msg);
+            return new ClientPath(cc, id, date, noPath);
         }
         else{
             rSet.close();

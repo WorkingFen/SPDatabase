@@ -84,10 +84,6 @@ public class CashierController implements Initializable {
     @FXML
     private TableColumn<CashierPath, String> pathState;
     @FXML
-    private TableColumn<CashierPath, String> reservePath;
-    @FXML
-    private TableColumn<CashierPath, String> cancelReservation;
-    @FXML
     private TableColumn<CashierPath, String> statusReservation;
 
     public CashierController() throws SQLException {
@@ -147,7 +143,7 @@ public class CashierController implements Initializable {
 
         ObservableList<CashierPath> list = FXCollections.observableArrayList();
         for(int i = minReservation-1; i < maxReservation; i++){
-            CashierPath temp = Reservation.getCashierReservation(this, conn, "Rezerwuj", "Anuluj", i+1);
+            CashierPath temp = Reservation.getCashierReservation(this, conn, i+1);
             if(temp != null) list.add(temp);
         }
         return list;
@@ -261,8 +257,6 @@ public class CashierController implements Initializable {
         pathHours.setCellValueFactory(new PropertyValueFactory<>("date"));
         pathNumber.setCellValueFactory(new PropertyValueFactory<>("pathNumber"));
         pathState.setCellValueFactory(new PropertyValueFactory<>("state"));
-        reservePath.setCellValueFactory(new PropertyValueFactory<>("reserveButton"));
-        cancelReservation.setCellValueFactory(new PropertyValueFactory<>("cancelButton"));
         statusReservation.setCellValueFactory(new PropertyValueFactory<>("statusButton"));
 
         pathTable.getItems().addAll(paths);

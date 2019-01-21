@@ -44,7 +44,6 @@
                         <TableColumn fx:id="number" prefWidth="57.0" text="Lp." />
                         <TableColumn fx:id="pathHours" prefWidth="309.0" text="Data i godzina" />
                         <TableColumn fx:id="pathNumber" prefWidth="222.0" text="Numer toru" />
-                        <TableColumn fx:id="reservePath" prefWidth="152.0" text="" />
                      </columns>
                   </TableView>
                </content>

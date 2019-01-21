@@ -60,8 +60,6 @@
                    <TableColumn fx:id="pathHours" prefWidth="210.0" text="Data i godzina" />
                    <TableColumn fx:id="pathNumber" prefWidth="109.0" text="Numer toru" />
                    <TableColumn fx:id="pathState" prefWidth="186.0" text="Status" />
-                   <TableColumn fx:id="reservePath" prefWidth="87.0" text="" />
-                   <TableColumn fx:id="cancelReservation" prefWidth="87.0" text="" />
                    <TableColumn fx:id="statusReservation" prefWidth="87.0" text="" />
                </columns>
             </TableView>
