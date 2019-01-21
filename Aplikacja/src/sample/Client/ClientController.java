@@ -10,6 +10,8 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.TextField;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
@@ -47,6 +49,14 @@ public class ClientController implements Initializable {
     private TableColumn<ClientLesson, String> lessonRescuer;
     @FXML
     private TableColumn<ClientLesson, Button> reserveLesson;
+	
+	
+	@FXML
+	private TextField dateField;
+	@FXML
+	private TextField pathField;
+	@FXML
+	private Button addReservationButton
 
     private int ID = Main.ID;
     private String[] poolName;

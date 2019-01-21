@@ -39,13 +39,20 @@
             </Tab>
             <Tab text="Rezerwacja toru">
                <content>
-                  <TableView fx:id="pathTable" prefHeight="315.0" prefWidth="722.0">
-                     <columns>
-                        <TableColumn fx:id="number" prefWidth="57.0" text="Lp." />
-                        <TableColumn fx:id="pathHours" prefWidth="309.0" text="Data i godzina" />
-                        <TableColumn fx:id="pathNumber" prefWidth="222.0" text="Numer toru" />
-                     </columns>
-                  </TableView>
+                  <AnchorPane prefHeight="200.0" prefWidth="200.0">
+                     <children>
+                        <TableView fx:id="pathTable" prefHeight="490.0" prefWidth="740.0">
+                           <columns>
+                              <TableColumn fx:id="number" prefWidth="57.0" text="Lp." />
+                              <TableColumn fx:id="pathHours" prefWidth="309.0" text="Data i godzina" />
+                              <TableColumn fx:id="pathNumber" prefWidth="222.0" text="Numer toru" />
+                           </columns>
+                        </TableView>
+                        <TextField fx:id="dateField" layoutY="489.0" promptText="Data" />
+                        <TextField fx:id="pathField" layoutX="149.0" layoutY="489.0" promptText="Tor" />
+                        <Button fx:id="addReservationButton" layoutX="298.0" layoutY="489.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="93.0" text="Dodaj " />
+                     </children>
+                  </AnchorPane>
                </content>
             </Tab>
          </tabs>
