@@ -6,6 +6,8 @@ email_address VARCHAR2(4000);
 sex NUMBER(3);
 first_char VARCHAR2(2);
 condition NUMBER(6);
+login VARCHAR2(4000);
+password_hash VARCHAR2(4000);
 BEGIN
     FOR counter IN 1..number_of_clients
     LOOP
@@ -43,6 +45,12 @@ BEGIN
 
         INSERT INTO KLIENCI
         VALUES (counter, first_name, last_name, phone_number, email_address);
+
+                    SELECT LOGIN into login FROM (SELECT LOGIN, ROWNUM AS RN FROM GENERATOR_LOGINS_CLIENTS) WHERE RN = counter;
+                    SELECT PASSWORD_HASH into password_hash FROM (SELECT PASSWORD_HASH, ROWNUM AS RN FROM GENERATOR_PASSWORD_HASHES_CLIENTS) WHERE RN = counter;
+
+                INSERT INTO DANE_DO_LOGOWANIA_KLIENCI
+                VALUES (counter, login, password_hash, counter);
 
     END LOOP;
 END;

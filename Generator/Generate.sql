@@ -4,11 +4,14 @@
 @Tables/Physical_Tables.sql
 @Tables/Views.sql
 @Generators/Generate_Hashes.sql
+@Generators/Generate_Hashes_Clients.sql
 @Generators/Generate_Logins.sql
+@Generators/Generate_Logins_Clients.sql
 @Generators/Generate_Men_Lasts.sql
 @Generators/Generate_Men_Names.sql
 @Generators/Generate_Men_Posts.sql
 @Generators/Generate_Passwords.sql
+@Generators/Generate_Passwords_Clients.sql
 @Generators/Generate_Pools_Names.sql
 @Generators/Generate_Services.sql
 @Generators/Generate_Streets.sql
