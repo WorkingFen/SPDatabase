@@ -8,11 +8,12 @@ is_offered NUMBER(3);
 BEGIN
 
 	SELECT COUNT(*) into number_of_pools FROM BASENY;
+	number_of_pools := number_of_pools - 1;
 	service_id := 1;
 	ogolna_id := 1;
 	lokalna_id := 1;
 	
-	FOR counter IN 2..number_of_pools
+	FOR counter IN 1..number_of_pools
 	LOOP
 	
 	    price := dbms_random.value(85,95.49);
@@ -28,7 +29,7 @@ BEGIN
 		
 	END LOOP;
 	
-	FOR counter IN 2..number_of_pools
+	FOR counter IN 1..number_of_pools
 	LOOP
 	
 	    price := dbms_random.value(6,15.49);
@@ -44,7 +45,7 @@ BEGIN
 		
 	END LOOP;
 	
-	FOR counter IN 2..number_of_pools
+	FOR counter IN 1..number_of_pools
 	LOOP
 	
 	    price := dbms_random.value(4,10.49);
@@ -60,7 +61,7 @@ BEGIN
 		
 	END LOOP;
 	
-	FOR counter IN 2..number_of_pools
+	FOR counter IN 1..number_of_pools
 	LOOP
 		
 		is_offered := dbms_random.value(0,999.49);
@@ -82,7 +83,7 @@ BEGIN
 		
 	END LOOP;
 	
-	FOR counter IN 2..number_of_pools
+	FOR counter IN 1..number_of_pools
 	LOOP
 		
 		is_offered := dbms_random.value(0,999.49);
@@ -104,7 +105,7 @@ BEGIN
 		
 	END LOOP;
 	
-	FOR counter IN 2..number_of_pools
+	FOR counter IN 1..number_of_pools
 	LOOP
 		
 		is_offered := dbms_random.value(0,999.49);
@@ -126,7 +127,7 @@ BEGIN
 		
 	END LOOP;
 	
-	FOR counter IN 2..number_of_pools
+	FOR counter IN 1..number_of_pools
 	LOOP
 	
 	    price := dbms_random.value(15,30.49);
@@ -142,7 +143,7 @@ BEGIN
 		
 	END LOOP;
 	
-	FOR counter IN 2..number_of_pools
+	FOR counter IN 1..number_of_pools
 	LOOP
 	
 	    price := dbms_random.value(50,100.49);
@@ -158,7 +159,7 @@ BEGIN
 		
 	END LOOP;
 	
-	FOR counter IN 2..number_of_pools
+	FOR counter IN 1..number_of_pools
 	LOOP
 	
 	    price := dbms_random.value(30,60.49);
@@ -174,7 +175,7 @@ BEGIN
 		
 	END LOOP;
 	
-	FOR counter IN 2..number_of_pools
+	FOR counter IN 1..number_of_pools
 	LOOP
 		
 		is_offered := dbms_random.value(0,999.49);
