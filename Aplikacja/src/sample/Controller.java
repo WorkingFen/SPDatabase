@@ -29,12 +29,14 @@ public class Controller implements Initializable {
 
     }
 
-    private void changeScreen(String fxmlPath, ActionEvent event)throws IOException {
+    private void changeScreen(String fxmlPath, ActionEvent event, String title)throws IOException {
 
         Parent tableViewParent = FXMLLoader.load(getClass().getResource(fxmlPath));
         Scene tableViewScene = new Scene(tableViewParent);
 
         Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
+		window.setTitle(title);
+
         window.setScene(tableViewScene);
         window.show();
     }
@@ -47,35 +49,35 @@ public class Controller implements Initializable {
         int source = LoginDetails.checkLoginDetails(Main.jdbc.getConn(), loginInputText, passwordInputText);
 
         if(loginInputText.equals("Klient")){
-            changeScreen("Client/client.fxml", event);
+            changeScreen("Client/client.fxml", event,"Klient");
             System.out.println("Klient");
         }
         else if(source == 1 || loginInputText.equals("Marketer")){
-            changeScreen("Marketing/marketing.fxml", event);
+            changeScreen("Marketing/marketing.fxml", event,"Marketer");
             System.out.println("Marketer");
         }
         else if(source == 2 || loginInputText.equals("HR")){
-            changeScreen("HR/HR.fxml", event);
+            changeScreen("HR/HR.fxml", event,"HR");
             System.out.println("HR");
         }
         else if(source == 3 || loginInputText.equals("Kasjer")){
-            changeScreen("Cashier/cashier.fxml", event);
+            changeScreen("Cashier/cashier.fxml", event,"Kasjer");
             System.out.println("Kasjer");
         }
         else if(source == 4 || loginInputText.equals("Kierownik")){
-            changeScreen("Manager/manager.fxml", event);
+            changeScreen("Manager/manager.fxml", event,"Kierownik");
             System.out.println("Kierownik");
         }
         else if(source == 5 || loginInputText.equals("Konserwator")){
-            changeScreen("Repairman/repairman.fxml", event);
+            changeScreen("Repairman/repairman.fxml", event,"Konserwator");
             System.out.println("Konserwator");
         }
         else if(source == 6 || loginInputText.equals("Wlasciciel")){
-            changeScreen("Owner/owner.fxml", event);
+            changeScreen("Owner/owner.fxml", event,"Właściciel");
             System.out.println("Wlasciciel");
         }
         else if(source == 7 || loginInputText.equals("Audytor")){
-            changeScreen("Auditor/auditor.fxml", event);
+            changeScreen("Auditor/auditor.fxml", event,"Audytor");
             System.out.println("Audytor");
         }
         else{

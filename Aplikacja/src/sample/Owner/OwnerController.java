@@ -197,6 +197,7 @@ public class OwnerController implements Initializable {
         Scene tableViewScene = new Scene(tableViewParent);
 
         Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
+		window.setTitle("Logowanie");
         window.setScene(tableViewScene);
         window.show();
     }
