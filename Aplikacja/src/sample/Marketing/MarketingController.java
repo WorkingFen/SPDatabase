@@ -297,6 +297,7 @@ public class MarketingController implements Initializable {
 
         Parent tableViewParent = FXMLLoader.load(getClass().getResource("../sample.fxml"));
         Scene tableViewScene = new Scene(tableViewParent);
+		tableViewScene.getStylesheets().add("ButtonStyles.css");
 
         Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
 		window.setTitle("Logowanie");

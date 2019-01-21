@@ -43,7 +43,7 @@ public class PopupWindowAlert {
         layout.getChildren().addAll(label, bottom);
 
         Scene scene = new Scene(layout);
-
+		scene.getStylesheets().add("ButtonStyles.css");
         window.setScene(scene);
         window.showAndWait();
 

@@ -15,7 +15,11 @@ public class Main extends Application {
         jdbc = new JDBC();
         Parent root = FXMLLoader.load(getClass().getResource("sample.fxml"));
         primaryStage.setTitle("Logowanie");
-        primaryStage.setScene(new Scene(root, 600, 400));
+
+        Scene scene = new Scene(root, 600, 400);
+        primaryStage.setScene(scene);
+        scene.getStylesheets().add("ButtonStyles.css");
+
         primaryStage.show();
     }
 
