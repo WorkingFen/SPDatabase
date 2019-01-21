@@ -87,6 +87,8 @@ public class CashierController implements Initializable {
     private TableColumn<CashierPath, String> reservePath;
     @FXML
     private TableColumn<CashierPath, String> cancelReservation;
+    @FXML
+    private TableColumn<CashierPath, String> statusReservation;
 
     public CashierController() throws SQLException {
     }
@@ -261,6 +263,7 @@ public class CashierController implements Initializable {
         pathState.setCellValueFactory(new PropertyValueFactory<>("state"));
         reservePath.setCellValueFactory(new PropertyValueFactory<>("reserveButton"));
         cancelReservation.setCellValueFactory(new PropertyValueFactory<>("cancelButton"));
+        statusReservation.setCellValueFactory(new PropertyValueFactory<>("statusButton"));
 
         pathTable.getItems().addAll(paths);
     }
