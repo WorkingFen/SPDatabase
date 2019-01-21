@@ -9,6 +9,8 @@ id_number NUMBER;
 id_employee NUMBER;
 login VARCHAR2(4000);
 password_hash VARCHAR2(4000);
+employment_date DATE;
+pool_count NUMBER(2);
 
 BEGIN
 
@@ -19,10 +21,20 @@ BEGIN
     
     SELECT COUNT(*) into id_employee FROM PRACOWNICY;
     id_employee := id_employee+1;
+	
+	SELECT COUNT(*) into pool_count FROM BASENY;
+	pool_count := pool_count - 1;
 
     IF pool=0 THEN
-        FOR pool_number in (SELECT NUMER_OBIEKTU FROM BASENY)
+        FOR counter in 1..pool_count
         LOOP
+        
+            SELECT Data INTO employment_date FROM
+            ( SELECT Data FROM PRZEGLADY WHERE Baseny_numer_obiektu = counter ORDER BY Data )
+            WHERE rownum = 1;
+
+            employment_date := employment_date - INTERVAL '2' YEAR;
+            
             auxiliary := 1;
             FOR i in 1..7
             LOOP
@@ -52,7 +64,7 @@ BEGIN
                     END IF;
     
                     INSERT INTO PRACOWNICY
-                    VALUES (id_employee, first_name, last_name, 0, i, pool_number.NUMER_OBIEKTU);
+                    VALUES (id_employee, first_name, last_name, 0, employment_date, null, i, counter);
     
                     INSERT INTO OSOBY
                     VALUES (id_number, null, null, id_employee);
@@ -67,6 +79,13 @@ BEGIN
             END LOOP;
         END LOOP;
     ELSE
+    
+        SELECT Data INTO employment_date FROM
+        ( SELECT Data FROM PRZEGLADY WHERE Baseny_numer_obiektu = pool ORDER BY Data )
+        WHERE rownum = 1;
+
+        employment_date := employment_date - INTERVAL '2' YEAR;
+    
         auxiliary := 1;
         FOR i in 1..7
         LOOP
@@ -96,7 +115,7 @@ BEGIN
                 END IF;
     
                 INSERT INTO PRACOWNICY
-                VALUES (id_employee, first_name, last_name, 0, i, pool);
+                VALUES (id_employee, first_name, last_name, 0, employment_date, null, i, pool);
     
                 INSERT INTO OSOBY
                 VALUES (id_number, null, null, id_employee);

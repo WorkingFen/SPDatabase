@@ -33,6 +33,7 @@ BEGIN
 
 	SELECT COUNT(*) INTO transaction_id FROM TRANSAKCJE;
 
+	number_of_pools := number_of_pools - 1;
 	transaction_id := transaction_id + 1;
 	reservation_id := 1;
 	lesson_id := 1;
@@ -40,7 +41,7 @@ BEGIN
 	FOR counter1 IN 1..lessons_in_general
 	LOOP
 
-		pool_id := dbms_random.value(2, number_of_pools+0.49);
+		pool_id := dbms_random.value(1, number_of_pools-0.51);
 
         SELECT Numer_uslugi INTO service_id FROM USLUGI WHERE Baseny_Numer_obiektu = pool_id AND Nazwa_uslugi = 'lekcja p³ywania';
 
@@ -192,7 +193,7 @@ BEGIN
 
 		IF condition=0 THEN
 
-			pool_id := dbms_random.value(1,number_of_pools+0.49);
+			pool_id := dbms_random.value(1,number_of_pools-0.51);
 
 		ELSE 
 
