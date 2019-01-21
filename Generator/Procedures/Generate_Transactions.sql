@@ -6,6 +6,7 @@ condition NUMBER(3);
 condition2 NUMBER(3);
 pool_id NUMBER(2);
 earliest_date DATE;
+rand_hour NUMBER(2);
 
 BEGIN
 
@@ -39,6 +40,8 @@ BEGIN
 		LOOP
 
 			transaction_date := TRUNC(SYSDATE -  DBMS_RANDOM.value(0,30*MONTHS_BETWEEN(SYSDATE, start_date)));
+            rand_hour := dbms_random.value(7,21.49);
+            transaction_date := transaction_date + rand_hour/24;
 
 			INSERT INTO TRANSAKCJE
 			VALUES (transaction_id, transaction_date);
