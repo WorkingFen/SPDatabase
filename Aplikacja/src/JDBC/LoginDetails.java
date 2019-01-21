@@ -92,6 +92,23 @@ public class LoginDetails {
         }
     }
 
+    public static int getLoginID(Connection conn, String login) throws SQLException {
+        PreparedStatement stmt = conn.prepareStatement("SELECT Osoby_Numer_Identyfikacyjny FROM Dane_Do_Logowania WHERE Login = ?");
+        stmt.setString(1, login);
+        ResultSet rSet = stmt.executeQuery();
+        if(rSet.next()){
+            int logNum = rSet.getInt(1);
+            rSet.close();
+            stmt.close();
+            return logNum;
+        }
+        else{
+            rSet.close();
+            stmt.close();
+            return 0;
+        }
+    }
+
     public static int checkClientLoginDetails(Connection conn, String login, String password) throws SQLException {
         PreparedStatement stmt = conn.prepareStatement("SELECT Klienci_Numer_Klienta FROM Dane_Do_Logowania_Klienci WHERE Login = ?");
         stmt.setString(1, login);
@@ -117,6 +134,23 @@ public class LoginDetails {
             rSet.close();
             stmt.close();
             return 42;
+        }
+    }
+
+    public static int getClientLoginID(Connection conn, String login) throws SQLException {
+        PreparedStatement stmt = conn.prepareStatement("SELECT Klienci_Numer_Klienta FROM Dane_Do_Logowania_Klienci WHERE Login = ?");
+        stmt.setString(1, login);
+        ResultSet rSet = stmt.executeQuery();
+        if(rSet.next()){
+            int logNum = rSet.getInt(1);
+            rSet.close();
+            stmt.close();
+            return logNum;
+        }
+        else{
+            rSet.close();
+            stmt.close();
+            return 0;
         }
     }
 

@@ -48,6 +48,7 @@ public class ClientController implements Initializable {
     @FXML
     private TableColumn<ClientLesson, Button> reserveLesson;
 
+    private int ID = Main.ID;
     private String[] poolName;
 
     public ClientController() throws SQLException {

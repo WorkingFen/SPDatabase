@@ -48,7 +48,13 @@ public class Controller implements Initializable {
         String passwordInputText = passwordInput.getText();
 
         int source = LoginDetails.checkLoginDetails(Main.jdbc.getConn(), loginInputText, passwordInputText);
-        if(source==0) source = LoginDetails.checkClientLoginDetails(Main.jdbc.getConn(), loginInputText, passwordInputText);
+        if(source==0) {
+            source = LoginDetails.checkClientLoginDetails(Main.jdbc.getConn(), loginInputText, passwordInputText);
+            Main.ID = LoginDetails.getClientLoginID(Main.jdbc.getConn(), loginInputText);
+        }
+        else
+            Main.ID = LoginDetails.getLoginID(Main.jdbc.getConn(), loginInputText);
+
 
         if(source == 0 || loginInputText.equals("Klient")){
             changeScreen("Client/client.fxml", event,"Klient");

@@ -174,14 +174,15 @@ public class Reservation {
         String date;
         String name;
         String surname;
+        String status;
         PreparedStatement stmt = conn.prepareStatement(
-                "SELECT to_char(Data_i_Godzina, 'YYYY-MM-DD HH24:MI'), Imie, Nazwisko FROM " +
+                "SELECT to_char(Data_i_Godzina, 'YYYY-MM-DD HH24:MI'), Imie, Nazwisko, Status FROM " +
                         "(SELECT z.Numer_Rezerwacji, z.Data_i_Godzina, z.Status, z.Imie, z.Nazwisko, b.Nazwa_Obiektu FROM " +
                             "(SELECT a.Numer_Rezerwacji, a.Data_i_Godzina, a.Status, a.Imie, a.Nazwisko, u.Baseny_Numer_Obiektu FROM " +
                                 "(SELECT rt.Numer_Rezerwacji, rt.Data_I_Godzina, rt.Ogolne_Numer_Uslugi, rt.Status, k.Imie, k.Nazwisko FROM Rezerwacje_Toru rt JOIN Klienci k ON rt.Klienci_Numer_Klienta = k.Numer_Klienta) a " +
                             "JOIN Uslugi u ON a.Ogolne_Numer_Uslugi = u.Numer_Uslugi) z " +
                         "JOIN Baseny b ON z.Baseny_Numer_Obiektu = b.Numer_Obiektu) " +
-                    "WHERE Numer_Rezerwacji = ? AND Nazwa_Obiektu = ? AND Status = 0"
+                    "WHERE Numer_Rezerwacji = ? AND Nazwa_Obiektu = ?"
         );
         stmt.setInt(1, id);
         stmt.setString(2, poolItem);
@@ -190,9 +191,11 @@ public class Reservation {
             date = rSet.getString(1);
             name = rSet.getString(2);
             surname = rSet.getString(3);
+            if(rSet.getInt(4)==0) status = "Nie wykorzystana";
+            else status = "Wykorzystana";
             rSet.close();
             stmt.close();
-            return new MarketingReservation(date, "Yyyyy", name, surname);
+            return new MarketingReservation(date, status, name, surname);
         }
         else{
             rSet.close();

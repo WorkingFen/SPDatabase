@@ -45,6 +45,8 @@ public class RepairmanController implements Initializable {
     @FXML
     private TableColumn<RepairmanInspection, String> delete;
 
+    private int ID = Main.ID;
+
     public RepairmanController() throws SQLException {
     }
 

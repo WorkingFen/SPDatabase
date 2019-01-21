@@ -78,6 +78,8 @@ public class ManagerController implements Initializable {
     @FXML
     private TableColumn<ManagerInspection, String> inspectionComment;
 
+    private int ID = Main.ID;
+
     public ManagerController() throws SQLException {
     }
 

@@ -86,6 +86,8 @@ public class CashierController implements Initializable {
     @FXML
     private TableColumn<CashierPath, String> statusReservation;
 
+    private int ID = Main.ID;
+
     public CashierController() throws SQLException {
     }
 

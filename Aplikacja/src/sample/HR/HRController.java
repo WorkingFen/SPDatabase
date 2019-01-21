@@ -64,6 +64,8 @@ public class HRController implements Initializable {
     @FXML
     private TextField positionField;
 
+    private int ID = Main.ID;
+
     public HRController() throws SQLException {
     }
 
