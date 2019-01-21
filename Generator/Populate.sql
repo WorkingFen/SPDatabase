@@ -12,7 +12,7 @@ generate_owner(0);
 generate_auditor;
 generate_workers(0,1,1,5,1,2,10,5);
 generate_services;
-generate_clients(1000);
+generate_clients(971);
 
 SELECT COUNT(*) INTO number_of_services FROM USLUGI;
 
