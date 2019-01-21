@@ -15,6 +15,7 @@ public class CashierPath {
     private String state;
     private Button reserveButton;
     private Button cancelButton;
+    private Button statusButton;
 
     public CashierPath(CashierController cc, int number, String date, int pathNumber, String state, String msgIn, String msgOut){
         this.cc = cc;
@@ -24,6 +25,7 @@ public class CashierPath {
         this.state = state;
         if(state.equals("Wolny")) this.reserveButton = new Button(msgIn);
         else if(state.equals("Zajęty")) this.cancelButton = new Button(msgOut);
+        this.statusButton = new Button("Skorzystano");
 
         if(reserveButton != null){
             this.reserveButton.setOnAction(e->{
@@ -114,4 +116,11 @@ public class CashierPath {
         this.reserveButton = reserveButton;
     }
 
+    public CashierController getCc() { return cc; }
+
+    public void setCc(CashierController cc) { this.cc = cc; }
+
+    public Button getStatusButton() { return statusButton; }
+
+    public void setStatusButton(Button statusButton) { this.statusButton = statusButton; }
 }
