@@ -33,6 +33,7 @@ public class Controller implements Initializable {
 
         Parent tableViewParent = FXMLLoader.load(getClass().getResource(fxmlPath));
         Scene tableViewScene = new Scene(tableViewParent);
+        tableViewScene.getStylesheets().add("ButtonStyles.css");
 
         Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
 		window.setTitle(title);

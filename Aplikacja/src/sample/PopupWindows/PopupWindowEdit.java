@@ -53,6 +53,7 @@ public class PopupWindowEdit {
 
         Scene scene = new Scene(layout);
 
+		scene.getStylesheets().add("ButtonStyles.css");
         window.setScene(scene);
         window.showAndWait();
 
