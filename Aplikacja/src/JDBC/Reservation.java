@@ -51,16 +51,16 @@ public class Reservation {
         }
     }
 
-    public static void addCashierReservation(Connection conn, int id, int clientID) throws SQLException {
+    public static void setReservation(Connection conn, int path, String state) throws SQLException {
         try {
             PreparedStatement stmt;
 
             conn.setAutoCommit(false);
 
-            stmt = conn.prepareStatement("UPDATE Rezerwacje_Toru SET Status = 1, Klienci_Numer_Klienta = ? WHERE Numer_Rezerwacji = ?");
+            if(state.equals("Nie skorzystano")) stmt = conn.prepareStatement("UPDATE Rezerwacje_Toru SET Status = 1 WHERE Numer_Rezerwacji = ?");
+            else stmt = conn.prepareStatement("UPDATE Rezerwacje_Toru SET Status = 0 WHERE Numer_Rezerwacji = ?");
 
-            stmt.setInt(1, clientID);
-            stmt.setInt(2, id);
+            stmt.setInt(1, path);
             stmt.executeQuery();
             stmt.close();
             conn.commit();
@@ -75,40 +75,44 @@ public class Reservation {
         }
     }
 
-    public static void deleteCashierReservation(Connection conn, int id, int clientID) throws SQLException {
+    public static void addClientReservation(Connection conn, int clientID, String date, String path, String poolName) throws SQLException {
         try {
             PreparedStatement stmt;
 
             conn.setAutoCommit(false);
 
-            stmt = conn.prepareStatement("UPDATE Rezerwacje_Toru SET Status = 0 WHERE Numer_Rezerwacji = ? AND Klienci_Numer_Klienta = ?");
+            stmt = conn.prepareStatement("INSERT INTO Rezerwacje_Toru VALUES(?, to_date(?, 'YYYY-MM-DD HH24:MI'), ?, 0, ?, ?)");
+
+            PreparedStatement stmt2 = conn.prepareStatement("SELECT MAX(Rezerwacje_Toru.Numer_rezerwacji) FROM Rezerwacje_Toru");
+            ResultSet rset = stmt2.executeQuery();
+
+            int id;
+            if(rset.next()) id = rset.getInt(1)+1;
+            else id = 1;
+
+            rset.close();
+            stmt2.close();
+
+            stmt2 = conn.prepareStatement(
+                    "SELECT Ogolne_Numer_Uslugi FROM " +
+                            "(SELECT b.Nazwa_Obiektu, u.Nazwa_Uslugi, u.Ogolne_Numer_Uslugi FROM Baseny b JOIN Uslugi u ON b.Numer_Obiektu = u.Baseny_Numer_Obiektu) " +
+                         "WHERE Nazwa_Obiektu = ? AND Nazwa_Uslugi = 'rezerwacja toru' "
+            );
+            stmt2.setString(1, poolName);
+            rset = stmt2.executeQuery();
+
+            int generalID;
+            if(rset.next()) generalID = rset.getInt(1);
+            else return;
+
+            rset.close();
+            stmt2.close();
 
             stmt.setInt(1, id);
-            stmt.setInt(2, clientID);
-            stmt.executeQuery();
-            stmt.close();
-            conn.commit();
-        }
-
-        catch (Exception e) {
-            System.out.println(e.getMessage());
-            conn.rollback();
-        }
-        finally {
-            conn.setAutoCommit(true);
-        }
-    }
-
-    public static void addClientReservation(Connection conn, int id, int clientID) throws SQLException {
-        try {
-            PreparedStatement stmt;
-
-            conn.setAutoCommit(false);
-
-            stmt = conn.prepareStatement("UPDATE Rezerwacje_Toru SET Status = 1, Klienci_Numer_Klienta = ? WHERE Numer_Rezerwacji = ?");
-
-            stmt.setInt(1, clientID);
-            stmt.setInt(2, id);
+            stmt.setString(2, date);
+            stmt.setString(3, path);
+            stmt.setInt(4, clientID);
+            stmt.setInt(5, generalID);
             stmt.executeQuery();
             stmt.close();
             conn.commit();

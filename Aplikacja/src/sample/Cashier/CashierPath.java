@@ -2,6 +2,8 @@ package sample.Cashier;
 
 import javafx.scene.control.Button;
 
+import java.sql.SQLException;
+
 public class CashierPath {
     private CashierController cc;
     private int number;
@@ -16,7 +18,16 @@ public class CashierPath {
         this.date = date;
         this.pathNumber = pathNumber;
         this.state = state;
-        this.statusButton = new Button("Skorzystano");
+        if(state.equals("Nie skorzystano")) this.statusButton = new Button("Skorzystano");
+        else this.statusButton = new Button("Nie skorzystano");
+
+        this.statusButton.setOnAction(e -> {
+            try {
+                cc.setStatus(number, state);
+            } catch (SQLException e1) {
+                e1.printStackTrace();
+            }
+        });
     }
 
     public int getNumber() {

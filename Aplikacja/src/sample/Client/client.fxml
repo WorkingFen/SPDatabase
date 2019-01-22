@@ -48,9 +48,9 @@
                               <TableColumn fx:id="pathNumber" prefWidth="222.0" text="Numer toru" />
                            </columns>
                         </TableView>
-                        <TextField fx:id="dateField" layoutY="489.0" promptText="Data" />
+                        <TextField fx:id="dateField" layoutY="489.0" promptText="YYYY-MM-DD HH24:MI" />
                         <TextField fx:id="pathField" layoutX="149.0" layoutY="489.0" promptText="Tor" />
-                        <Button fx:id="addReservationButton" layoutX="298.0" layoutY="489.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="93.0" text="Dodaj " />
+                        <Button fx:id="addReservationButton" onAction="#addReservationButtonPushed" layoutX="298.0" layoutY="489.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="93.0" text="Dodaj " />
                      </children>
                   </AnchorPane>
                </content>

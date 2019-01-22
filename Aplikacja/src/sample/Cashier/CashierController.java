@@ -221,6 +221,13 @@ public class CashierController implements Initializable {
         initializeLessons();
     }
 
+    void setStatus(int id, String state) throws  SQLException {
+        Reservation.setReservation(Main.jdbc.getConn(), id, state);
+        pathTable.getItems().clear();
+        paths = getReservations();
+        initializePaths();
+    }
+
     private void addClient(String name, String surname, String phone, String email) throws SQLException {
         Client.addClient(Main.jdbc.getConn(), name, surname, phone, email);
         clientTable.getItems().clear();

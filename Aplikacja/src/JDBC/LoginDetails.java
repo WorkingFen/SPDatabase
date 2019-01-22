@@ -115,12 +115,12 @@ public class LoginDetails {
         ResultSet rSet = stmt.executeQuery();
         if(rSet.next()){
             int logNum = rSet.getInt(1);
-            PreparedStatement stmt2 = conn.prepareStatement("SELECT RN FROM (SELECT Haslo AS HA, ROWNUM AS RN FROM Generator_Passwords) WHERE HA = ?");
+            PreparedStatement stmt2 = conn.prepareStatement("SELECT RN FROM (SELECT Haslo AS HA, ROWNUM AS RN FROM Generator_Passwords_Clients) WHERE HA = ?");
             stmt2.setString(1, password);
             ResultSet rSet2 = stmt2.executeQuery();
             if(rSet2.next()){
                 int passNum = rSet2.getInt(1);
-                if((passNum+127) == logNum){
+                if(passNum == logNum){
                     return 0;
                 }
             }

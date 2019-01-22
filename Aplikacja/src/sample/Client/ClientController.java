@@ -17,6 +17,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import sample.Controller;
 import sample.Main;
+import sample.PopupWindows.PopupWindowAlert;
 
 import java.io.IOException;
 import java.net.URL;
@@ -59,7 +60,7 @@ public class ClientController implements Initializable {
 	@FXML
 	private Button addReservationButton;
 
-    private int ID;
+    int ID;
     private String[] poolName;
 
     public ClientController() throws SQLException {
@@ -162,11 +163,14 @@ public class ClientController implements Initializable {
         return Client.getClient(Main.jdbc.getConn(), name, surname, phone);
     }
 
-    void addReservation(int id, int clientID) throws SQLException {
-        Reservation.addClientReservation(Main.jdbc.getConn(), id, clientID);
+    private void addReservation(int clientID, String date, String path) throws SQLException {
+        Reservation.addClientReservation(Main.jdbc.getConn(), clientID, date, path, poolName[0]);
         pathTable.getItems().clear();
         clientPaths = getReservations(poolName[0]);
         initializePaths();
+
+        dateField.setText(null);
+        pathField.setText(null);
     }
 
     void addAttendee(int id, int clientID) throws SQLException {
@@ -232,6 +236,23 @@ public class ClientController implements Initializable {
         System.out.println("clicked on " + poolName[0]);   //debug
 
         changeTables(poolName[0]);
+    }
+
+    public void addReservationButtonPushed(ActionEvent event) throws IOException {
+
+        String dateInput= dateField.getText();
+        String pathInput = pathField.getText();
+
+        if(dateInput.equals("") || pathInput.equals("")) return;
+
+        boolean answer = PopupWindowAlert.display("Czy na pewno chcesz zarezerwować ten tor?","Rezerwowanie", 350);
+        if(answer){
+            try {
+                this.addReservation(ID, dateInput, pathInput);
+            } catch (SQLException e1) {
+                e1.printStackTrace();
+            }
+        }
     }
 
     public void logOutButtonPushed(ActionEvent event) throws IOException {

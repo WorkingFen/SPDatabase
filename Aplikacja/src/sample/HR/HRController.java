@@ -154,7 +154,7 @@ public class HRController implements Initializable {
     }
 
     private void addEmployee(String name, String surname, String post) throws SQLException {
-        Employee.addEmployee(Main.jdbc.getConn(), name, surname, post);
+        Employee.addEmployee(Main.jdbc.getConn(), name, surname, post, poolNo);
         employeeTable.getItems().clear();
         employees = getEmployees();
         initializeEmployees();

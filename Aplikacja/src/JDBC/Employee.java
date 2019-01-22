@@ -13,7 +13,7 @@ import java.sql.SQLException;
 
 public class Employee {
 
-    static public void addEmployee(Connection conn, String name, String surname, String post) throws SQLException {
+    static public void addEmployee(Connection conn, String name, String surname, String post, int poolNo) throws SQLException {
         int postID;
         try{
             PreparedStatement stmt;
@@ -35,7 +35,7 @@ public class Employee {
                 return;
             }
 
-            stmt=conn.prepareStatement("INSERT INTO Pracownicy VALUES(?, ?, ?, 0, ?, 3)");
+            stmt=conn.prepareStatement("INSERT INTO Pracownicy VALUES(?, ?, ?, 0, ?, ?)");
 
             PreparedStatement stmt2 = conn.prepareStatement("SELECT MAX(Pracownicy.Numer_Identyfikacyjny) FROM Pracownicy");
             rSet = stmt2.executeQuery();
@@ -51,6 +51,7 @@ public class Employee {
             stmt.setString(2, name);
             stmt.setString(3, surname);
             stmt.setInt(4, postID);
+            stmt.setInt(5, poolNo);
             stmt.executeQuery();
             stmt.close();
             conn.commit();
