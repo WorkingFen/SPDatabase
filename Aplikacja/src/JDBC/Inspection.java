@@ -101,9 +101,10 @@ public class Inspection {
         }
     }
 
-    static public RepairmanInspection getRepairmanInspection(RepairmanController rc, Connection conn, int id) throws SQLException {
-        PreparedStatement stmt = conn.prepareStatement("SELECT to_char(p.Data, 'YYYY-MM-DD') FROM Przeglady p WHERE Numer_Przegladu = ?");
+    static public RepairmanInspection getRepairmanInspection(RepairmanController rc, Connection conn, int id, int poolNo) throws SQLException {
+        PreparedStatement stmt = conn.prepareStatement("SELECT to_char(p.Data, 'YYYY-MM-DD') FROM Przeglady p WHERE Numer_Przegladu = ? AND Baseny_Numer_Obiektu = ?");
         stmt.setInt(1, id);
+        stmt.setInt(2, poolNo);
         ResultSet rSet = stmt.executeQuery();
         if(rSet.next()){
             String date = rSet.getString(1);
@@ -118,9 +119,10 @@ public class Inspection {
         }
     }
 
-    static public ManagerInspection getManagerInspection(Connection conn, int id) throws SQLException {
-        PreparedStatement stmt = conn.prepareStatement("SELECT to_char(p.Data, 'YYYY-MM-DD') FROM Przeglady p WHERE Numer_Przegladu = ?");
+    static public ManagerInspection getManagerInspection(Connection conn, int id, int poolNo) throws SQLException {
+        PreparedStatement stmt = conn.prepareStatement("SELECT to_char(p.Data, 'YYYY-MM-DD') FROM Przeglady p WHERE Numer_Przegladu = ? AND Baseny_Numer_Obiektu = ?");
         stmt.setInt(1, id);
+        stmt.setInt(2, poolNo);
         ResultSet rSet = stmt.executeQuery();
         if(rSet.next()){
             String date = rSet.getString(1);

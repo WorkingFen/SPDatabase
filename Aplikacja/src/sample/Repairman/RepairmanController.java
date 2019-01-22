@@ -1,6 +1,7 @@
 package sample.Repairman;
 
 import JDBC.Inspection;
+import JDBC.Pool;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -15,6 +16,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
+import sample.Controller;
 import sample.Main;
 import sample.PopupWindows.PopupWindowAlert;
 
@@ -45,9 +47,19 @@ public class RepairmanController implements Initializable {
     @FXML
     private TableColumn<RepairmanInspection, String> delete;
 
-    private int ID = Main.ID;
+    private int poolNo;
 
     public RepairmanController() throws SQLException {
+    }
+
+    public void setPoolNo(int ID) throws SQLException {
+        if(ID==0) poolNo = 0;
+        else poolNo = Pool.getPoolNo(Main.jdbc.getConn(), ID);
+        System.out.println(ID + " " + poolNo);
+
+        inspections = getInspections();
+
+        initializeInspections();
     }
 
     private ObservableList<RepairmanInspection> getInspections() throws SQLException {
@@ -75,7 +87,7 @@ public class RepairmanController implements Initializable {
 
         ObservableList<RepairmanInspection> list = FXCollections.observableArrayList();
         for(int i = minInspection-1; i < maxInspection; i++){
-            RepairmanInspection temp = Inspection.getRepairmanInspection(this, conn, i+1);
+            RepairmanInspection temp = Inspection.getRepairmanInspection(this, conn, i+1, poolNo);
             if(temp != null) list.add(temp);
         }
         return list;
@@ -98,7 +110,7 @@ public class RepairmanController implements Initializable {
         poolField.setText(null);
     }
 
-    private ObservableList<RepairmanInspection> inspections = getInspections();
+    private ObservableList<RepairmanInspection> inspections;
 
     private void initializeInspections() {
         inspectionID.setCellValueFactory(new PropertyValueFactory<>("id"));
@@ -110,8 +122,8 @@ public class RepairmanController implements Initializable {
     }
 
     @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
-        initializeInspections();
+    public void initialize(URL url, ResourceBundle resourceBundle)
+    {
     }
 
     public void addClientButtonPushed(ActionEvent event) throws IOException {

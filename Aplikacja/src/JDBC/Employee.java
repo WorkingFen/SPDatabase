@@ -200,9 +200,10 @@ public class Employee {
         }
     }
 
-    static public HREmployee getHREmployee(HRController hc, Connection conn, int id) throws SQLException {
-        PreparedStatement stmt = conn.prepareStatement("SELECT p.Imie, p.Nazwisko, p.Stanowiska_Numer_Stanowiska FROM Pracownicy p WHERE Numer_Identyfikacyjny = ?");
+    static public HREmployee getHREmployee(HRController hc, Connection conn, int id, int poolNo) throws SQLException {
+        PreparedStatement stmt = conn.prepareStatement("SELECT p.Imie, p.Nazwisko, p.Stanowiska_Numer_Stanowiska FROM Pracownicy p WHERE Numer_Identyfikacyjny = ? AND Baseny_Numer_Obiektu = ?");
         stmt.setInt(1, id);
+        stmt.setInt(2, poolNo);
         ResultSet rSet = stmt.executeQuery();
         if(rSet.next()){
             String name = rSet.getString(1);
@@ -263,9 +264,10 @@ public class Employee {
         }
     }
 
-    static public ManagerEmployee getManagerEmployee(Connection conn, int id) throws SQLException {
-        PreparedStatement stmt = conn.prepareStatement("SELECT p.Imie, p.Nazwisko, p.Stanowiska_Numer_Stanowiska FROM Pracownicy p WHERE Numer_Identyfikacyjny = ?");
+    static public ManagerEmployee getManagerEmployee(Connection conn, int id, int poolNo) throws SQLException {
+        PreparedStatement stmt = conn.prepareStatement("SELECT p.Imie, p.Nazwisko, p.Stanowiska_Numer_Stanowiska FROM Pracownicy p WHERE Numer_Identyfikacyjny = ? AND Baseny_Numer_Obiektu = ?");
         stmt.setInt(1, id);
+        stmt.setInt(2, poolNo);
         ResultSet rSet = stmt.executeQuery();
         if(rSet.next()){
             String name = rSet.getString(1);

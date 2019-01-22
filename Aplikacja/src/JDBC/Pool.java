@@ -61,4 +61,21 @@ public class Pool {
             return null;
         }
     }
+
+    static public int getPoolNo(Connection conn, int ID) throws SQLException {
+        PreparedStatement stmt = conn.prepareStatement("SELECT Baseny_Numer_Obiektu FROM Pracownicy WHERE Numer_identyfikacyjny = ?");
+        stmt.setInt(1, ID);
+        ResultSet rSet = stmt.executeQuery();
+        if(rSet.next()){
+            int poolNo = rSet.getInt(1);
+            rSet.close();
+            stmt.close();
+            return poolNo;
+        }
+        else{
+            rSet.close();
+            stmt.close();
+            return 0;
+        }
+    }
 }

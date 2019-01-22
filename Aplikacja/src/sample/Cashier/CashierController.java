@@ -1,9 +1,6 @@
 package sample.Cashier;
 
-import JDBC.Attendee;
-import JDBC.Client;
-import JDBC.Lesson;
-import JDBC.Reservation;
+import JDBC.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -18,6 +15,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
+import sample.Controller;
 import sample.Main;
 import sample.PopupWindows.PopupWindowAlert;
 
@@ -86,9 +84,20 @@ public class CashierController implements Initializable {
     @FXML
     private TableColumn<CashierPath, String> statusReservation;
 
-    private int ID = Main.ID;
+    private int poolNo;
 
     public CashierController() throws SQLException {
+    }
+
+    public void setPoolNo(int ID) throws SQLException {
+        if(ID==0) poolNo = 0;
+        else poolNo = Pool.getPoolNo(Main.jdbc.getConn(), ID);
+
+        lessons = getLessons();
+        paths = getReservations();
+
+        initializeLessons();
+        initializePaths();
     }
 
     private ObservableList<CashierLesson> getLessons() throws SQLException {
@@ -115,7 +124,7 @@ public class CashierController implements Initializable {
 
         ObservableList<CashierLesson> list = FXCollections.observableArrayList();
         for(int i = minLesson-1; i < maxLesson; i++){
-            CashierLesson temp = Lesson.getCashierLesson(this, conn, "Zapisz", "Wypisz", i+1);
+            CashierLesson temp = Lesson.getCashierLesson(this, conn, "Zapisz", "Wypisz", i+1, poolNo);
             if(temp != null) list.add(temp);
         }
         return list;
@@ -145,7 +154,7 @@ public class CashierController implements Initializable {
 
         ObservableList<CashierPath> list = FXCollections.observableArrayList();
         for(int i = minReservation-1; i < maxReservation; i++){
-            CashierPath temp = Reservation.getCashierReservation(this, conn, i+1);
+            CashierPath temp = Reservation.getCashierReservation(this, conn, i+1, poolNo);
             if(temp != null) list.add(temp);
         }
         return list;
@@ -212,20 +221,6 @@ public class CashierController implements Initializable {
         initializeLessons();
     }
 
-    void addReservation(int id, int clientID) throws SQLException {
-        Reservation.addCashierReservation(Main.jdbc.getConn(), id, clientID);
-        pathTable.getItems().clear();
-        paths = getReservations();
-        initializePaths();
-    }
-
-    void deleteReservation(int id, int clientID) throws SQLException {
-        Reservation.deleteCashierReservation(Main.jdbc.getConn(), id, clientID);
-        pathTable.getItems().clear();
-        paths = getReservations();
-        initializePaths();
-    }
-
     private void addClient(String name, String surname, String phone, String email) throws SQLException {
         Client.addClient(Main.jdbc.getConn(), name, surname, phone, email);
         clientTable.getItems().clear();
@@ -238,9 +233,9 @@ public class CashierController implements Initializable {
         emailField.setText(null);
     }
 
-    private ObservableList<CashierLesson> lessons = getLessons();
+    private ObservableList<CashierLesson> lessons;
 
-    private ObservableList<CashierPath> paths = getReservations();
+    private ObservableList<CashierPath> paths;
 
     private ObservableList<CashierClient> clients = getClients();
 
@@ -279,8 +274,6 @@ public class CashierController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
 
-        initializeLessons();
-        initializePaths();
         initializeClients();
 
     }

@@ -9,7 +9,6 @@ import javafx.stage.Stage;
 
 public class Main extends Application {
     static public JDBC jdbc;
-    static public int ID;
 
     @Override
     public void start(Stage primaryStage) throws Exception{

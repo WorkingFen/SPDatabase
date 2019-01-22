@@ -10,6 +10,11 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import sample.Cashier.CashierController;
+import sample.Client.ClientController;
+import sample.HR.HRController;
+import sample.Manager.ManagerController;
+import sample.Repairman.RepairmanController;
 
 import java.io.IOException;
 import java.net.URL;
@@ -29,9 +34,10 @@ public class Controller implements Initializable {
 
     }
 
-    private void changeScreen(String fxmlPath, ActionEvent event, String title)throws IOException {
+    private FXMLLoader changeScreen(String fxmlPath, ActionEvent event, String title)throws IOException {
 
-        Parent tableViewParent = FXMLLoader.load(getClass().getResource(fxmlPath));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlPath));
+        Parent tableViewParent = loader.load();
         Scene tableViewScene = new Scene(tableViewParent);
         tableViewScene.getStylesheets().add("ButtonStyles.css");
 
@@ -40,6 +46,7 @@ public class Controller implements Initializable {
 
         window.setScene(tableViewScene);
         window.show();
+        return loader;
     }
 
     public void loginButtonPushed(ActionEvent event) throws IOException, SQLException {
@@ -47,17 +54,22 @@ public class Controller implements Initializable {
         String loginInputText = loginInput.getText();
         String passwordInputText = passwordInput.getText();
 
+        int ID;
+
         int source = LoginDetails.checkLoginDetails(Main.jdbc.getConn(), loginInputText, passwordInputText);
         if(source==0) {
             source = LoginDetails.checkClientLoginDetails(Main.jdbc.getConn(), loginInputText, passwordInputText);
-            Main.ID = LoginDetails.getClientLoginID(Main.jdbc.getConn(), loginInputText);
+            ID = LoginDetails.getClientLoginID(Main.jdbc.getConn(), loginInputText);
         }
-        else
-            Main.ID = LoginDetails.getLoginID(Main.jdbc.getConn(), loginInputText);
+        else if(source!=6 && source!=7)
+            ID = LoginDetails.getLoginID(Main.jdbc.getConn(), loginInputText);
+        else ID = 0;
 
 
         if(source == 0 || loginInputText.equals("Klient")){
-            changeScreen("Client/client.fxml", event,"Klient");
+            FXMLLoader loader = changeScreen("Client/client.fxml", event,"Klient");
+            ClientController cc = loader.getController();
+            cc.setID(ID);
             System.out.println("Klient");
         }
         else if(source == 1 || loginInputText.equals("Marketer")){
@@ -65,19 +77,27 @@ public class Controller implements Initializable {
             System.out.println("Marketer");
         }
         else if(source == 2 || loginInputText.equals("HR")){
-            changeScreen("HR/HR.fxml", event,"HR");
+            FXMLLoader loader = changeScreen("HR/HR.fxml", event,"HR");
+            HRController hrc = loader.getController();
+            hrc.setPoolNo(ID);
             System.out.println("HR");
         }
         else if(source == 3 || loginInputText.equals("Kasjer")){
-            changeScreen("Cashier/cashier.fxml", event,"Kasjer");
+            FXMLLoader loader = changeScreen("Cashier/cashier.fxml", event,"Kasjer");
+            CashierController cc = loader.getController();
+            cc.setPoolNo(ID);
             System.out.println("Kasjer");
         }
         else if(source == 4 || loginInputText.equals("Kierownik")){
-            changeScreen("Manager/manager.fxml", event,"Kierownik");
+            FXMLLoader loader = changeScreen("Manager/manager.fxml", event,"Kierownik");
+            ManagerController mc = loader.getController();
+            mc.setPoolNo(ID);
             System.out.println("Kierownik");
         }
         else if(source == 5 || loginInputText.equals("Konserwator")){
-            changeScreen("Repairman/repairman.fxml", event,"Konserwator");
+            FXMLLoader loader = changeScreen("Repairman/repairman.fxml", event,"Konserwator");
+            RepairmanController rc = loader.getController();
+            rc.setPoolNo(ID);
             System.out.println("Konserwator");
         }
         else if(source == 6 || loginInputText.equals("Wlasciciel")){

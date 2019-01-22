@@ -123,8 +123,21 @@ public class Reservation {
         }
     }
 
-    static public CashierPath getCashierReservation(CashierController cc, Connection conn, int id) throws SQLException {
-        PreparedStatement stmt = conn.prepareStatement("SELECT to_char(rt.Data_i_Godzina, 'YYYY-MM-DD HH24:MI'), rt.Numer_toru, rt.Status FROM Rezerwacje_Toru rt WHERE Numer_Rezerwacji = ? AND Data_I_Godzina > SYSDATE");
+    static public CashierPath getCashierReservation(CashierController cc, Connection conn, int id, int poolNo) throws SQLException {
+        PreparedStatement stmt;
+        if(poolNo == 0)
+            stmt = conn.prepareStatement(
+                    "SELECT to_char(Data_i_Godzina, 'YYYY-MM-DD HH24:MI'), Numer_toru, Status FROM " +
+                            "(SELECT rt.Data_i_Godzina, rt.Numer_Toru, rt.Status, rt.Numer_Rezerwacji, u.Baseny_Numer_Obiektu FROM Rezerwacje_Toru rt JOIN Uslugi u ON u.Ogolne_Numer_Uslugi = rt.Ogolne_Numer_Uslugi) " +
+                         "WHERE Numer_Rezerwacji = ? AND Data_I_Godzina > SYSDATE");
+        else
+            {
+            stmt = conn.prepareStatement(
+                    "SELECT to_char(Data_i_Godzina, 'YYYY-MM-DD HH24:MI'), Numer_toru, Status FROM " +
+                            "(SELECT rt.Data_i_Godzina, rt.Numer_Toru, rt.Status, rt.Numer_Rezerwacji, u.Baseny_Numer_Obiektu FROM Rezerwacje_Toru rt JOIN Uslugi u ON u.Ogolne_Numer_Uslugi = rt.Ogolne_Numer_Uslugi) " +
+                            "WHERE Numer_Rezerwacji = ? AND Data_I_Godzina > SYSDATE AND Baseny_Numer_Obiektu = ?");
+            stmt.setInt(2, poolNo);
+        }
         stmt.setInt(1, id);
         ResultSet rSet = stmt.executeQuery();
         if(rSet.next()){

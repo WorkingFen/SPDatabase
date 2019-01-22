@@ -74,7 +74,7 @@ public class Transaction {
         }
     }
 
-    static public ManagerTransaction getManagerTransaction(Connection conn, int id) throws SQLException {
+    static public ManagerTransaction getManagerTransaction(Connection conn, int id, int poolNo) throws SQLException {
         PreparedStatement stmt = conn.prepareStatement("SELECT to_char(t.Data, 'YYYY-MM-DD HH24:MI:SS') FROM Transakcje t WHERE Numer_transakcji = ?");
         stmt.setInt(1, id);
         ResultSet rSet = stmt.executeQuery();
@@ -105,8 +105,9 @@ public class Transaction {
             stmt.close();
             return null;
         }
-        stmt = conn.prepareStatement("SELECT Cena FROM Uslugi WHERE Numer_Uslugi = ?");
+        stmt = conn.prepareStatement("SELECT Cena FROM Uslugi WHERE Numer_Uslugi = ? AND Baseny_Numer_Obiektu = ?");
         stmt.setInt(1, noService);
+        stmt.setInt(2, poolNo);
         rSet = stmt.executeQuery();
         if(rSet.next()){
             int price = rSet.getInt(1)*amount;
@@ -121,7 +122,7 @@ public class Transaction {
         }
     }
 
-    static public ManagerIncome getManagerIncome(Connection conn, String year, int month) throws SQLException {
+    static public ManagerIncome getManagerIncome(Connection conn, String year, int month, int poolNo) throws SQLException {
         String date;
         if(month < 10) date = year+"-0"+month;
         else date = year+"-"+month;
@@ -130,14 +131,16 @@ public class Transaction {
         PreparedStatement stmt = conn.prepareStatement(
                 "SELECT sum(Ilosc*Cena) FROM " +
                         "(SELECT a.Data, a.Ilosc, u.Cena, u.Baseny_Numer_Obiektu FROM " +
-                        "(SELECT t.Data, k.Ilosc, k.Uslugi_Numer_Uslugi FROM Transakcje t JOIN Koszyki k ON t.Numer_Transakcji = k.Transakcje_Numer_Transakcji) a " +
+                            "(SELECT t.Data, k.Ilosc, k.Uslugi_Numer_Uslugi FROM Transakcje t JOIN Koszyki k ON t.Numer_Transakcji = k.Transakcje_Numer_Transakcji) a " +
                         "JOIN Uslugi u ON a.Uslugi_Numer_Uslugi = u.Numer_Uslugi) " +
-                        "WHERE to_char(Data, 'YYYY-MM') = ?"
+                     "WHERE to_char(Data, 'YYYY-MM') = ? AND Baseny_Numer_Obiektu = ?"
         );
         stmt.setString(1, date);
+        stmt.setInt(2, poolNo);
         ResultSet rSet = stmt.executeQuery();
         if(rSet.next()){
             income = rSet.getInt(1);
+            if(income==0) return null;
             rSet.close();
             stmt.close();
             return new ManagerIncome(date, income);
@@ -149,7 +152,7 @@ public class Transaction {
         }
     }
 
-    static public ManagerSalary getManagerSalary(Connection conn, String year, int month) throws SQLException {
+    static public ManagerSalary getManagerSalary(Connection conn, String year, int month, int poolNo) throws SQLException {
         String date;
         if(month < 10) date = year+"-0"+month;
         else date = year+"-"+month;
@@ -158,11 +161,15 @@ public class Transaction {
 
         PreparedStatement stmt = conn.prepareStatement(
                 "SELECT sum(Wynagrodzenie+Dodatek_Do_Pensji) FROM " +
-                        "(SELECT p.Dodatek_Do_Pensji, s.Wynagrodzenie FROM Pracownicy p JOIN Stanowiska s ON p.Stanowiska_Numer_Stanowiska = s.Numer_Stanowiska) "
+                        "(SELECT p.Dodatek_Do_Pensji, p.Baseny_Numer_Obiektu, p.Data_Zatrudnienia, s.Wynagrodzenie FROM Pracownicy p JOIN Stanowiska s ON p.Stanowiska_Numer_Stanowiska = s.Numer_Stanowiska) " +
+                        "WHERE Baseny_Numer_Obiektu = ? AND Data_Zatrudnienia < to_date(?, 'YYYY-MM')"
         );
+        stmt.setInt(1, poolNo);
+        stmt.setString(2, date);
         ResultSet rSet = stmt.executeQuery();
         if(rSet.next()){
             expenses = rSet.getInt(1);
+            if(expenses==0) return null;
             rSet.close();
             stmt.close();
             return new ManagerSalary(date, expenses);

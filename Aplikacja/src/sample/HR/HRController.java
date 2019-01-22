@@ -2,6 +2,7 @@ package sample.HR;
 
 import JDBC.Employee;
 import JDBC.LoginDetails;
+import JDBC.Pool;
 import JDBC.Post;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -19,6 +20,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.stage.Stage;
+import sample.Controller;
 import sample.Main;
 import sample.PopupWindows.PopupWindowAlert;
 
@@ -64,9 +66,18 @@ public class HRController implements Initializable {
     @FXML
     private TextField positionField;
 
-    private int ID = Main.ID;
+    private int poolNo;
 
     public HRController() throws SQLException {
+    }
+
+    public void setPoolNo(int ID) throws SQLException {
+        if(ID==0) poolNo = 0;
+        else poolNo = Pool.getPoolNo(Main.jdbc.getConn(), ID);
+
+        employees = getEmployees();
+
+        initializeEmployees();
     }
 
     private ObservableList<HREmployee> getEmployees() throws SQLException {
@@ -83,7 +94,8 @@ public class HRController implements Initializable {
 
         ObservableList<HREmployee> list = FXCollections.observableArrayList();
         for(int i = 0; i < noEmployees; i++){
-            list.add(Employee.getHREmployee(this, conn, i+1));
+            HREmployee temp = Employee.getHREmployee(this, conn, i+1, poolNo);
+            if(temp!=null) list.add(temp);
         }
         return list;
     }
@@ -152,7 +164,7 @@ public class HRController implements Initializable {
         positionField.setText(null);
     }
 
-    private ObservableList<HREmployee> employees = getEmployees();
+    private ObservableList<HREmployee> employees;
 
     private final ObservableList<HRPost> posts = getPosts();
 
@@ -176,7 +188,6 @@ public class HRController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb){
-        initializeEmployees();
         initializePosts();
     }
 

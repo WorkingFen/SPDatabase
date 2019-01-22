@@ -15,6 +15,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
+import sample.Controller;
 import sample.Main;
 
 import java.io.IOException;
@@ -56,12 +57,16 @@ public class ClientController implements Initializable {
 	@FXML
 	private TextField pathField;
 	@FXML
-	private Button addReservationButton
+	private Button addReservationButton;
 
-    private int ID = Main.ID;
+    private int ID;
     private String[] poolName;
 
     public ClientController() throws SQLException {
+    }
+
+    public void setID(int ID) throws SQLException {
+        this.ID = ID;
     }
 
     private void clearTables(){

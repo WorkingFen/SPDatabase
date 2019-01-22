@@ -2,6 +2,7 @@ package sample.Manager;
 
 import JDBC.Employee;
 import JDBC.Inspection;
+import JDBC.Pool;
 import JDBC.Transaction;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -16,6 +17,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
+import sample.Controller;
 import sample.Main;
 
 import java.io.IOException;
@@ -78,9 +80,26 @@ public class ManagerController implements Initializable {
     @FXML
     private TableColumn<ManagerInspection, String> inspectionComment;
 
-    private int ID = Main.ID;
+    private int poolNo;
 
     public ManagerController() throws SQLException {
+    }
+
+    public void setPoolNo(int ID) throws SQLException {
+        if(ID==0) poolNo = 0;
+        else poolNo = Pool.getPoolNo(Main.jdbc.getConn(), ID);
+
+        employees = getEmployees();
+        transactions = getTransactions();
+        incomes = getIncomes();
+        salaries = getSalaries();
+        inspections = getInspections();
+
+        initializeEmployee();
+        initializeTransaction();
+        initializeIncome();
+        initializeSalary();
+        initializeInspection();
     }
 
     private ObservableList<ManagerEmployee> getEmployees() throws SQLException {
@@ -97,7 +116,8 @@ public class ManagerController implements Initializable {
 
         ObservableList<ManagerEmployee> list = FXCollections.observableArrayList();
         for(int i = 0; i < noEmployees; i++){
-            list.add(Employee.getManagerEmployee(conn, i+1));
+            ManagerEmployee temp = Employee.getManagerEmployee(conn, i+1, poolNo);
+            if(temp!=null) list.add(temp);
         }
         return list;
     }
@@ -116,7 +136,8 @@ public class ManagerController implements Initializable {
 
         ObservableList<ManagerTransaction> list = FXCollections.observableArrayList();
         for(int i = 0; i < noTransactions; i++){
-            list.add(Transaction.getManagerTransaction(conn, i+1));
+            ManagerTransaction temp = Transaction.getManagerTransaction(conn, i+1, poolNo);
+            if(temp!=null) list.add(temp);
         }
         return list;
     }
@@ -146,7 +167,7 @@ public class ManagerController implements Initializable {
         ObservableList<ManagerIncome> list = FXCollections.observableArrayList();
         for(int year = minYear-1; year < maxYear; year++){
             for(int month = 0; month < 12; month++){
-                ManagerIncome temp = Transaction.getManagerIncome(conn, Integer.toString(year+1), month+1);
+                ManagerIncome temp = Transaction.getManagerIncome(conn, Integer.toString(year+1), month+1, poolNo);
                 if(temp != null) list.add(temp);
             }
         }
@@ -178,7 +199,7 @@ public class ManagerController implements Initializable {
         ObservableList<ManagerSalary> list = FXCollections.observableArrayList();
         for(int year = minYear-1; year < maxYear; year++){
             for(int month = 0; month < 12; month++){
-                ManagerSalary temp = Transaction.getManagerSalary(conn, Integer.toString(year+1), month+1);
+                ManagerSalary temp = Transaction.getManagerSalary(conn, Integer.toString(year+1), month+1, poolNo);
                 if(temp != null) list.add(temp);
             }
         }
@@ -199,20 +220,21 @@ public class ManagerController implements Initializable {
 
         ObservableList<ManagerInspection> list = FXCollections.observableArrayList();
         for(int i = 0; i < noInspections; i++){
-            list.add(Inspection.getManagerInspection(conn, i+1));
+            ManagerInspection temp = Inspection.getManagerInspection(conn, i+1, poolNo);
+            if(temp!=null) list.add(temp);
         }
         return list;
     }
 
-    private final ObservableList<ManagerEmployee> employees = getEmployees();
+    private ObservableList<ManagerEmployee> employees;
 
-    private final ObservableList<ManagerTransaction> transactions = getTransactions();
+    private ObservableList<ManagerTransaction> transactions;
 
-    private final ObservableList<ManagerIncome> incomes = getIncomes();
+    private ObservableList<ManagerIncome> incomes;
 
-    private final ObservableList<ManagerSalary> salaries = getSalaries();
+    private ObservableList<ManagerSalary> salaries;
 
-    private final ObservableList<ManagerInspection> inspections = getInspections();
+    private ObservableList<ManagerInspection> inspections;
 
     private void initializeEmployee()
     {
@@ -260,11 +282,7 @@ public class ManagerController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        initializeEmployee();
-        initializeTransaction();
-        initializeIncome();
-        initializeSalary();
-        initializeInspection();
+
     }
 
     public void logOutButtonPushed(ActionEvent event) throws IOException {

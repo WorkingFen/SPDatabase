@@ -47,15 +47,25 @@ public class Lesson {
         }
     }
 
-    static public CashierLesson getCashierLesson(CashierController cc, Connection conn, String msgIn, String msgOut, int id) throws SQLException {
+    static public CashierLesson getCashierLesson(CashierController cc, Connection conn, String msgIn, String msgOut, int id, int poolNo) throws SQLException {
         String date;
         String noAttendees;
         int lessonID;
         String surname;
-        PreparedStatement stmt = conn.prepareStatement(
-                "SELECT to_char(Data_i_Godzina, 'YYYY-MM-DD HH24:MI'), Liczba_zapisanych_osob, Nazwisko, Numer_Lekcji FROM " +
-                        "(SELECT * FROM Lekcje_Plywania JOIN Pracownicy ON Numer_Ratownika = Numer_Identyfikacyjny) " +
-                        "WHERE Numer_Lekcji = ? AND Data_I_Godzina > SYSDATE");
+        PreparedStatement stmt;
+        if(poolNo==0) {
+            stmt = conn.prepareStatement(
+                    "SELECT to_char(Data_i_Godzina, 'YYYY-MM-DD HH24:MI'), Liczba_zapisanych_osob, Nazwisko, Numer_Lekcji FROM " +
+                            "(SELECT * FROM Lekcje_Plywania JOIN Pracownicy ON Numer_Ratownika = Numer_Identyfikacyjny) " +
+                            "WHERE Numer_Lekcji = ? AND Data_I_Godzina > SYSDATE");
+        }
+        else {
+            stmt = conn.prepareStatement(
+                    "SELECT to_char(Data_i_Godzina, 'YYYY-MM-DD HH24:MI'), Liczba_zapisanych_osob, Nazwisko, Numer_Lekcji FROM " +
+                            "(SELECT * FROM Lekcje_Plywania JOIN Pracownicy ON Numer_Ratownika = Numer_Identyfikacyjny) " +
+                            "WHERE Numer_Lekcji = ? AND Data_I_Godzina > SYSDATE AND Baseny_Numer_Obiektu = ?");
+            stmt.setInt(2, poolNo);
+        }
         stmt.setInt(1, id);
         ResultSet rSet = stmt.executeQuery();
         if(rSet.next()){
