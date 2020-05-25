@@ -21,3 +21,5 @@ Ze względu na to, że usuwanie bazy danych Oracle wiąże się z ogromnymi kosz
 > Jako, że wbudowany skrypt usuwania bazy danych bardziej szkodzi, aniżeli pomaga 
 
 kierujemy do bardzo pomocnej strony [usuwania bazy](http://www.rebellionrider.com/oracle-database-12c-tutorial/how-to-uninstall-oracle-database-12c-rebellionrider.htm#.XBOlpVxKiUl)
+
+25.05.2020 Edit: W repozytorium [OracleRemoval](https://github.com/WorkingFen/OracleRemoval) znajduje się skrypt Batchowy, który doszczętnie usuwa bazę danych Oracle'a.
